@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
         const member = message.member;
         //comprobar el canal adecuado
         if(!args.join(' ') || !args[0]){
-                message.reply("Te falta escribir el anime q quieres buscar")
+                message.reply("Te falta escribir el usuario que quieres buscar")
                 return;
         } else if(args.join(' ').length < 3){
                 message.reply("Ese nombre es muy corto")
@@ -43,7 +43,7 @@ module.exports.run = async(client, message, args) => {
                 //info
                 const browser = await puppeteer.launch({ 
                     headless: false,
-                    args: ['--no-sandbox']
+                    args: ['--no-sandbox', "--disable-setuid-sandbox"],
                 });
                 const page = await browser.newPage();
                 result = await page.goto(url);
