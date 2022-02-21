@@ -1,0 +1,49 @@
+{
+    "shortcode": "en",
+    "lang": "English",
+    "code": 1,
+    "errors": {
+        "error": "ERROR",
+        "noPerm": "You have not permission to do this!",
+        "noChannel": "You must specify a channel",
+        "wrongUsage": "You haven't typed anything. | **Try:**",
+        "unknown": "An unknown error"
+    },
+    "messages": {
+        "description": "Description",
+        "views": "Views",
+        "wait": "Please wait...",
+        "channel": "Channel",
+        "click": "Click Here",
+        "usedby": "Used by",
+        "wentLive": "went live!",
+        "viewers": "Viewers",
+        "game": "Game",
+        "newvideo": "published new video!"
+    },
+    "commands": {
+        "setLang": {
+            "messages":{
+                "success": "Idioma cambiado correctamente de **Español**",
+                "available": "es / español"
+            },
+            "errors":{
+                "noLang": "This language does not exist. | **Try with:**",
+                "sameLang": " this has already been placed. | **Available:**"
+            }
+        },
+        "setPrefix": {
+            "messages":{
+                "prefix": "The prefix is ",
+                "newPrefix": "Prefix successfully changed to "
+            },
+            "errors":{
+                "long": "The prefix exceeds the 3-letter limit. | **Try again**",
+                "same": "The written prefix remains the same. | **Try again**"
+            }
+        } 
+    },
+    "categories": {
+        "info": "Info"
+    }
+}

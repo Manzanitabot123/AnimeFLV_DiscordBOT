@@ -1,0 +1,25 @@
+{
+  "name": "animeflv_bot",
+  "version": "1.0.0",
+  "description": "Bot template for Discord.js v13 with command handler, Slash (/) commands.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "author": "cFyt",
+  "license": "MIT",
+  "dependencies": {
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "ascii-table": "^0.0.9",
+    "discord.js": "^13.0.1",
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security",
+    "get-image-colors": "^4.0.1",
+    "glob": "^7.1.7",
+    "path": "^0.12.7",
+    "puppeteer": "^13.3.1",
+    "quick.db": "^7.1.3",
+    "random": "^3.0.6"
+  }
+}
