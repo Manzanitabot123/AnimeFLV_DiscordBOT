@@ -10,7 +10,7 @@ module.exports.run = (client, interaction) => {
 }
 module.exports.conf = {
     "name": "ping",
-    "description": ["Bot pingini ölçer.", "Calculates bot's ping."],
+    "description": "Calcula el ping del Bot",
     "options": [],
     "category": "info"
 }

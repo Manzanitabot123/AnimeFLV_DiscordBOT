@@ -22,4 +22,6 @@ client.on('ready', () => {
   require('./utils/event')(client)
 });
 
+global.textoyemojis = require('./textoyemojis')
+
 client.login(token);

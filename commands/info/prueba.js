@@ -25,7 +25,7 @@ module.exports.run = async(client, message, args) => {
         } else if (isNumber(value) === true) {
         collector.stop();
         mensaje.delete()
-        msg.edit(value);
+        msg.edit(`${textoyemojis.emojis.estrella} / ${value} / ${textoyemojis.emojis.media_estrella}`);
         } else {
         collector.stop();
         mensaje.delete()
@@ -44,19 +44,7 @@ module.exports.run = async(client, message, args) => {
 
 module.exports.conf = {
     "name": "prueba",
-    "description": [{
-        "lang": "es",
-        "description": "Muestra el ping del bot."
-    }, {
-        "lang": "en",
-        "description": "Display bot's ping."
-    }],
+    "description": ["Muestra el ping del bot."],
     "aliases": ["pruebita"],
-    "usage": [{
-        "lang": "es",
-        "usage": "latencia"
-    }, {
-        "lang": "en",
-        "usage": "ping"
-    }]
+    "usage": ["latencia"]
 }

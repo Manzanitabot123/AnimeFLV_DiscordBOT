@@ -14,19 +14,7 @@ module.exports.run = (client, message, args) => {
 }
 module.exports.conf = {
     "name": "ping",
-    "description": [{
-        "lang": "es",
-        "description": "Muestra el ping del bot."
-    }, {
-        "lang": "en",
-        "description": "Display bot's ping."
-    }],
+    "description": [ "Muestra el ping del bot." ],
     "aliases": ["pong", "latencia"],
-    "usage": [{
-        "lang": "es",
-        "usage": "latencia"
-    }, {
-        "lang": "en",
-        "usage": "ping"
-    }]
+    "usage": ["latencia"]
 }

@@ -1,6 +1,5 @@
 //This template created by cFyt https://github.com/cFyt/discord.js-13-bot-template
 const { timeout } = require('../config.json');
-const { getLang } = require('../utils/getLang');
 const { getPrefix } = require('../utils/getprefix');
 const lastuse = new Set();
 
@@ -23,7 +22,6 @@ module.exports = message => {
         cmd = client.commands.get(client.aliases.get(command));
     }
     if (!cmd) return
-    let lang = getLang(message)
 
-    cmd.run(client, message, args, prefix, lang)
+    cmd.run(client, message, args, prefix)
 }

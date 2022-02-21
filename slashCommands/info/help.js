@@ -1,18 +1,16 @@
 const { Client, Interaction, MessageEmbed } = require("discord.js");
-const es = require('../../langs/es.json')
 /**
  * @param {Client} client
  * @param {Interaction} interaction
- * @param {es} lang
  */
-module.exports.run =  (client,interaction, options,lang) => {
+module.exports.run =  (client,interaction, options) => {
     console.log(options)
     interaction.reply(`EN CONSTRUCCIÓN`)
     
 }
 module.exports.conf = {
     "name": "help",
-    "description": ["Bot ve komutlar hakkında bilgileri gösterir.","Displays bot's commands and info1."],
+    "description": "Ve información detallada del Bot.",
     "options":[
         {
             "name": "category",

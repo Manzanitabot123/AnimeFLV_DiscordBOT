@@ -971,7 +971,7 @@ module.exports.run = async(client, message, args) => {
                 const estrellitas5_1 = await page.$(estrellitas);
                 let littlestars5_1 = await page.evaluate(el => el.textContent, estrellitas5_1);
                 var littlestarssymbols5_1;
-                if(littlestars5_1 >= 0.0 && littlestars5_1 <= 0.5) {littlestarssymbols5_1 = "<:media_estrella:940318620028907560>"} else if(littlestars5_1 >= 0.6 && littlestars5_1 <= 1.0) {littlestarssymbols5_1 = "<:estrella:940318620171505665>"} else if(littlestars5_1 >= 1.1 && littlestars5_1 <= 1.5) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:media_estrella:940318620028907560>"} else if(littlestars5_1 >= 1.6 && littlestars5_1 <= 2.0) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:estrella:940318620171505665>"} else if(littlestars5_1 >= 2.1 && littlestars5_1 <= 2.5) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:estrella:940318620171505665> <:media_estrella:940318620028907560>"} else if(littlestars5_1 >= 2.6 && littlestars5_1 <= 3.0) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665>"} else if(littlestars5_1 >= 3.1 && littlestars5_1 <= 3.5) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665> <:media_estrella:940318620028907560>"} else if(littlestars5_1 >= 3.6 && littlestars5_1 <= 4.0) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665>"} else if(littlestars5_1 >= 4.1 && littlestars5_1 <= 4.7) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665> <:media_estrella:940318620028907560>"} else if(littlestars5_1 >= 4.8 && littlestars5_1 <= 5.0) {littlestarssymbols5_1 = "<:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665> <:estrella:940318620171505665>"} else {littlestarssymbols5_1 = "<:media_estrella:940318620028907560>"};
+                if(littlestars5_1 >= 0.0 && littlestars5_1 <= 0.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 0.6 && littlestars5_1 <= 1.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 1.1 && littlestars5_1 <= 1.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 1.6 && littlestars5_1 <= 2.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 2.1 && littlestars5_1 <= 2.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 2.6 && littlestars5_1 <= 3.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 3.1 && littlestars5_1 <= 3.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 3.6 && littlestars5_1 <= 4.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 4.1 && littlestars5_1 <= 4.7) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 4.8 && littlestars5_1 <= 5.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`};
                 //imagen referencial
                 await page.waitForSelector(imagen_referencial);
                 const imagen_referencial5_1 = await page.evaluate(el => window.getComputedStyle(el).backgroundImage, await page.$(imagen_referencial));
@@ -1043,19 +1043,7 @@ module.exports.run = async(client, message, args) => {
 };
 module.exports.conf = {
     "name": "descargar",
-    "description": [{
-        "lang": "es",
-        "description": "Muestra el ping del bot."
-    }, {
-        "lang": "en",
-        "description": "Display bot's ping."
-    }],
+    "description": [ "Muestra el ping del bot." ],
     "aliases": ["download", "descarga", "desc", "down"],
-    "usage": [{
-        "lang": "es",
-        "usage": "descargar"
-    }, {
-        "lang": "en",
-        "usage": "download"
-    }]
+    "usage": [ "descargar" ]
 }

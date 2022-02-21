@@ -1,10 +1,8 @@
 const {  timeout } = require('../config.json')
-const { getLang } = require('../utils/getLang');
 const lastuse = new Set();
 
 module.exports = interaction => {
     let client = interaction.client
-    let lang = getLang(interaction)
     if (lastuse.has(interaction.member.username)) return
     lastuse.add(interaction.member.username)
     setTimeout(() => {
@@ -19,5 +17,5 @@ module.exports = interaction => {
     interaction.options._hoistedOptions.forEach(element => {
         options[element.name] = element
     });
-    cmd.run(client, interaction,options, lang)
+    cmd.run(client, interaction,options)
 }
