@@ -1,13 +1,13 @@
 {
   "name": "animeflv_bot",
-  "version": "1.0.0",
-  "description": "Bot template for Discord.js v13 with command handler, Slash (/) commands.",
+  "version": "1.1.0",
+  "description": "Un Bot de Discord (no oficial 🤖) de Animeflv para ver información y descargar animes clásicos, actuales y populares.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ."
   },
-  "author": "cFyt",
+  "author": "Manzanitabot123",
   "license": "MIT",
   "dependencies": {
     "@discordjs/rest": "^0.1.0-canary.0",

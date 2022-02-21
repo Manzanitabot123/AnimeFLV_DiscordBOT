@@ -72,11 +72,12 @@ module.exports.run = async(client, message, args) => {
                 const stars5 = "body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > div > p:nth-child(2) > span.Vts.fa-star";
                 
                 //info
-                const browser = await puppeteer.launch({ 
-                    headless: false,
-                    args: ['--no-sandbox', "--disable-setuid-sandbox"],
-                });
+                const browser = await puppeteer.launch({
+                    headless: true,
+                    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
+                    });
                 const page = await browser.newPage();
+                await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
                 await page.goto(url);
 
                 //Para 1 resultado ___________________________________________________________________________________________________________________________________________________________________________________
