@@ -72,7 +72,10 @@ module.exports.run = async(client, message, args) => {
                 const stars5 = "body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > div > p:nth-child(2) > span.Vts.fa-star";
                 
                 //info
-                const browser = await puppeteer.launch({ headless: false});
+                const browser = await puppeteer.launch({ 
+                    headless: false,
+                    args: ['--no-sandbox']
+                });
                 const page = await browser.newPage();
                 await page.goto(url);
 

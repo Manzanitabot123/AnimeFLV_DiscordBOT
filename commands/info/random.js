@@ -38,7 +38,10 @@ module.exports.run = async(client, message, args) => {
                 url = `https://www3.animeflv.net/browse?page=${pagina}`;
                 
                 //info
-                const browser = await puppeteer.launch({ headless: false});
+                const browser = await puppeteer.launch({ 
+                    headless: false,
+                    args: ['--no-sandbox']
+                });
                 const page = await browser.newPage();
                 await page.goto(url);
 
