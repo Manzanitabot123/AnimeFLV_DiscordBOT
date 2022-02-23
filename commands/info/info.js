@@ -2,6 +2,7 @@ const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = requi
 const puppeteer = require('puppeteer');
 const getColors = require('get-image-colors');
 const { captureRejections } = require("events");
+const { channel } = require("diagnostics_channel");
 
 /**
  * @param {Client} client
@@ -194,13 +195,13 @@ module.exports.run = async(client, message, args) => {
                                         );
                                     
                                         const resultado5 = new MessageEmbed()
-                                        .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                        .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                         .setTitle("Por favor elige el anime que buscas")
                                         .setColor("DARK_GREEN")
                                         .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```' + '```' + '[５] ('+ valor5 +") - "+ output5 + " │ ⭐" + calificacion5 + '```')
                                         .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                         .setThumbnail(miniatura)
-                                        .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                        .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         
                                         msg.edit({embeds: [resultado5], components:[row5]}).then(message => {
                                             const filter = (button5) => button5.user.id === member.id;
@@ -323,13 +324,13 @@ module.exports.run = async(client, message, args) => {
                                         );
                         
                                         const resultado4 = new MessageEmbed()
-                                        .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                        .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                         .setTitle("Por favor elige el anime que buscas")
                                         .setColor("DARK_GREEN")
                                         .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```')
                                         .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                         .setThumbnail(miniatura)
-                                        .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                        .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         msg.edit({embeds: [resultado4], components:[row4]}).then(message => {
                                             const filter = (button4) => button4.user.id === member.id;
                                             const collector4 = message.createMessageComponentCollector({
@@ -433,13 +434,13 @@ module.exports.run = async(client, message, args) => {
                                     );
                     
                                     const resultado3 = new MessageEmbed()
-                                    .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                    .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                     .setTitle("Por favor elige el anime que buscas")
                                     .setColor("DARK_GREEN")
                                     .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```')
                                     .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                     .setThumbnail(miniatura)
-                                    .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                    .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                     msg.edit({embeds: [resultado3], components:[row3]}).then(message => {
                                         const filter = (button3) => button3.user.id === member.id;
                                         const collector3 = message.createMessageComponentCollector({
@@ -526,13 +527,13 @@ module.exports.run = async(client, message, args) => {
                                 );
                 
                                 const resultado2 = new MessageEmbed()
-                                .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                 .setTitle("Por favor elige el anime que buscas")
                                 .setColor("DARK_GREEN")
                                 .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' +'[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```')
                                 .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                 .setThumbnail(miniatura)
-                                .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                 msg.edit({embeds: [resultado2], components:[row2]}).then(message => {
                                     const filter = (button2) => button2.user.id === member.id;
                                     const collector2 = message.createMessageComponentCollector({
@@ -602,13 +603,13 @@ module.exports.run = async(client, message, args) => {
                             );
             
                             const resultado1 = new MessageEmbed()
-                            .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                            .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                             .setTitle("Por favor elige el anime que buscas")
                             .setDescription('```'+'[１] ('+ valor1 +") │ "+ output1 + " │ ⭐" + calificacion1 +'```')
                             .setColor("DARK_GREEN")
                             .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                             .setThumbnail(miniatura)
-                            .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                            .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                             msg.edit({embeds: [resultado1], components:[row1]}).then(message => {
                                 const filter = (button1) => button1.user.id === member.id;
                                 const collector1 = message.createMessageComponentCollector({
@@ -656,7 +657,7 @@ module.exports.run = async(client, message, args) => {
                 } else {msg.edit({
                     embeds: [
                         new MessageEmbed()
-                            .setAuthor(message.author.username, message.author.displayAvatarURL())
+                            .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                             .setColor("DARK_RED")
                             .setTimestamp()
                             .setDescription("No se encontraron coincidencias para **" + args.join(' ') + "** D:")
@@ -684,6 +685,7 @@ module.exports.run = async(client, message, args) => {
             async function respuesta5_1(browser, page, message, urlone, eltitulo, eltipo)
             {   
                 try{
+                message.channel.sendTyping();
                 //detalles
                 const detalles5_1 = new MessageActionRow().addComponents(
                     new MessageButton()
@@ -841,7 +843,7 @@ module.exports.run = async(client, message, args) => {
 
                 //ENVIANDO MENSAJE
                 const resultado5_1 = new MessageEmbed()
-                .setAuthor('AnimeFLV', 'https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3', 'https://www3.animeflv.net/')
+                .setAuthor({name: 'AnimeFLV', iconURL: 'https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3', url:'https://www3.animeflv.net/'})
                 .setTitle(`${title5_1} ${state5_1}`)
                 .setColor(colorembed5_1)
                 .setURL(url5_1)
@@ -896,7 +898,7 @@ module.exports.run = async(client, message, args) => {
 };
 module.exports.conf = {
     "name": "info",
-    "description": [ "Muestra el ping del bot." ],
+    "description": [ "Busca y obtén información de un anime." ],
     "aliases": ["animeinfo", "infoanime","information"],
     "usage": [ "info" ]
 }

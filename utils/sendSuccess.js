@@ -9,7 +9,7 @@ function sendSuccess(message, msg, reply) {
             embeds: [
                 new MessageEmbed()
                     .setColor("DARK_GREEN")
-                    .setAuthor(message.author.username, message.author.displayAvatarURL())
+                    .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                     .setTimestamp()
                     .setDescription(msg)
             ]
@@ -21,7 +21,7 @@ function sendSuccess(message, msg, reply) {
             embeds: [
                 new MessageEmbed()
                     .setColor("DARK_GREEN")
-                    .setAuthor(message.author.username, message.author.displayAvatarURL())
+                    .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                     .setTimestamp()
                     .setDescription(msg)
             ]

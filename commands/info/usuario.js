@@ -31,6 +31,7 @@ module.exports.run = async(client, message, args) => {
 
         async function usuario(url){
                 //mensaje de espera (cargando...)
+                message.channel.sendTyping();
                 const msg = await message.reply({
                     embeds: [
                         new MessageEmbed()
@@ -53,7 +54,7 @@ module.exports.run = async(client, message, args) => {
                     msg.edit({
                         embeds: [
                             new MessageEmbed()
-                                .setAuthor(message.author.username, message.author.displayAvatarURL())
+                                .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                                 .setColor("DARK_RED")
                                 .setDescription("No existe nadie llamado **" + args.join(' ') + "** D:")
                         ]});
@@ -381,7 +382,7 @@ module.exports.run = async(client, message, args) => {
 
 module.exports.conf = {
     "name": "usuario",
-    "description": [ "Muestra el ping del bot." ],
+    "description": [ "Revisa perfiles de usuarios de  AnimeFLV" ],
     "aliases": ["user"],
     "usage": ["latencia"]
 }

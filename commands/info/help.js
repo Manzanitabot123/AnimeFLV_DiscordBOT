@@ -1,10 +1,11 @@
-const { Client, Interaction, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const { stripIndents } = require('common-tags');
 /**
  * @param {Client} client
- * @param {Interaction} interaction
+ * @param {Message} message
  */
-module.exports.run =  (client,interaction, prefix) => {
-    const detallesurl = new MessageActionRow().addComponents(
+module.exports.run = (client, message, args, prefix) => {
+    const detallesurlmsg = new MessageActionRow().addComponents(
         new MessageButton()
         .setURL('https://www.animeflv.net/')
         .setLabel("Sitio web")
@@ -28,7 +29,7 @@ module.exports.run =  (client,interaction, prefix) => {
     );
     const embed = new MessageEmbed()
             .setColor('RANDOM')
-            .setAuthor({name: `${interaction.guild.me.displayName}`, iconURL: interaction.guild.iconURL()})
+            .setAuthor({name: `${message.guild.me.displayName}`, iconURL: message.guild.iconURL()})
             .setThumbnail(client.user.displayAvatarURL());
             let commandNames = [];
             client.commands.forEach(c => {
@@ -37,18 +38,17 @@ module.exports.run =  (client,interaction, prefix) => {
 
             commandNames.forEach(emote => {
                 let cmds = client.commands.filter(c => c.conf.name === (emote));
-                embed.setDescription(`Es un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 10 comandos:`)
+                embed.setDescription(`**El prefijo actual es \`${prefix}\`**\n\nEs un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 10 comandos:`)
                 embed.addField(`☆ ${emote}`, cmds.map(c => `*${c.conf.description}* \n ( Aliases: ${(c.conf.aliases).join("; ")} )`).join(" "));
             });
             embed.setImage('https://latarde.com/wp-content/uploads/2021/04/alternativas-a-AnimeFLV.jpg');
             embed.setTimestamp();
 
-            return interaction.reply({embeds: [embed], components:[detallesurl]});
-    
+            return message.reply({embeds: [embed], components:[detallesurlmsg]});
 }
 module.exports.conf = {
     "name": "help",
-    "description": "Ve información detallada del Bot y sus comandos.",
-    "options":[],
-    "category": "info"
+    "description": [ "Ve información del bot y los comandos." ],
+    "aliases": ["pong", "latencia"],
+    "usage": ["latencia"]
 }

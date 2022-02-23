@@ -26,7 +26,7 @@ module.exports.run = (client, message, args, prefix) => {
 
 module.exports.conf = {
     "name": "prefix",
-    "description": ["Ve o establecer el prefijo del bot."],
+    "description": ["Ve o establece el prefijo del bot."],
     "aliases": ["setprefix", "sprefix", "prefijo"],
     "usage": ["prefijo ?p / prefijo"]
 }

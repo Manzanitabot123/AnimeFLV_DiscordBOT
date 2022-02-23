@@ -194,13 +194,13 @@ module.exports.run = async(client, message, args) => {
                                         );
                                     
                                         const resultado5 = new MessageEmbed()
-                                        .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                        .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                         .setTitle("Por favor elige el anime que deseas descargar")
                                         .setColor("DARK_GREEN")
                                         .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```' + '```' + '[５] ('+ valor5 +") - "+ output5 + " │ ⭐" + calificacion5 + '```')
                                         .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                         .setThumbnail(miniatura)
-                                        .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                        .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         
                                         msg.edit({embeds: [resultado5], components:[row5]}).then(message => {
                                             const filter = (button5) => button5.user.id === member.id;
@@ -278,13 +278,13 @@ module.exports.run = async(client, message, args) => {
                                         );
                         
                                         const resultado4 = new MessageEmbed()
-                                        .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                        .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                         .setTitle("Por favor elige el anime que deseas descargar")
                                         .setColor("DARK_GREEN")
                                         .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```')
                                         .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                         .setThumbnail(miniatura)
-                                        .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                        .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         msg.edit({embeds: [resultado4], components:[row4]}).then(message => {
                                             const filter = (button4) => button4.user.id === member.id;
                                             const collector4 = message.createMessageComponentCollector({
@@ -354,13 +354,13 @@ module.exports.run = async(client, message, args) => {
                                     );
                     
                                     const resultado3 = new MessageEmbed()
-                                    .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                    .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                     .setTitle("Por favor elige el anime que deseas descargar")
                                     .setColor("DARK_GREEN")
                                     .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```')
                                     .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                     .setThumbnail(miniatura)
-                                    .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                    .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                     msg.edit({embeds: [resultado3], components:[row3]}).then(message => {
                                         const filter = (button3) => button3.user.id === member.id;
                                         const collector3 = message.createMessageComponentCollector({
@@ -421,13 +421,13 @@ module.exports.run = async(client, message, args) => {
                                 );
                 
                                 const resultado2 = new MessageEmbed()
-                                .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                                .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                                 .setTitle("Por favor elige el anime que deseas descargar")
                                 .setColor("DARK_GREEN")
                                 .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' +'[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```')
                                 .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                 .setThumbnail(miniatura)
-                                .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                                .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                 msg.edit({embeds: [resultado2], components:[row2]}).then(message => {
                                     const filter = (button2) => button2.user.id === member.id;
                                     const collector2 = message.createMessageComponentCollector({
@@ -479,13 +479,13 @@ module.exports.run = async(client, message, args) => {
                             );
             
                             const resultado1 = new MessageEmbed()
-                            .setAuthor("Tu busqueda fue: 🔎 " + args.join(' '), message.author.displayAvatarURL())
+                            .setAuthor({name: "Tu busqueda fue: 🔎 " + args.join(' '), iconURL: message.author.displayAvatarURL()})
                             .setTitle("Por favor elige el anime que deseas descargar")
                             .setDescription('```'+'[１] ('+ valor1 +") │ "+ output1 + " │ ⭐" + calificacion1 +'```')
                             .setColor("DARK_GREEN")
                             .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                             .setThumbnail(miniatura)
-                            .setFooter(`Se cancelará la busqueda automáticamente en 18 segundos`);
+                            .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                             msg.edit({embeds: [resultado1], components:[row1]}).then(message => {
                                 const filter = (button1) => button1.user.id === member.id;
                                 const collector1 = message.createMessageComponentCollector({
@@ -524,7 +524,7 @@ module.exports.run = async(client, message, args) => {
                 } else {msg.edit({
                     embeds: [
                         new MessageEmbed()
-                            .setAuthor(message.author.username, message.author.displayAvatarURL())
+                            .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                             .setColor("DARK_RED")
                             .setTimestamp()
                             .setDescription("No se encontraron coincidencias para **" + args.join(' ') + "** D:")
@@ -581,6 +581,7 @@ module.exports.run = async(client, message, args) => {
                     } else if (isNumber(value) === true) {
                     collector.stop();
                     mensaje.delete()
+                    message.channel.sendTyping();
                     msg.edit({
                         embeds: [
                             new MessageEmbed()
@@ -593,7 +594,7 @@ module.exports.run = async(client, message, args) => {
                     msg.edit({
                         embeds: [
                             new MessageEmbed()
-                                .setAuthor(message.author.username, message.author.displayAvatarURL())
+                                .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                                 .setColor("DARK_RED")
                                 .setDescription("No existe un episodio **" + value + "** o aún no esta disponible")
                         ]});
@@ -813,7 +814,7 @@ module.exports.run = async(client, message, args) => {
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
-                                .setDescription("Tenias un solo trabajo y era poner un puto numero y ni eso puedes hacer D:< ...")
+                                .setDescription("Proceso Finalizado. Se requería de un número natural mayor a 0.")
                         ], components:[]})
                     
                     await browser.close();
@@ -833,217 +834,10 @@ module.exports.run = async(client, message, args) => {
                   });
                 })
             }
-
-            //Para la 1era alternativa ___________________________________________________________________________________________________________________________________________________________________________________
-            async function respuesta5_1(browser, page, message, urlone, eltitulo, eltipo)
-            {   
-                try{
-                //detalles
-                const detalles5_1 = new MessageActionRow().addComponents(
-                    new MessageButton()
-                    .setURL("https://www3.animeflv.net" + urlone[0])
-                    .setLabel("Ver original")
-                    .setStyle('LINK')
-                );
-
-                //Titutlo
-                let title5_1 = eltitulo;
-                
-                //capitulos
-                var episodios5_1;
-                await page.waitForSelector("#episodeList");
-                const capitulos5_1 = await page.evaluate(() => Array.from(document.querySelectorAll("#episodeList"), el => el.childElementCount)[0]);
-                
-                //Estado
-                var next5_1;
-                await page.waitForSelector(estado);
-                let estado5_1 = await page.$(estado);
-                let state5_1 = await page.evaluate(el => el.textContent, estado5_1);
-                let colorembed5_1 = "#ec1424";
-                if(state5_1 == "Finalizado") { state5_1 = "[🔴 FINALIZADO]";
-                episodios5_1 = capitulos5_1;
-                next5_1 = "No hay próximo episodio.";
-                } else {(colorembed5_1 = "#14c40c") && (state5_1 = "[🟢 EN EMISIÓN]");
-                episodios5_1 = capitulos5_1 - 1;
-                
-                //proximo_episodio
-
-                const proximo5_1 = await page.$("#episodeList > li.fa-play-circle.Next > a > span");
-                next5_1 = "Fecha del proximo episodio: **" + await page.evaluate(el => el.textContent, proximo5_1) + "**";
-                };
-                //URL
-                let url5_1 = "https://www3.animeflv.net" + urlone[0];
-
-                //otros nombres
-                var othernames5_1;
-                await page.evaluate(() => Array.from(document.querySelectorAll("body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3) > span:nth-child(1)"), el => el.textContent)[0]);
-                if(await page.evaluate(() => Array.from(document.querySelectorAll("body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3) > span:nth-child(1)"), el => el.textContent)[0]) !== undefined) {
-                    const otros_nombres5_1 = await page.$(otros_nombres);
-                    othernames5_1 = await page.evaluate(el => el.textContent, otros_nombres5_1);
-                } else {
-                    othernames5_1 = "No tiene otros nombres"
-                };
-
-                //géneros
-                var gender5_1;
-                if(await page.evaluate(() => Array.from(document.querySelectorAll('body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(1)[href]'), a => a.getAttribute('href'))[0]) !== undefined) {
-                    await page.waitForSelector("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(1)");
-                    const ungender5_1 = await page.$("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(1)");
-                    const ungenero5_1 = await page.evaluate(el => el.textContent, ungender5_1);
-                    
-                    if(await page.evaluate(() => Array.from(document.querySelectorAll('body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(2)[href]'), a => a.getAttribute('href'))[0]) !== undefined) {
-                        await page.waitForSelector("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(2)");
-                        const dosgender5_1 = await page.$("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(2)");
-                        const dosgenero5_1 = await page.evaluate(el => el.textContent, dosgender5_1);
-                        
-                        if(await page.evaluate(() => Array.from(document.querySelectorAll('body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(3)[href]'), a => a.getAttribute('href'))[0]) !== undefined) {
-                            await page.waitForSelector("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(3)");
-                            const tresgender5_1 = await page.$("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(3)");
-                            const tresgenero5_1 = await page.evaluate(el => el.textContent, tresgender5_1);
-                                
-                            if(await page.evaluate(() => Array.from(document.querySelectorAll('body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(4)[href]'), a => a.getAttribute('href'))[0]) !== undefined) {
-                                await page.waitForSelector("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(4)");
-                                    const cuatrogender5_1 = await page.$("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(4)");
-                                    const cuatrogenero5_1 = await page.evaluate(el => el.textContent, cuatrogender5_1);
-                                    gender5_1 = ungenero5_1 + `, ` + dosgenero5_1 + `, ` + tresgenero5_1 + ` y ` + cuatrogenero5_1;
-                            } else {
-                                gender5_1 = ungenero5_1 + `, ` + dosgenero5_1 + ` y ` + tresgenero5_1;
-                            }
-                        } else {
-                            gender5_1 = ungenero5_1 + ` y ` + dosgenero5_1;
-                        }
-                    } else {
-                        gender5_1 = ungenero5_1;
-                    }
-                } else { 
-                    gender5_1 = "No tiene género";
-                };
-
-                
-                //imagen
-                const imgs = await page.$$eval(imagen, imgs => imgs.map(img => img.getAttribute('src')));
-                const imagen5_1 = imgs[0];
-
-                //sinopsis
-                await page.waitForSelector(descripción);
-                const desc5_1 = await page.$(descripción);
-                let description5_1 = await page.evaluate(el => el.textContent, desc5_1);
-
-                //cantidaddeseguidores
-                await page.waitForSelector(seguidores);
-                const seguidores5_1 = await page.$(seguidores);
-                let followers5_1 = await page.evaluate(el => el.textContent, seguidores5_1);
-
-                //losseguidores
-                var allfollowers5_1;
-                await page.waitForSelector(nombresdelosseguidores);
-                if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(1) > a > img") !== null) {
-                    const unoseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(1) > a > img", unoseguidor5_1 => unoseguidor5_1.map(alt => alt.getAttribute('alt')));
-                    
-                    if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(2) > a > img") !== null) {
-                        const dosseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(2) > a > img", dosseguidor5_1 => dosseguidor5_1.map(alt => alt.getAttribute('alt')));
-                        
-                        if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(3) > a > img") !== null) {
-                            const tresseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(3) > a > img", tresseguidor5_1 => tresseguidor5_1.map(alt => alt.getAttribute('alt')));
-                            
-                            if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(4) > a > img") !== null) {
-                                const cuatrosegudor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(4) > a > img", cuatrosegudor5_1 => cuatrosegudor5_1.map(alt => alt.getAttribute('alt')));
-                                    allfollowers5_1 = unoseguidor5_1[0] + ", " + dosseguidor5_1[0] + ", " + tresseguidor5_1[0] + ", " + cuatrosegudor5_1[0];
-                            
-                            } else {
-                                allfollowers5_1 = unoseguidor5_1[0] + ", " + dosseguidor5_1[0] + ", " + tresseguidor5_1[0];
-                            }
-                        } else {
-                            allfollowers5_1 = unoseguidor5_1[0] + ", " + dosseguidor5_1[0];
-                        }
-                    } else {
-                        allfollowers5_1 = unoseguidor5_1[0];
-                    }
-                } else { 
-                    allfollowers5_1 = "No hay seguidores";
-                }
-
-                //tipo
-                let tipo5_1 = eltipo;
-
-                //estrellitas
-                await page.waitForSelector(estrellitas);
-                const estrellitas5_1 = await page.$(estrellitas);
-                let littlestars5_1 = await page.evaluate(el => el.textContent, estrellitas5_1);
-                var littlestarssymbols5_1;
-                if(littlestars5_1 >= 0.0 && littlestars5_1 <= 0.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 0.6 && littlestars5_1 <= 1.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 1.1 && littlestars5_1 <= 1.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 1.6 && littlestars5_1 <= 2.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 2.1 && littlestars5_1 <= 2.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 2.6 && littlestars5_1 <= 3.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 3.1 && littlestars5_1 <= 3.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 3.6 && littlestars5_1 <= 4.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 4.1 && littlestars5_1 <= 4.7) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 4.8 && littlestars5_1 <= 5.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`};
-                //imagen referencial
-                await page.waitForSelector(imagen_referencial);
-                const imagen_referencial5_1 = await page.evaluate(el => window.getComputedStyle(el).backgroundImage, await page.$(imagen_referencial));
-                const backgroundImage5_1 = imagen_referencial5_1.match(/url\("(.*)"/)[1];
-                
-                var backgroundImg5_1;
-                if(await getColors(backgroundImage5_1).then(colors => colors[1]._rgb[0]) !== 40) {
-                    backgroundImg5_1 = backgroundImage5_1;
-                } else {backgroundImg5_1 = "https://www3.animeflv.net/assets/animeflv/img/logo.png"};
-
-                //votos
-                await page.waitForSelector(votos);
-                const votos5_1 = await page.$(votos);
-                let votes5_1 = await page.evaluate(el => el.textContent, votos5_1);
-
-                //ENVIANDO MENSAJE
-                const resultado5_1 = new MessageEmbed()
-                .setAuthor('AnimeFLV', 'https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3', 'https://www3.animeflv.net/')
-                .setTitle(`${title5_1} ${state5_1}`)
-                .setColor(colorembed5_1)
-                .setURL(url5_1)
-                .setThumbnail("https://www3.animeflv.net"+imagen5_1)
-                .setImage(backgroundImg5_1)
-                .setDescription(`**Descripción:** \n${description5_1}`)
-                .addFields(
-                    { name: 'Otros nombres:', value: othernames5_1, inline: false },   
-                    { name: 'Género:', value: gender5_1 , inline: false },
-                    {name: "Tipo:", value: tipo5_1, inline: false}
-                )
-                .addField("Episodios:", `( ${episodios5_1} ) ${next5_1}`, false)
-                .addField(`Seguidores:`, `( ${followers5_1} ) ${allfollowers5_1}, etc.`, false)
-                .addField('Calificación:', `( ${littlestars5_1} ) ${littlestarssymbols5_1}`, false)
-                .setFooter(`Votos: 🗳️ ${votes5_1}`);
-                message.edit({
-                    embeds: [resultado5_1], components:[detalles5_1] 
-                });
-
-                //Buscando comentarios y reacciones
-                await page.waitForSelector("#disqus_thread")
-                    const gaaaa = await page.evaluate(() => Array.from(document.querySelectorAll("#disqus_thread"), a => a.querySelector("iFrame").getAttribute("src"))[0]);
-                    await page.goto(gaaaa);
-
-                await page.waitForSelector("#reactions");
-                    const gaxd2 = await page.$("#reactions > div.align.align--center.spacing-bottom");
-                    let gaxd = await page.evaluate(el => el.textContent.replace(' Responses',''), gaxd2);
-
-                await page.waitForSelector("#main-nav");
-                    const gaxd2x = await page.$("#main-nav > nav > ul > li.nav-tab.nav-tab--primary.tab-conversation.active > a > span.comment-count");
-                    let gaxdx = await page.evaluate(el => el.textContent.replace(' comentarios',''), gaxd2x);
-
-                message.edit({
-                    embeds: [resultado5_1.addField("Reacciones:", gaxd, true).addField("Comentarios:", gaxdx, true)], components:[detalles5_1]
-                });
-                await browser.close();
-            }
-
-                
-            catch(error)
-            {
-                message.edit({
-                    embeds: [
-                        new MessageEmbed()
-                            .setColor("DARK_RED")
-                            .setTimestamp()
-                            .setDescription("Hubo un error al buscar **" + args.join(' ')+"**")
-                    ]});
-            }
-            }
 };
 module.exports.conf = {
     "name": "descargar",
-    "description": [ "Muestra el ping del bot." ],
+    "description": [ "Obtén enlaces de descarga de cualquier anime." ],
     "aliases": ["download", "descarga", "desc", "down"],
     "usage": [ "descargar" ]
 }

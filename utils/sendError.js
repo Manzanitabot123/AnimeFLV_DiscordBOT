@@ -7,7 +7,7 @@ function sendError(message, error, reply) {
         message.channel.send({
             embeds: [
                 new MessageEmbed()
-                    .setAuthor(message.author.username, message.author.displayAvatarURL())
+                    .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                     .setColor("DARK_RED")
                     .setTimestamp()
                     .setDescription(error)
@@ -20,7 +20,7 @@ function sendError(message, error, reply) {
         message.reply({
             embeds: [
                 new MessageEmbed()
-                    .setAuthor(message.author.username, message.author.displayAvatarURL())
+                    .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
                     .setColor("DARK_RED")
                     .setTimestamp()
                     .setDescription(error)

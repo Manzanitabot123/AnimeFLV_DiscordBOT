@@ -79,7 +79,7 @@ module.exports.run = async(client, message, args) => {
                     .setLabel("Ver original")
                     .setStyle('LINK')
                     );
-                
+                message.channel.sendTyping();
                 msg.edit({
                         embeds: [
                             new MessageEmbed()
@@ -262,7 +262,7 @@ module.exports.run = async(client, message, args) => {
 
                 //ENVIANDO MENSAJE
                 const resultado5_1 = new MessageEmbed()
-                .setAuthor('AnimeFLV', 'https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3', 'https://www3.animeflv.net/')
+                .setAuthor({name: 'AnimeFLV', iconURL: 'https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3', url:'https://www3.animeflv.net/'})
                 .setTitle(`${title5_1} ${state5_1}`)
                 .setColor(colorembed5_1)
                 .setURL(url5_1)
@@ -277,7 +277,7 @@ module.exports.run = async(client, message, args) => {
                 .addField("Episodios:", `( ${episodios5_1} ) ${next5_1}`, false)
                 .addField(`Seguidores:`, `( ${followers5_1} ) ${allfollowers5_1}, etc.`, false)
                 .addField('Calificación:', `( ${littlestars5_1} ) ${littlestarssymbols5_1}`, false)
-                .setFooter(`Votos: 🗳️ ${votes5_1}`);
+                .setFooter({text: `Votos: 🗳️ ${votes5_1}`});
                 msg.edit({
                     embeds: [resultado5_1], components:[detallesrandom] 
                 });
@@ -318,7 +318,7 @@ module.exports.run = async(client, message, args) => {
 
 module.exports.conf = {
     "name": "random",
-    "description": [ "Muestra el ping del bot." ],
+    "description": [ "Genera un anime aleatrio del repositorio de animes" ],
     "aliases": ["aleatorio"],
     "usage": ["aleatorio"]
 }
