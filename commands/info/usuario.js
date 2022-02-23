@@ -24,8 +24,8 @@ module.exports.run = async(client, message, args) => {
                 message.reply("Tu busqueda contiene más de un reglón")
                 return;
         } else {
-                usuario()
-        };
+                usuario();
+        }
 
         async function usuario(){
                 //mensaje de espera (cargando...)

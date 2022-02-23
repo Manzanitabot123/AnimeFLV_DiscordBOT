@@ -1,6 +1,5 @@
 const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const puppeteer = require('puppeteer');
-const getColors = require('get-image-colors');
 const { captureRejections } = require("events");
 
 /**

@@ -25,20 +25,8 @@ module.exports.run = async(client, message, args) => {
                 message.reply("Tu busqueda contiene más de un reglón")
                 return;
             } else {
-                searchdown()
-            };
-            
-            //función de busqueda
-            const otros_nombres = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3)";
-            const genero = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav";
-            const imagen = "body > div.Wrapper > div > div > div.Container > div > aside > div.AnimeCover > div > figure > img";
-            const estado = "body > div.Wrapper > div > div > div.Container > div > aside > p > span";
-            const descripción = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > div.Description > p";
-            const seguidores = "body > div.Wrapper > div > div > div.Container > div > aside > section > div > div > span";
-            const nombresdelosseguidores = "body > div.Wrapper > div > div > div.Container > div > aside > section > ul";
-            const estrellitas = "#votes_prmd";
-            const votos = "#votes_nmbr";
-            const imagen_referencial = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Bg";
+                searchdown();
+            }
 
             async function searchdown(){
                 //mensaje de espera (cargando...)
@@ -83,8 +71,8 @@ module.exports.run = async(client, message, args) => {
                 //Para 1 resultado ___________________________________________________________________________________________________________________________________________________________________________________
                 if (await page.$(resultadouno) !== null) {
                     //Para la miniatura
-                    const imgs = await page.$$eval("body > div.Wrapper > div > div > main > ul > li > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
-                    const miniatura = imgs[0]
+                    const imgs1 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                    const miniatura1 = imgs1[0]
                     
                     await page.waitForSelector(resultadouno)
                     let element1 = await page.$(resultadouno)
@@ -103,6 +91,10 @@ module.exports.run = async(client, message, args) => {
                     
                     //Para 2 resultados ___________________________________________________________________________________________________________________________________________________________________________________
                     if (await page.$(resultadodos) !== null) {
+                        //Para la miniatura
+                        const imgs2 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                        const miniatura2 = imgs2[0]
+
                         await page.waitForSelector(resultadodos)
                         let element2 = await page.$(resultadodos)
                         let value2 = await page.evaluate(el => el.textContent, element2)
@@ -120,6 +112,10 @@ module.exports.run = async(client, message, args) => {
                         
                         //Para 3 resultados ___________________________________________________________________________________________________________________________________________________________________________________
                         if (await page.$(resultadotres) !== null) {
+                            //Para la miniatura
+                            const imgs3 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                            const miniatura3 = imgs3[0]
+
                             await page.waitForSelector(resultadotres)
                             let element3 = await page.$(resultadotres)
                             let value3 = await page.evaluate(el => el.textContent, element3)
@@ -137,6 +133,10 @@ module.exports.run = async(client, message, args) => {
                             
                             //Para 4 resultados ___________________________________________________________________________________________________________________________________________________________________________________
                             if (await page.$(resultadocuatro) !== null) {
+                                //Para la miniatura
+                                const imgs4 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                                const miniatura4 = imgs4[0]
+
                                 await page.waitForSelector(resultadocuatro)
                                 let element4 = await page.$(resultadocuatro)
                                 let value4 = await page.evaluate(el => el.textContent, element4)
@@ -154,6 +154,10 @@ module.exports.run = async(client, message, args) => {
 
                                 //Para 5 resultados ___________________________________________________________________________________________________________________________________________________________________________________
                                 if (await page.$(resultadocinco) !== null) {
+                                    //Para la miniatura
+                                    const imgs5 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                                    const miniatura5 = imgs5[0]
+
                                     await page.waitForSelector(resultadocinco)
                                     let element5 = await page.$(resultadocinco)
                                     let value5 = await page.evaluate(el => el.textContent, element5)
@@ -199,7 +203,7 @@ module.exports.run = async(client, message, args) => {
                                         .setColor("DARK_GREEN")
                                         .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```' + '```' + '[５] ('+ valor5 +") - "+ output5 + " │ ⭐" + calificacion5 + '```')
                                         .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
-                                        .setThumbnail(miniatura)
+                                        .setThumbnail(miniatura1)
                                         .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         
                                         msg.edit({embeds: [resultado5], components:[row5]}).then(message => {
@@ -216,26 +220,26 @@ module.exports.run = async(client, message, args) => {
                                                     if (b.customId === "one5") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output1;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
                                                     } else if (b.customId === "two5") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output2;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
                                                         
                                                     } else if (b.customId === "three5") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output3;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura3)
 
                                                     } else if (b.customId === "four5") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output4;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura4)
                                                       
                                                     } else if (b.customId === "five5") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output5;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura5)
                                                       
                                                     }
                                                 });
@@ -283,7 +287,7 @@ module.exports.run = async(client, message, args) => {
                                         .setColor("DARK_GREEN")
                                         .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```')
                                         .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
-                                        .setThumbnail(miniatura)
+                                        .setThumbnail(miniatura1)
                                         .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         msg.edit({embeds: [resultado4], components:[row4]}).then(message => {
                                             const filter = (button4) => button4.user.id === member.id;
@@ -299,22 +303,22 @@ module.exports.run = async(client, message, args) => {
                                                     if (b.customId === "one4") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output1;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
 
                                                     } else if (b.customId === "two4") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output2;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
                                                         
                                                     } else if (b.customId === "three4") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output3;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura3)
 
                                                     } else if (b.customId === "four4") {
                                                         const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output4;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo)
+                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura4)
 
                                                     }
                                                 });
@@ -359,7 +363,7 @@ module.exports.run = async(client, message, args) => {
                                     .setColor("DARK_GREEN")
                                     .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```')
                                     .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
-                                    .setThumbnail(miniatura)
+                                    .setThumbnail(miniatura1)
                                     .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                     msg.edit({embeds: [resultado3], components:[row3]}).then(message => {
                                         const filter = (button3) => button3.user.id === member.id;
@@ -375,17 +379,17 @@ module.exports.run = async(client, message, args) => {
                                                 if (b.customId === "one3") { 
                                                     const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output1;
-                                                    collectormsg(msg, page, browser, urlone, eltitulo)
+                                                    collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
 
                                                 } else if (b.customId === "two3") {
                                                     const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output2;
-                                                    collectormsg(msg, page, browser, urlone, eltitulo)
+                                                    collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
                                                     
                                                 } else if (b.customId === "three3") {
                                                     const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output3;
-                                                    collectormsg(msg, page, browser, urlone, eltitulo)
+                                                    collectormsg(msg, page, browser, urlone, eltitulo, miniatura3)
                         
                                                 }
                                             });
@@ -426,7 +430,7 @@ module.exports.run = async(client, message, args) => {
                                 .setColor("DARK_GREEN")
                                 .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' +'[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```')
                                 .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
-                                .setThumbnail(miniatura)
+                                .setThumbnail(miniatura1)
                                 .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                 msg.edit({embeds: [resultado2], components:[row2]}).then(message => {
                                     const filter = (button2) => button2.user.id === member.id;
@@ -442,12 +446,12 @@ module.exports.run = async(client, message, args) => {
                                             if (b.customId === "one2") { 
                                                 const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                 const eltitulo = output1;
-                                                collectormsg(msg, page, browser, urlone, eltitulo)
+                                                collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
 
                                             } else if (b.customId === "two2") {
                                                 const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                 const eltitulo = output2;
-                                                collectormsg(msg, page, browser, urlone, eltitulo)
+                                                collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
                                                 
                                             }
                                         });
@@ -484,7 +488,7 @@ module.exports.run = async(client, message, args) => {
                             .setDescription('```'+'[１] ('+ valor1 +") │ "+ output1 + " │ ⭐" + calificacion1 +'```')
                             .setColor("DARK_GREEN")
                             .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
-                            .setThumbnail(miniatura)
+                            .setThumbnail(miniatura1)
                             .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                             msg.edit({embeds: [resultado1], components:[row1]}).then(message => {
                                 const filter = (button1) => button1.user.id === member.id;
@@ -500,7 +504,7 @@ module.exports.run = async(client, message, args) => {
                                         if (b.customId === "one1") {
                                             const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                             const eltitulo = output1;
-                                            collectormsg(msg, page, browser, urlone, eltitulo)
+                                            collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
 
                                         }
                                     });
@@ -549,12 +553,12 @@ module.exports.run = async(client, message, args) => {
             };
 
             //Para recoletar el numero de página ___________________________________________________________________________________________________________________________________________________________________________________
-            async function collectormsg(msg, page, browser, urlone, eltitulo) {
+            async function collectormsg(msg, page, browser, urlone, eltitulo, miniatura) {
                 await msg.edit({
                     embeds: [
                         new MessageEmbed()
                             .setColor("YELLOW")
-                            .setDescription("Escribe el número de un capítulo")
+                            .setDescription("Escribe el número del capítulo de "+eltitulo)
                     ], components:[]
                 }).then(msg => {
                     const filter = (m) => m.author.id === message.author.id;;
@@ -706,6 +710,7 @@ module.exports.run = async(client, message, args) => {
                                                     .setColor("DARK_RED")
                                                     .setTitle("Enlaces de descarga")
                                                     .setURL(enlaceoriginal)
+                                                    .setThumbnail(miniatura)
                                                     .setDescription("**"+ eltitulo + "** | EPISODIO " + value)
                                                     .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                                     .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
@@ -723,6 +728,7 @@ module.exports.run = async(client, message, args) => {
                                             new MessageEmbed()
                                                 .setColor("DARK_RED")
                                                 .setTitle("Enlaces de descarga")
+                                                .setThumbnail(miniatura)
                                                 .setURL(enlaceoriginal)
                                                 .setDescription("**"+ eltitulo + "** | EPISODIO " + value)
                                                 .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
@@ -741,6 +747,7 @@ module.exports.run = async(client, message, args) => {
                                         new MessageEmbed()
                                             .setColor("DARK_RED")
                                             .setTitle("Enlaces de descarga")
+                                            .setThumbnail(miniatura)
                                             .setURL(enlaceoriginal)
                                             .setDescription("**"+ eltitulo + "** | EPISODIO " + value)
                                             .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
@@ -759,6 +766,7 @@ module.exports.run = async(client, message, args) => {
                                         .setColor("DARK_RED")
                                         .setTitle("Enlaces de descarga")
                                         .setURL(enlaceoriginal)
+                                        .setThumbnail(miniatura)
                                         .setDescription("**"+ eltitulo + "** | EPISODIO " + value)
                                         .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                         .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
@@ -775,6 +783,7 @@ module.exports.run = async(client, message, args) => {
                                     .setColor("DARK_RED")
                                     .setTitle("Enlaces de descarga")
                                     .setURL(enlaceoriginal)
+                                    .setThumbnail(miniatura)
                                     .setDescription("**"+ eltitulo + "** | EPISODIO " + value)
                                     .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                     .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
@@ -790,6 +799,7 @@ module.exports.run = async(client, message, args) => {
                                 .setColor("DARK_RED")
                                 .setTitle("Enlaces de descarga")
                                 .setURL(enlaceoriginal)
+                                .setThumbnail(miniatura)
                                 .setDescription("**"+ eltitulo + "** | EPISODIO " + value)
                                 .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                         ], components:[detallesraros]})
@@ -802,6 +812,7 @@ module.exports.run = async(client, message, args) => {
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
+                                .setThumbnail(miniatura)
                                 .setDescription("No hay enlaces de descarga episodio **" +  value + "** ...")
                         ], components:[detallesraros]})
                     

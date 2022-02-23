@@ -7,14 +7,18 @@ const {
 
 /**
  * Creates a pagination embed
- * @param {Message} msg
+ * @param {Interaction} interaction
  * @param {MessageEmbed[]} pages
  * @param {MessageButton[]} buttonList
  * @param {number} timeout
  * @returns
  */
-const paginationEmbed = async (msg, interaction, pages, buttonList, timeout = 60000) => {
-  //if (!msg && !msg.channel) throw new Error("Channel is inaccessible.");
+const paginationEmbed2 = async (
+  interaction,
+  pages,
+  buttonList,
+  timeout = 60000
+) => {
   if (!pages) throw new Error("No hay páginas");
   if (!buttonList) throw new Error("No hay botones");
   if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
@@ -26,9 +30,16 @@ const paginationEmbed = async (msg, interaction, pages, buttonList, timeout = 60
   let page = 0;
 
   const row = new MessageActionRow().addComponents(buttonList);
-  const curPage = await msg.edit({
+
+  //has the interaction already been deferred? If not, defer the reply.
+  if (interaction.deferred == false) {
+    await interaction.deferReply();
+  }
+
+  const curPage = await interaction.editReply({
     embeds: [pages[page].setFooter({text: `Página: ${page + 1} / ${pages.length}`})],
-    components: [row],fetchReply: true,
+    components: [row],
+    fetchReply: true,
   });
 
   const filter = (i) =>
@@ -53,20 +64,20 @@ const paginationEmbed = async (msg, interaction, pages, buttonList, timeout = 60
     }
     await i.deferUpdate();
     await i.editReply({
-      embeds: [pages[page].setFooter({text: `Página: ${page + 1} / ${pages.length}`})],
+      embeds: [pages[page].setFooter({ text: `Página: ${page + 1} / ${pages.length}` })],
       components: [row],
     });
     collector.resetTimer();
   });
 
-  collector.on("end", () => {
-    if (!curPage.MessageDelete) {
+  collector.on("end", (_, reason) => {
+    if (reason !== "messageDelete") {
       const disabledRow = new MessageActionRow().addComponents(
         buttonList[0].setDisabled(true),
         buttonList[1].setDisabled(true)
       );
       curPage.edit({
-        embeds: [pages[page].setFooter({text: `Página: ${page + 1} / ${pages.length}`})],
+        embeds: [pages[page].setFooter({ text: `Página: ${page + 1} / ${pages.length}` })],
         components: [disabledRow],
       });
     }
@@ -74,4 +85,4 @@ const paginationEmbed = async (msg, interaction, pages, buttonList, timeout = 60
 
   return curPage;
 };
-module.exports = paginationEmbed;
+module.exports = paginationEmbed2;

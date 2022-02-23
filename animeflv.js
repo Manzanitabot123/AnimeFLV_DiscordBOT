@@ -46,10 +46,8 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
 
                 /* Aliases */
                 if (!props.conf.aliases) return logger.warn(`[ADVERTENCIA]: ${file} no tiene suficientes alias.`);
-
-                for (let i = 0; i < props.conf.aliases.length; i++) {
-                    client.aliases.set(props.conf.aliases[i], props.conf.name);
-                };
+                
+                client.aliases.set(props.conf.aliases, props.conf.name);
             });
             console.log(`[CARGADO]: Folder - ${folder}`);
         });

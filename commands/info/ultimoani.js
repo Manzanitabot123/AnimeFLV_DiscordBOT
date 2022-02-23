@@ -1,7 +1,6 @@
 const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const paginationEmbed = require('../../utils/paginationEmbed');
 const puppeteer = require('puppeteer');
-const getColors = require('get-image-colors');
 const { captureRejections } = require("events");
 
 /**

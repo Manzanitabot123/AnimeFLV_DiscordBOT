@@ -1,9 +1,12 @@
 const { Client, Interaction, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const db = require('quick.db');
+require("dotenv").config();
+const defprefix = process.env.PREFIX;
 /**
  * @param {Client} client
  * @param {Interaction} interaction
  */
-module.exports.run =  (client,interaction, prefix) => {
+module.exports.run =  (client,interaction) => {
     const detallesurl = new MessageActionRow().addComponents(
         new MessageButton()
         .setURL('https://www.animeflv.net/')
@@ -35,9 +38,17 @@ module.exports.run =  (client,interaction, prefix) => {
                 commandNames.push(c.conf.name);
             })
 
+            var fprefix;
+            let prefix = db.get(`prefix.${interaction.guildId}`)
+            if (prefix) {
+                fprefix = prefix
+            } else {
+                fprefix = defprefix
+            }
+
             commandNames.forEach(emote => {
                 let cmds = client.commands.filter(c => c.conf.name === (emote));
-                embed.setDescription(`Es un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 10 comandos:`)
+                embed.setDescription(`**El prefijo actual es \`${fprefix}\`**\n\nEs un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 10 comandos:`)
                 embed.addField(`☆ ${emote}`, cmds.map(c => `*${c.conf.description}* \n ( Aliases: ${(c.conf.aliases).join("; ")} )`).join(" "));
             });
             embed.setImage('https://latarde.com/wp-content/uploads/2021/04/alternativas-a-AnimeFLV.jpg');

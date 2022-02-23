@@ -27,11 +27,10 @@ module.exports.run = async(client, message, args) => {
                 return;
             } else {
                 searchinfo()
-            };
+            }
             
             //función de busqueda
             const otros_nombres = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3)";
-            const genero = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav";
             const imagen = "body > div.Wrapper > div > div > div.Container > div > aside > div.AnimeCover > div > figure > img";
             const estado = "body > div.Wrapper > div > div > div.Container > div > aside > p > span";
             const descripción = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > div.Description > p";
@@ -858,7 +857,7 @@ module.exports.run = async(client, message, args) => {
                 .addField("Episodios:", `( ${episodios5_1} ) ${next5_1}`, false)
                 .addField(`Seguidores:`, `( ${followers5_1} ) ${allfollowers5_1}, etc.`, false)
                 .addField('Calificación:', `( ${littlestars5_1} ) ${littlestarssymbols5_1}`, false)
-                .setFooter(`Votos: 🗳️ ${votes5_1}`);
+                .setFooter({text: `Votos: 🗳️ ${votes5_1}`});
                 message.edit({
                     embeds: [resultado5_1], components:[detalles5_1] 
                 });

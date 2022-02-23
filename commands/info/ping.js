@@ -1,4 +1,5 @@
 const { Client, Message } = require("discord.js");
+const { captureRejections } = require("events");
 /**
  * @param {Client} client
  * @param {Message} message
