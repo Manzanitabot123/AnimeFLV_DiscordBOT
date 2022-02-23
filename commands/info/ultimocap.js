@@ -8,12 +8,11 @@ const { captureRejections } = require("events");
  * @param {Message} message
  */
 module.exports.run = async(client, message, args) => {
-            var url;
             const member = message.member;
-            ultimocap(url)
+            ultimocap();
 
 
-            async function ultimocap(url){
+            async function ultimocap(){
                 //mensaje de espera (cargando...)
                 const msg = await message.reply({
                     embeds: [
@@ -22,7 +21,8 @@ module.exports.run = async(client, message, args) => {
                             .setDescription("Buscando...")
                     ], components:[]});
                 try{
-                    url = `https://www3.animeflv.net`;
+                const url = `https://www3.animeflv.net`;
+
                 const resultadouno = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(1) > a > strong";
                 const episodionumero1 = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(1) > a > span.Capi"
 

@@ -9,11 +9,10 @@ const { captureRejections } = require("events");
  * @param {Message} message
  */
 module.exports.run = async(client, message, args) => {
-            var url;
-            ultimoani(url)
+            ultimoani();
             
             //función de busqueda
-            async function ultimoani(url){
+            async function ultimoani(){
                 //mensaje de espera (cargando...)
                 const msg = await message.reply({
                     embeds: [
@@ -24,7 +23,7 @@ module.exports.run = async(client, message, args) => {
                 message.channel.sendTyping();
 
                 try{
-                            url = `https://www3.animeflv.net`;
+                            const url = `https://www3.animeflv.net`;
             
                             const resultadouno = "body > div.Wrapper > div > div > div > main > ul.ListAnimes.AX.Rows.A06.C04.D03 > li:nth-child(1) > article > a > h3";
                             const pelianime1 = "body > div.Wrapper > div > div > div > main > ul.ListAnimes.AX.Rows.A06.C04.D03 > li:nth-child(1) > article > a > div > span";

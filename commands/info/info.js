@@ -9,7 +9,6 @@ const { channel } = require("diagnostics_channel");
  * @param {Message} message
  */
 module.exports.run = async(client, message, args) => {
-            var url;
             //remplazar el mensaje por una url
             const anime = args.join(' ').replace(/ /g,"+");
             const member = message.member;
@@ -27,8 +26,8 @@ module.exports.run = async(client, message, args) => {
                 message.reply("Tu busqueda contiene más de un reglón")
                 return;
             } else {
-                search(url)
-            }
+                searchinfo()
+            };
             
             //función de busqueda
             const otros_nombres = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3)";
@@ -42,7 +41,7 @@ module.exports.run = async(client, message, args) => {
             const votos = "#votes_nmbr";
             const imagen_referencial = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Bg";
 
-            async function search(url){
+            async function searchinfo(){
                 //mensaje de espera (cargando...)
                 const msg = await message.reply({
                     embeds: [
@@ -51,7 +50,8 @@ module.exports.run = async(client, message, args) => {
                             .setDescription("Buscando **" +  args.join(' ') + "** ...")
                     ], components:[]});
                 try{
-                url = `https://www3.animeflv.net/browse?q=${anime}`;
+                const url = `https://www3.animeflv.net/browse?q=${anime}`;
+
                 const resultadouno = "body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > h3";
                 const pelianime1 = "body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > div > span";
                 const stars1 = "body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > div > p:nth-child(2) > span.Vts.fa-star";

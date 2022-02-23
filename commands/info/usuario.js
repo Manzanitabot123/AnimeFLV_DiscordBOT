@@ -7,8 +7,6 @@ const { captureRejections } = require("events");
  * @param {Message} message
  */
 module.exports.run = async(client, message, args) => {
-        var url;
-        var result;
         //remplazar el mensaje por una url
         const user_animeflv = args.join(' ').replace(/ /g,"+");
         const member = message.member;
@@ -26,10 +24,10 @@ module.exports.run = async(client, message, args) => {
                 message.reply("Tu busqueda contiene más de un reglón")
                 return;
         } else {
-                usuario(url)
-        }
+                usuario()
+        };
 
-        async function usuario(url){
+        async function usuario(){
                 //mensaje de espera (cargando...)
                 message.channel.sendTyping();
                 const msg = await message.reply({
@@ -39,7 +37,7 @@ module.exports.run = async(client, message, args) => {
                             .setDescription("Buscando al usuario **" +  args.join(' ') + "** ...")
                     ], components:[]});
                 try{
-                url = `https://www3.animeflv.net/perfil/${user_animeflv}`;
+                const url = `https://www3.animeflv.net/perfil/${user_animeflv}`;
                 
                 //info
                 const browser = await puppeteer.launch({
@@ -48,7 +46,7 @@ module.exports.run = async(client, message, args) => {
                     });
                 const page = await browser.newPage();
                 await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
-                result = await page.goto(url);
+                const result = await page.goto(url);
                 if (result.status() === 404) {
                     console.error('Usuario desconocido')
                     msg.edit({

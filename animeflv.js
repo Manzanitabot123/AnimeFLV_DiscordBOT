@@ -1,4 +1,4 @@
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 require("dotenv").config();
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const token = process.env.CLIENT_TOKEN;
@@ -31,28 +31,28 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
     folders.forEach((folder) => {
         fs.readdir(`${__dirname}/commands/${folder}`, (err, files) => {
 
-            if (err) return logger.error(`An Error Occured while Loading Commands. ${err.stack}`);
+            if (err) return logger.error(`Ocurrió un erro al cargar los comandos: ${err.stack}`);
 
-            if (!files) return logger.warn(`[WARN]: No Files found in "${folder.toUpperCase()}" Dir.`);
+            if (!files) return logger.warn(`[ADVERTENCIA]: No se encontraron archivos en el directorio "${folder.toUpperCase()}"`);
 
             files.forEach((file) => {
 
                 let props = require(`./commands/${folder}/${file}`);
 
                 /* Name */
-                if (!props.conf || !props.conf.name) return logger.error(`[WARN]: ${file} doesn't have enough Properties.`);
+                if (!props.conf || !props.conf.name) return logger.error(`[ADVERTENCIA]: ${file} no tiene suficientes propiedades.`);
 
                 client.commands.set(props.conf.name, props);
 
                 /* Aliases */
-                if (!props.conf.aliases) return logger.warn(`[WARN]: ${file} doesn't have enough Aliases.`);
+                if (!props.conf.aliases) return logger.warn(`[ADVERTENCIA]: ${file} no tiene suficientes alias.`);
 
                 for (let i = 0; i < props.conf.aliases.length; i++) {
                     client.aliases.set(props.conf.aliases[i], props.conf.name);
                 };
             });
-            console.log(`[LOADED]: Folder - ${folder}`);
+            console.log(`[CARGADO]: Folder - ${folder}`);
         });
-    });
+});
 
 client.login(token);

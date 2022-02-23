@@ -8,8 +8,7 @@ const random = require('random');
  * @param {Message} message
  */
 module.exports.run = async(client, message, args) => {
-        var url;
-        usuario(url)
+        random();
 
         //función de busqueda
         const otros_nombres = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3)";
@@ -23,7 +22,7 @@ module.exports.run = async(client, message, args) => {
         const votos = "#votes_nmbr";
         const imagen_referencial = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Bg";
 
-        async function usuario(url){
+        async function random(){
                 //mensaje de espera (cargando...)
                 const msg = await message.reply({
                     embeds: [
@@ -35,7 +34,7 @@ module.exports.run = async(client, message, args) => {
                 const pagina = random.int((min = 1), (max = 146));
 
                 try{
-                url = `https://www3.animeflv.net/browse?page=${pagina}`;
+                const url = `https://www3.animeflv.net/browse?page=${pagina}`;
                 
                 //info
                 const browser = await puppeteer.launch({
