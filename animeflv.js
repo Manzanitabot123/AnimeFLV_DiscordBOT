@@ -63,7 +63,17 @@ var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
     client.guilds.cache.forEach(guild => {
         try {
         const channel = guild.channels.cache.find(channel => channel.permissionsFor(guild.me).has('VIEW_CHANNEL') && channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.type == 'GUILD_TEXT') || guild.channels.cache.first();
-        if (channel) {
+        
+        let felizjuevesconfig = "verdad";
+        let siono = db.get(`felizjueves.${guild.id}`)
+        var ffelizjueves;
+        if (siono) {
+        ffelizjueves = siono
+        } else {
+        ffelizjueves = felizjuevesconfig
+        };
+
+        if (channel && ffelizjueves !== "falso") {
             channel.send({
                 files: [{
                     attachment: testchart,
@@ -72,7 +82,7 @@ var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
                 content:`**Feliz jueves a todos**`,
             });
         } else {
-            console.log('El server ' + guild.name + ' no tiene canales.');
+            console.log('El server ' + guild.name + ' no tiene canales disponibles o ha desactivado el felizjueves');
         }
     } catch (err) {
         console.log('No se pudo enviar el mensaje a ' + guild.name + '.');

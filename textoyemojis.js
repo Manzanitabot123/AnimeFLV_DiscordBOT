@@ -45,6 +45,14 @@ module.exports = {
                 long: "EL prefijo sobrepasa con el limite de 3 letras. | **Intentalo de nuevo**",
                 same: "EL prefijo escrito sigue siendo el mismo. | **Intentalo de nuevo**"
             }
+        },
+        felizjueves: {
+            messages:{
+                newConfig: "El mensaje semanal de *Feliz Jueves* ha sido: "
+            },
+            errors:{
+                same: "La configuración de mensaje semanal de *Feliz Jueves* sigue siendo la misma. | **Intentalo de nuevo**"
+            }
         } 
     },
     categories: {
