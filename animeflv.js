@@ -1,9 +1,11 @@
 const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 require("dotenv").config();
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES], partials: ['MESSAGE', "CHANNEL"] });
 const token = process.env.CLIENT_TOKEN;
+const cron = require('cron');
 const fs = require('fs')
-const path = require('path')
+const db = require('quick.db');
+const path = require('path');
 client.commands = new Collection();
 client.aliases = new Collection();
 client.slash = new Collection();
@@ -19,7 +21,9 @@ client.on('ready', () => {
         ], 
         status: "idle"
     }
-  ) 
+  )
+  let clientguilds = client.guilds.cache
+  console.log(clientguilds.map(g => `${g.id} | ${g.name}`) || "Ningun servidor")
   require('./utils/handler')(client)
   require('./utils/event')(client)
 });
@@ -52,5 +56,30 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
             console.log(`[CARGADO]: Folder - ${folder}`);
         });
 });
+
+var job = new cron.CronJob('13 12 11 1-31 0-11 4', function() {
+    console.log("Feliz jueves.");
+    var testchart = `https://media.discordapp.net/attachments/946075296069730385/946436742473457664/felizjueves.gif`;
+    client.guilds.cache.forEach(guild => {
+        try {
+        const channel = guild.channels.cache.find(channel => channel.permissionsFor(guild.me).has('VIEW_CHANNEL') && channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.type == 'GUILD_TEXT') || guild.channels.cache.first();
+        if (channel) {
+            channel.send({
+                files: [{
+                    attachment: testchart,
+                    name: 'feliz_jueves.gif'
+                }],
+                content:`**Feliz jueves**`,
+            });
+        } else {
+            console.log('El server ' + guild.name + ' no tiene canales.');
+        }
+    } catch (err) {
+        console.log('No se pudo enviar el mensaje a ' + guild.name + '.');
+    }
+    });
+  }, null, true, 'America/Lima');
+
+job.start();
 
 client.login(token);

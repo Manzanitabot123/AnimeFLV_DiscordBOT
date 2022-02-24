@@ -8,11 +8,10 @@ const random = require('random');
  * @param {Message} message
  */
 module.exports.run = async(client, message, args) => {
-        random();
+        randomanime();
 
         //función de busqueda
         const otros_nombres = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3)";
-        const genero = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav";
         const imagen = "body > div.Wrapper > div > div > div.Container > div > aside > div.AnimeCover > div > figure > img";
         const estado = "body > div.Wrapper > div > div > div.Container > div > aside > p > span";
         const descripción = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > div.Description > p";
@@ -22,7 +21,7 @@ module.exports.run = async(client, message, args) => {
         const votos = "#votes_nmbr";
         const imagen_referencial = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Bg";
 
-        async function random(){
+        async function randomanime(){
                 //mensaje de espera (cargando...)
                 const msg = await message.reply({
                     embeds: [
