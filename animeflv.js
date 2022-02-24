@@ -57,7 +57,7 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
         });
 });
 
-var job = new cron.CronJob('13 12 11 1-31 0-11 4', function() {
+var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
     console.log("Feliz jueves.");
     var testchart = `https://media.discordapp.net/attachments/946075296069730385/946436742473457664/felizjueves.gif`;
     client.guilds.cache.forEach(guild => {
@@ -69,7 +69,7 @@ var job = new cron.CronJob('13 12 11 1-31 0-11 4', function() {
                     attachment: testchart,
                     name: 'feliz_jueves.gif'
                 }],
-                content:`**Feliz jueves**`,
+                content:`**Feliz jueves a todos**`,
             });
         } else {
             console.log('El server ' + guild.name + ' no tiene canales.');

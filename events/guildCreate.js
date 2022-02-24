@@ -17,7 +17,6 @@ module.exports = async(guild) => {
     let cmds = []
     client.slash.each(prob => {
         cmds.push({ name: prob.conf.name, description: prob.conf.description, options: prob.conf.options })
-        cmds
     })
     commandRefresh(guild.id, cmds)
 }
