@@ -927,6 +927,6 @@ module.exports.run = async(client, message, args) => {
 module.exports.conf = {
     "name": "info",
     "description": [ "Busca y obtén información de un anime." ],
-    "aliases": ["animeinfo", "infoanime","information"],
+    "aliases": ["animeinfo", "infoanime","information", "search", "buscar"],
     "usage": [ "info" ]
 }

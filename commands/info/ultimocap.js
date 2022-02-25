@@ -1,6 +1,7 @@
 const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const puppeteer = require('puppeteer');
 const { captureRejections } = require("events");
+const zsExtract = require('zs-extract');
 
 /**
  * @param {Client} client
@@ -260,7 +261,9 @@ module.exports.run = async(client, message, args) => {
                         embeds: [
                             new MessageEmbed()
                                 .setColor("YELLOW")
-                                .setDescription("Recopilando información del " + episodio+"...")
+                                .setDescription("Recopilando información del **" + episodio+"** ..." + "\n **¿Como descargo un archivo de Mega o Stapé?**")
+                                .setThumbnail(miniatura)
+                                .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
                         ], components:[]})
                 const result = await page.goto(urlone);
                     if (result.status() === 404) {
@@ -296,8 +299,44 @@ module.exports.run = async(client, message, args) => {
                     let Formatoenlace1 = await page.evaluate(el => el.textContent, elFormatodellink);
                     if (Formatoenlace1 == "SUB") {Formatoenlace1 = "Subtitulado"} else if (Formatoenlace1 == "LAT") {Formatoenlace1 = "Latino"} else { /* nada */};
                     //Link
-                    const linkenlace1 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(1) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                    var linkenlace1 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(1) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                    try {
+                        if (linkenlace1.includes("zippyshare.com/")){
+                            const info1 = await zsExtract.extract(linkenlace1);
+                            if (info1 !== undefined) {
+                                linkenlace1 = info1.download
+                            } else {
+                                linkenlace1 = linkenlace1
+                            }
                     
+                            } else if (linkenlace1.includes("streamtape.com/")){
+                            await page.goto(linkenlace1)
+                            const linkdestape1 = await page.$$eval("#mainvideo", links => links.map(link => link.getAttribute('src')));
+                            if (linkdestape1[0] !== undefined) {
+                                linkenlace1 = 'https:'+linkdestape1[0]
+                            } else {
+                                linkenlace1 = linkenlace1
+                            }
+                            await page.goBack()
+                    
+                            } else if (linkenlace1.includes("mediafire.com/")){
+                                await page.goto(linkenlace1)
+                                const linkdemediafire1 = await page.$$eval("#downloadButton", links => links.map(link => link.getAttribute('href')));
+                                if (linkdemediafire1[0] !== undefined) {
+                                    linkenlace1 = linkdemediafire1[0]
+                                } else {
+                                    linkenlace1 = linkenlace1
+                                }
+                                await page.goBack()
+                    
+                            } else {
+                                linkenlace1 = linkenlace1
+                            }
+                        }
+                        catch(error)
+                        {
+                            linkenlace1 = linkenlace1
+                        }
                     //PARA DOS LINKS _______________________________________________________________________________________________________________________________________________________________________
                     if(await page.evaluate(() => Array.from(document.querySelectorAll("#DwsldCn > div > table > tbody > tr:nth-child(2)"), el => el.textContent)[0]) !== undefined) {
                         //Nombre
@@ -311,8 +350,45 @@ module.exports.run = async(client, message, args) => {
                         let Formatoenlace2 = await page.evaluate(el => el.textContent, elFormatodellink2);
                         if (Formatoenlace2 == "SUB") {Formatoenlace2 = "Subtitulado"} else if (Formatoenlace2 == "LAT") {Formatoenlace2 = "Latino"} else { /* nada */};
                         //Link
-                        const linkenlace2 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                        var linkenlace2 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                        try {
+                            if (linkenlace2.includes("zippyshare.com/")){
+                                const info2 = await zsExtract.extract(linkenlace2);
+                                if (info2 !== undefined) {
+                                    linkenlace2 = info2.download
+                                } else {
+                                    linkenlace2 = linkenlace2
+                                }
                         
+                                } else if (linkenlace2.includes("streamtape.com/")){
+                                await page.goto(linkenlace2)
+                                const linkdestape2 = await page.$$eval("#mainvideo", links => links.map(link => link.getAttribute('src')));
+                                if (linkdestape2[0] !== undefined) {
+                                    linkenlace2 = 'https:'+linkdestape2[0]
+                                } else {
+                                    linkenlace2 = linkenlace2
+                                }
+                                await page.goBack()
+                        
+                                } else if (linkenlace2.includes("mediafire.com/")){
+                                    await page.goto(linkenlace2)
+                                    const linkdemediafire2 = await page.$$eval("#downloadButton", links => links.map(link => link.getAttribute('href')));
+                                    if (linkdemediafire2[0] !== undefined) {
+                                        linkenlace2 = linkdemediafire2[0]
+                                    } else {
+                                        linkenlace2 = linkenlace2
+                                    }
+                                    await page.goBack()
+                        
+                                } else {
+                                    linkenlace2 = linkenlace2
+                                }
+                            }
+                            catch(error)
+                            {
+                                linkenlace2 = linkenlace2
+                            }
+
                         //PARA TRES LINKS _______________________________________________________________________________________________________________________________________________________________________
                         if(await page.evaluate(() => Array.from(document.querySelectorAll("#DwsldCn > div > table > tbody > tr:nth-child(3)"), el => el.textContent)[0]) !== undefined) {
                             //Nombre
@@ -326,8 +402,45 @@ module.exports.run = async(client, message, args) => {
                             let Formatoenlace3 = await page.evaluate(el => el.textContent, elFormatodellink3);
                             if (Formatoenlace3 == "SUB") {Formatoenlace3 = "Subtitulado"} else if (Formatoenlace3 == "LAT") {Formatoenlace3 = "Latino"} else { /* nada */};
                             //Link
-                            const linkenlace3 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                            var linkenlace3 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                            try {
+                                if (linkenlace3.includes("zippyshare.com/")){
+                                    const info3 = await zsExtract.extract(linkenlace3);
+                                    if (info3 !== undefined) {
+                                        linkenlace3 = info3.download
+                                    } else {
+                                        linkenlace3 = linkenlace3
+                                    }
                             
+                                    } else if (linkenlace3.includes("streamtape.com/")){
+                                    await page.goto(linkenlace3)
+                                    const linkdestape3 = await page.$$eval("#mainvideo", links => links.map(link => link.getAttribute('src')));
+                                    if (linkdestape3[0] !== undefined) {
+                                        linkenlace3 = 'https:'+linkdestape3[0]
+                                    } else {
+                                        linkenlace3 = linkenlace3
+                                    }
+                                    await page.goBack()
+                            
+                                    } else if (linkenlace3.includes("mediafire.com/")){
+                                        await page.goto(linkenlace3)
+                                        const linkdemediafire3 = await page.$$eval("#downloadButton", links => links.map(link => link.getAttribute('href')));
+                                        if (linkdemediafire3[0] !== undefined) {
+                                            linkenlace3 = linkdemediafire3[0]
+                                        } else {
+                                            linkenlace3 = linkenlace3
+                                        }
+                                        await page.goBack()
+                            
+                                    } else {
+                                        linkenlace3 = linkenlace3
+                                    }
+                                }
+                                catch(error)
+                                {
+                                    linkenlace3 = linkenlace3
+                                }
+
                             //PARA CUATRO LINKS _______________________________________________________________________________________________________________________________________________________________________
                             if(await page.evaluate(() => Array.from(document.querySelectorAll("#DwsldCn > div > table > tbody > tr:nth-child(4)"), el => el.textContent)[0]) !== undefined) {
                                 //Nombre
@@ -341,8 +454,45 @@ module.exports.run = async(client, message, args) => {
                                 let Formatoenlace4 = await page.evaluate(el => el.textContent, elFormatodellink4);
                                 if (Formatoenlace4 == "SUB") {Formatoenlace4 = "Subtitulado"} else if (Formatoenlace4 == "LAT") {Formatoenlace4 = "Latino"} else { /* nada */};
                                 //Link
-                                const linkenlace4 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                                var linkenlace4 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                                try {
+                                    if (linkenlace4.includes("zippyshare.com/")){
+                                        const info4 = await zsExtract.extract(linkenlace4);
+                                        if (info4 !== undefined) {
+                                            linkenlace4 = info4.download
+                                        } else {
+                                            linkenlace4 = linkenlace4
+                                        }
                                 
+                                        } else if (linkenlace4.includes("streamtape.com/")){
+                                        await page.goto(linkenlace4)
+                                        const linkdestape4 = await page.$$eval("#mainvideo", links => links.map(link => link.getAttribute('src')));
+                                        if (linkdestape4[0] !== undefined) {
+                                            linkenlace4 = 'https:'+linkdestape4[0]
+                                        } else {
+                                            linkenlace4 = linkenlace4
+                                        }
+                                        await page.goBack()
+                                
+                                        } else if (linkenlace4.includes("mediafire.com/")){
+                                            await page.goto(linkenlace4)
+                                            const linkdemediafire4 = await page.$$eval("#downloadButton", links => links.map(link => link.getAttribute('href')));
+                                            if (linkdemediafire4[0] !== undefined) {
+                                                linkenlace4 = linkdemediafire4[0]
+                                            } else {
+                                                linkenlace4 = linkenlace4
+                                            }
+                                            await page.goBack()
+                                
+                                        } else {
+                                            linkenlace4 = linkenlace4
+                                        }
+                                    }
+                                    catch(error)
+                                    {
+                                        linkenlace4 = linkenlace4
+                                    }
+
                                 //PARA CINCO LINKS _______________________________________________________________________________________________________________________________________________________________________
                                 if(await page.evaluate(() => Array.from(document.querySelectorAll("#DwsldCn > div > table > tbody > tr:nth-child(5)"), el => el.textContent)[0]) !== undefined) {
                                     //Nombre
@@ -356,8 +506,45 @@ module.exports.run = async(client, message, args) => {
                                     let Formatoenlace5 = await page.evaluate(el => el.textContent, elFormatodellink5);
                                     if (Formatoenlace5 == "SUB") {Formatoenlace5 = "Subtitulado"} else if (Formatoenlace5 == "LAT") {Formatoenlace5 = "Latino"} else { /* nada */};
                                     //Link
-                                    const linkenlace5 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                                    var linkenlace5 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                                    try {
+                                        if (linkenlace5.includes("zippyshare.com/")){
+                                            const info5 = await zsExtract.extract(linkenlace5);
+                                            if (info5 !== undefined) {
+                                                linkenlace5 = info5.download
+                                            } else {
+                                                linkenlace5 = linkenlace5
+                                            }
                                     
+                                            } else if (linkenlace5.includes("streamtape.com/")){
+                                            await page.goto(linkenlace5)
+                                            const linkdestape5 = await page.$$eval("#mainvideo", links => links.map(link => link.getAttribute('src')));
+                                            if (linkdestape5[0] !== undefined) {
+                                                linkenlace5 = 'https:'+linkdestape5[0]
+                                            } else {
+                                                linkenlace5 = linkenlace5
+                                            }
+                                            await page.goBack()
+                                    
+                                            } else if (linkenlace5.includes("mediafire.com/")){
+                                                await page.goto(linkenlace5)
+                                                const linkdemediafire5 = await page.$$eval("#downloadButton", links => links.map(link => link.getAttribute('href')));
+                                                if (linkdemediafire5[0] !== undefined) {
+                                                    linkenlace5 = linkdemediafire5[0]
+                                                } else {
+                                                    linkenlace5 = linkenlace5
+                                                }
+                                                await page.goBack()
+                                    
+                                            } else {
+                                                linkenlace5 = linkenlace5
+                                            }
+                                        }
+                                        catch(error)
+                                        {
+                                            linkenlace5 = linkenlace5
+                                        }
+
                                     //PARA SEIS LINKS _______________________________________________________________________________________________________________________________________________________________________
                                     if(await page.evaluate(() => Array.from(document.querySelectorAll("#DwsldCn > div > table > tbody > tr:nth-child(6)"), el => el.textContent)[0]) !== undefined) {
                                         //Nombre
@@ -371,16 +558,55 @@ module.exports.run = async(client, message, args) => {
                                         let Formatoenlace6 = await page.evaluate(el => el.textContent, elFormatodellink6);
                                         if (Formatoenlace6 == "SUB") {Formatoenlace6 = "Subtitulado"} else if (Formatoenlace6 == "LAT") {Formatoenlace6 = "Latino"} else { /* nada */};
                                         //Link
-                                        const linkenlace6 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(6) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                                        var linkenlace6 = await page.evaluate(() => Array.from(document.querySelectorAll('#DwsldCn > div > table > tbody > tr:nth-child(6) > td:nth-child(4) > a[href]'), a => a.getAttribute('href'))[0])
+                                        try {
+                                            if (linkenlace6.includes("zippyshare.com/")){
+                                                const info6 = await zsExtract.extract(linkenlace6);
+                                                if (info6 !== undefined) {
+                                                    linkenlace6 = info6.download
+                                                } else {
+                                                    linkenlace6 = linkenlace6
+                                                }
+                                    
+                                                } else if (linkenlace6.includes("streamtape.com/")){
+                                                await page.goto(linkenlace6)
+                                                const linkdestape6 = await page.$$eval("#mainvideo", links => links.map(link => link.getAttribute('src')));
+                                                if (linkdestape6[0] !== undefined) {
+                                                    linkenlace6 = 'https:'+linkdestape6[0]
+                                                } else {
+                                                    linkenlace6 = linkenlace6
+                                                }
+                                                await page.goBack()
+                                    
+                                                } else if (linkenlace6.includes("mediafire.com/")){
+                                                    await page.goto(linkenlace6)
+                                                    const linkdemediafire6 = await page.$$eval("#downloadButton", links => links.map(link => link.getAttribute('href')));
+                                                    if (linkdemediafire6[0] !== undefined) {
+                                                        linkenlace6 = linkdemediafire6[0]
+                                                    } else {
+                                                        linkenlace6 = linkenlace6
+                                                    }
+                                                    await page.goBack()
                                         
+                                                } else {
+                                                    linkenlace6 = linkenlace6
+                                                }
+                                            }
+                                            catch(error)
+                                            {
+                                                linkenlace6 = linkenlace6
+                                            }
+
                                         msg.edit({
                                             embeds: [
                                                 new MessageEmbed()
-                                                    .setColor("DARK_RED")
+                                                    .setColor("DARK_GREEN")
                                                     .setTitle("Enlaces de descarga")
                                                     .setThumbnail(miniatura)
                                                     .setURL(enlaceoriginal)
                                                     .setDescription("**"+ eltitulo + "** | " + episodio)
+                                                    .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
+                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                                     .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                                     .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                                                     .addField("3. "+nombreenlace3, tamañoenlace3 + " en **" + Formatoenlace3 +`** [Click para descargar](${linkenlace3})`, false)
@@ -395,11 +621,13 @@ module.exports.run = async(client, message, args) => {
                                         msg.edit({
                                         embeds: [
                                             new MessageEmbed()
-                                                .setColor("DARK_RED")
+                                                .setColor("DARK_GREEN")
                                                 .setTitle("Enlaces de descarga")
                                                 .setThumbnail(miniatura)
                                                 .setURL(enlaceoriginal)
                                                 .setDescription("**"+ eltitulo + "** | " + episodio)
+                                                .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
+                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                                 .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                                 .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                                                 .addField("3. "+nombreenlace3, tamañoenlace3 + " en **" + Formatoenlace3 +`** [Click para descargar](${linkenlace3})`, false)
@@ -414,11 +642,13 @@ module.exports.run = async(client, message, args) => {
                                     msg.edit({
                                     embeds: [
                                         new MessageEmbed()
-                                            .setColor("DARK_RED")
+                                            .setColor("DARK_GREEN")
                                             .setTitle("Enlaces de descarga")
                                             .setThumbnail(miniatura)
                                             .setURL(enlaceoriginal)
                                             .setDescription("**"+ eltitulo + "** | " + episodio)
+                                            .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
+                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                             .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                             .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                                             .addField("3. "+nombreenlace3, tamañoenlace3 + " en **" + Formatoenlace3 +`** [Click para descargar](${linkenlace3})`, false)
@@ -432,11 +662,13 @@ module.exports.run = async(client, message, args) => {
                                 msg.edit({
                                 embeds: [
                                     new MessageEmbed()
-                                        .setColor("DARK_RED")
+                                        .setColor("DARK_GREEN")
                                         .setTitle("Enlaces de descarga")
                                         .setThumbnail(miniatura)
                                         .setURL(enlaceoriginal)
                                         .setDescription("**"+ eltitulo + "** | " + episodio)
+                                        .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
+                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                         .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                         .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                                         .addField("3. "+nombreenlace3, tamañoenlace3 + " en **" + Formatoenlace3 +`** [Click para descargar](${linkenlace3})`, false)
@@ -449,11 +681,13 @@ module.exports.run = async(client, message, args) => {
                             msg.edit({
                             embeds: [
                                 new MessageEmbed()
-                                    .setColor("DARK_RED")
+                                    .setColor("DARK_GREEN")
                                     .setTitle("Enlaces de descarga")
                                     .setThumbnail(miniatura)
                                     .setURL(enlaceoriginal)
                                     .setDescription("**"+ eltitulo + "** | " + episodio)
+                                    .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
+                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                     .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                     .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                             ], components:[detallesraros]})
@@ -465,11 +699,13 @@ module.exports.run = async(client, message, args) => {
                         msg.edit({
                         embeds: [
                             new MessageEmbed()
-                                .setColor("DARK_RED")
+                                .setColor("DARK_GREEN")
                                 .setTitle("Enlaces de descarga")
                                 .setThumbnail(miniatura)
                                 .setURL(enlaceoriginal)
                                 .setDescription("**"+ eltitulo + "** | " + episodio)
+                                .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
+                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                 .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                         ], components:[detallesraros]})
                     
@@ -504,6 +740,6 @@ module.exports.run = async(client, message, args) => {
 module.exports.conf = {
     "name": "ultimocap",
     "description": [ "Muestra los últimos episodios del día." ],
-    "aliases": ["ultimocapitulo", "capitulonuevo", "capnuevo"],
+    "aliases": ["ultimocapitulo", "capitulonuevo", "capnuevo", "ultimoscaps"],
     "usage": [ "ultimocap" ]
 }
