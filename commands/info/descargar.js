@@ -668,7 +668,7 @@ module.exports.run = async(client, message, args) => {
                             if (info1 !== undefined) {
                                 linkenlace1 = info1.download
                             } else {
-                                linkenlace1 = linkenlace1
+                                /*nada*/
                             }
                     
                             } else if (linkenlace1.includes("streamtape.com/")){
@@ -677,7 +677,7 @@ module.exports.run = async(client, message, args) => {
                             if (linkdestape1[0] !== undefined) {
                                 linkenlace1 = 'https:'+linkdestape1[0]
                             } else {
-                                linkenlace1 = linkenlace1
+                                /*nada*/
                             }
                             await page.goBack()
                     
@@ -687,17 +687,17 @@ module.exports.run = async(client, message, args) => {
                                 if (linkdemediafire1[0] !== undefined) {
                                     linkenlace1 = linkdemediafire1[0]
                                 } else {
-                                    linkenlace1 = linkenlace1
+                                    /*nada*/
                                 }
                                 await page.goBack()
                     
                             } else {
-                                linkenlace1 = linkenlace1
+                                /*nada*/
                             }
                         }
                         catch(error)
                         {
-                            linkenlace1 = linkenlace1
+                            /*nada*/
                         }
                     
                     //PARA DOS LINKS _______________________________________________________________________________________________________________________________________________________________________
@@ -720,7 +720,7 @@ module.exports.run = async(client, message, args) => {
                                 if (info2 !== undefined) {
                                     linkenlace2 = info2.download
                                 } else {
-                                    linkenlace2 = linkenlace2
+                                    /*nada*/
                                 }
                         
                                 } else if (linkenlace2.includes("streamtape.com/")){
@@ -729,7 +729,7 @@ module.exports.run = async(client, message, args) => {
                                 if (linkdestape2[0] !== undefined) {
                                     linkenlace2 = 'https:'+linkdestape2[0]
                                 } else {
-                                    linkenlace2 = linkenlace2
+                                    /*nada*/
                                 }
                                 await page.goBack()
                         
@@ -739,17 +739,17 @@ module.exports.run = async(client, message, args) => {
                                     if (linkdemediafire2[0] !== undefined) {
                                         linkenlace2 = linkdemediafire2[0]
                                     } else {
-                                        linkenlace2 = linkenlace2
+                                        /*nada*/
                                     }
                                     await page.goBack()
                         
                                 } else {
-                                    linkenlace2 = linkenlace2
+                                    /*nada*/
                                 }
                             }
                             catch(error)
                             {
-                                linkenlace2 = linkenlace2
+                                /*nada*/
                             }
 
                         //PARA TRES LINKS _______________________________________________________________________________________________________________________________________________________________________
@@ -772,7 +772,7 @@ module.exports.run = async(client, message, args) => {
                                     if (info3 !== undefined) {
                                         linkenlace3 = info3.download
                                     } else {
-                                        linkenlace3 = linkenlace3
+                                        /*nada*/
                                     }
                             
                                     } else if (linkenlace3.includes("streamtape.com/")){
@@ -781,7 +781,7 @@ module.exports.run = async(client, message, args) => {
                                     if (linkdestape3[0] !== undefined) {
                                         linkenlace3 = 'https:'+linkdestape3[0]
                                     } else {
-                                        linkenlace3 = linkenlace3
+                                        /*nada*/
                                     }
                                     await page.goBack()
                             
@@ -791,17 +791,17 @@ module.exports.run = async(client, message, args) => {
                                         if (linkdemediafire3[0] !== undefined) {
                                             linkenlace3 = linkdemediafire3[0]
                                         } else {
-                                            linkenlace3 = linkenlace3
+                                            /*nada*/
                                         }
                                         await page.goBack()
                             
                                     } else {
-                                        linkenlace3 = linkenlace3
+                                        /*nada*/
                                     }
                                 }
                                 catch(error)
                                 {
-                                    linkenlace3 = linkenlace3
+                                    /*nada*/
                                 }
 
                             //PARA CUATRO LINKS _______________________________________________________________________________________________________________________________________________________________________
@@ -824,7 +824,7 @@ module.exports.run = async(client, message, args) => {
                                         if (info4 !== undefined) {
                                             linkenlace4 = info4.download
                                         } else {
-                                            linkenlace4 = linkenlace4
+                                            /*nada*/
                                         }
                                 
                                         } else if (linkenlace4.includes("streamtape.com/")){
@@ -833,7 +833,7 @@ module.exports.run = async(client, message, args) => {
                                         if (linkdestape4[0] !== undefined) {
                                             linkenlace4 = 'https:'+linkdestape4[0]
                                         } else {
-                                            linkenlace4 = linkenlace4
+                                            /*nada*/
                                         }
                                         await page.goBack()
                                 
@@ -843,17 +843,17 @@ module.exports.run = async(client, message, args) => {
                                             if (linkdemediafire4[0] !== undefined) {
                                                 linkenlace4 = linkdemediafire4[0]
                                             } else {
-                                                linkenlace4 = linkenlace4
+                                                /*nada*/
                                             }
                                             await page.goBack()
                                 
                                         } else {
-                                            linkenlace4 = linkenlace4
+                                            /*nada*/
                                         }
                                     }
                                     catch(error)
                                     {
-                                        linkenlace4 = linkenlace4
+                                        /*nada*/
                                     }
 
                                 //PARA CINCO LINKS _______________________________________________________________________________________________________________________________________________________________________
@@ -876,7 +876,7 @@ module.exports.run = async(client, message, args) => {
                                             if (info5 !== undefined) {
                                                 linkenlace5 = info5.download
                                             } else {
-                                                linkenlace5 = linkenlace5
+                                                /*nada*/
                                             }
                                     
                                             } else if (linkenlace5.includes("streamtape.com/")){
@@ -885,7 +885,7 @@ module.exports.run = async(client, message, args) => {
                                             if (linkdestape5[0] !== undefined) {
                                                 linkenlace5 = 'https:'+linkdestape5[0]
                                             } else {
-                                                linkenlace5 = linkenlace5
+                                                /*nada*/
                                             }
                                             await page.goBack()
                                     
@@ -895,17 +895,17 @@ module.exports.run = async(client, message, args) => {
                                                 if (linkdemediafire5[0] !== undefined) {
                                                     linkenlace5 = linkdemediafire5[0]
                                                 } else {
-                                                    linkenlace5 = linkenlace5
+                                                    /*nada*/
                                                 }
                                                 await page.goBack()
                                     
                                             } else {
-                                                linkenlace5 = linkenlace5
+                                                /*nada*/
                                             }
                                         }
                                         catch(error)
                                         {
-                                            linkenlace5 = linkenlace5
+                                            /*nada*/
                                         }
                                     
                                     //PARA SEIS LINKS _______________________________________________________________________________________________________________________________________________________________________
@@ -928,7 +928,7 @@ module.exports.run = async(client, message, args) => {
                                                 if (info6 !== undefined) {
                                                     linkenlace6 = info6.download
                                                 } else {
-                                                    linkenlace6 = linkenlace6
+                                                    /*nada*/
                                                 }
                                     
                                                 } else if (linkenlace6.includes("streamtape.com/")){
@@ -937,7 +937,7 @@ module.exports.run = async(client, message, args) => {
                                                 if (linkdestape6[0] !== undefined) {
                                                     linkenlace6 = 'https:'+linkdestape6[0]
                                                 } else {
-                                                    linkenlace6 = linkenlace6
+                                                    /*nada*/
                                                 }
                                                 await page.goBack()
                                     
@@ -947,17 +947,17 @@ module.exports.run = async(client, message, args) => {
                                                     if (linkdemediafire6[0] !== undefined) {
                                                         linkenlace6 = linkdemediafire6[0]
                                                     } else {
-                                                        linkenlace6 = linkenlace6
+                                                        /*nada*/
                                                     }
                                                     await page.goBack()
                                         
                                                 } else {
-                                                    linkenlace6 = linkenlace6
+                                                    /*nada*/
                                                 }
                                             }
                                             catch(error)
                                             {
-                                                linkenlace6 = linkenlace6
+                                                /*nada*/
                                             }
 
                                         msg.edit({

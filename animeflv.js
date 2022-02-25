@@ -11,17 +11,12 @@ client.aliases = new Collection();
 client.slash = new Collection();
 client.on('ready', () => {
   console.log(`PRENDIDO: ${client.user.tag}`);
-  client.user.setPresence(
-    { 
-        activities: [
-            { 
-                name: "en AnimeFLV 〢 flvhelp" , 
-                type: 'WATCHING' 
-            }
-        ], 
-        status: "idle"
-    }
-  )
+  client.user.setStatus("idle")
+  setInterval(() => {
+    const randomstatus = ["en AnimeFLV 〢 flvhelp", "en AnimeFLV 〢 /help", `en AnimeFLV 〢 ${client.guilds.cache.map(g => g.memberCount)} usuarios`, `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`, "en AnimeFLV 〢 flvhelp", "en AnimeFLV 〢 animeflv.net"]
+    const randomname = randomstatus[Math.floor(Math.random() * randomstatus.length)];
+	client.user.setActivity({ name: randomname,  type: 'WATCHING' })
+    }, 60000);
   let clientguilds = client.guilds.cache
   console.log(clientguilds.map(g => `${g.id} | ${g.name}`) || "Ningun servidor")
   require('./utils/handler')(client)
