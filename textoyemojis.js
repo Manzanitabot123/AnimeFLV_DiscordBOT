@@ -48,10 +48,16 @@ module.exports = {
         },
         felizjueves: {
             messages:{
-                newConfig: "El mensaje semanal de *Feliz Jueves* ha sido: "
+                newConfig: "El mensaje semanal de *Feliz Jueves* ha sido: ",
+                sigueConfig: "El mensaje semanal de *Feliz Jueves* se mantiene: ",
+                newChannel: "El canal de *Feliz jueves* ahora será: ",
+                randomChannel: "El canal de *Feliz jueves* ahora será: **Aleatoria**",
+                randomChanneloff: "El canal de *Feliz jueves* ahora será: **Aleatoria** cuando se vuelva a **activar**..."
             },
             errors:{
-                same: "La configuración de mensaje semanal de *Feliz Jueves* sigue siendo la misma. | **Intentalo de nuevo**"
+                same: "La configuración de mensaje semanal de *Feliz Jueves* sigue siendo la misma. | **Intentalo de nuevo**",
+                notextChannel: "Recuerda que el canal debe ser de tipo texto y accesible",
+                falseparatenerChannel: "No se puede establecer un canal si la función esta **Desactivada**"
             }
         } 
     },

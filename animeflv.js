@@ -73,8 +73,25 @@ var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
         ffelizjueves = felizjuevesconfig
         };
 
-        if (channel && ffelizjueves !== "falso") {
+        let felizjuevesconfigcanal = "random";
+        let canal_felizjueves = db.get(`felizjueves_canal.${guild.id}`)
+        var chfelizjueves;
+        if (canal_felizjueves) {
+        chfelizjueves = canal_felizjueves
+        } else {
+        chfelizjueves = felizjuevesconfigcanal
+        };
+
+        if (channel && ffelizjueves !== "falso" && chfelizjueves === "random") {
             channel.send({
+                files: [{
+                    attachment: testchart,
+                    name: 'feliz_jueves.gif'
+                }],
+                content:`**Feliz jueves a todos**`,
+            });
+        } else if (channel && ffelizjueves !== "falso" && chfelizjueves !== "random") {
+            client.channels.cache.get(chfelizjueves).send({
                 files: [{
                     attachment: testchart,
                     name: 'feliz_jueves.gif'
