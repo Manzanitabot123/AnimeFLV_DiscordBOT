@@ -66,10 +66,39 @@ module.exports.run = async(client, message, args) => {
                     });
                 const page = await browser.newPage();
                 await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
-                await page.goto(url);
+                const tiomeout = await page.goto(url, {waitUntil: 'load', timeout: 0});
 
-                //Para 1 resultado ___________________________________________________________________________________________________________________________________________________________________________________
-                if (await page.$(resultadouno) !== null) {
+                if (tiomeout.status() === 522) {
+                    msg.edit({
+                    embeds: [
+                        new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription(textoyemojis.errors.error522)
+                            .setFooter({text: textoyemojis.errors.espera})
+                    ]});
+                    return await browser.close()
+
+                } else if (tiomeout.status() === 404) {
+                    msg.edit({
+                    embeds: [
+                        new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription(textoyemojis.errors.error404)
+                            .setFooter({text: textoyemojis.errors.espera})
+                    ]});
+                    return await browser.close()
+                    
+                } else if (tiomeout.status() === 502) {
+                    msg.edit({
+                    embeds: [
+                        new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription(textoyemojis.errors.error502)
+                            .setFooter({text: textoyemojis.errors.espera})
+                    ]});
+                    return await browser.close()
+                    
+                } else if (await page.$(resultadouno) !== null) {
                     //Para la miniatura
                     const imgs1 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
                     const miniatura1 = imgs1[0]

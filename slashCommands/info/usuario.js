@@ -2,6 +2,7 @@ const { Client, Interaction, Message, MessageEmbed, MessageButton, MessageAction
 const puppeteer = require('puppeteer');
 const getColors = require('get-image-colors');
 const { captureRejections } = require("events");
+const { timeout } = require("cron");
 /**
  * @param {Client} client
  * @param {Interaction} interaction
@@ -57,18 +58,39 @@ module.exports.run = (client, interaction, options) => {
                 });
             const page = await browser.newPage();
             await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
-            const result = await page.goto(url);
-            if (result.status() === 404) {
-                console.error('Usuario desconocido')
-                interaction.editReply({
+            const tiomeout = await page.goto(url, {waitUntil: 'load', timeout: 0});
+
+                if (tiomeout.status() === 522) {
+                    interaction.editReply({
                     embeds: [
                         new MessageEmbed()
-                            .setAuthor({name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL()})
                             .setColor("DARK_RED")
-                            .setDescription("No existe nadie llamado **" + args + "** D:")
+                            .setDescription(textoyemojis.errors.error522)
+                            .setFooter({text: textoyemojis.errors.espera})
                     ]});
-                return await browser.close()
-              } else {
+                    return await browser.close()
+
+                } else if (tiomeout.status() === 502) {
+                    interaction.editReply({
+                    embeds: [
+                        new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription(textoyemojis.errors.error502)
+                            .setFooter({text: textoyemojis.errors.espera})
+                    ]});
+                    return await browser.close()
+                    
+                } else if (tiomeout.status() === 404) {
+                    console.error('Usuario desconocido')
+                    interaction.editReply({
+                        embeds: [
+                            new MessageEmbed()
+                                .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
+                                .setColor("DARK_RED")
+                                .setDescription("No existe nadie llamado **" + args.join(' ') + "** D:")
+                        ]});
+                    return await browser.close()
+                  } else {
                 //link
                 const linkdelpfp = await page.evaluate(() => Array.from(document.querySelectorAll('body > div.Wrapper > div > div > div > aside > div > div > figure > a[href]'), a => a.getAttribute('href'))[0])
                 const enlacedelpfp = "https://www3.animeflv.net" + linkdelpfp;

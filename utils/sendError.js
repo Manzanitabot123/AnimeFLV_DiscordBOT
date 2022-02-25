@@ -11,9 +11,7 @@ function sendError(message, error) {
                     .setTimestamp()
                     .setDescription(error)
             ]
-        }).then(msg => {
-            setTimeout(() => msg.delete() && message.delete(), 6000)
-          });
+        });
 }
 module.exports = {
     sendError

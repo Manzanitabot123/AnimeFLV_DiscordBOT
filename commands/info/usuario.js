@@ -46,8 +46,29 @@ module.exports.run = async(client, message, args) => {
                     });
                 const page = await browser.newPage();
                 await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
-                const result = await page.goto(url);
-                if (result.status() === 404) {
+                const tiomeout = await page.goto(url, {waitUntil: 'load', timeout: 0});
+
+                if (tiomeout.status() === 522) {
+                    msg.edit({
+                    embeds: [
+                        new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription(textoyemojis.errors.error522)
+                            .setFooter({text: textoyemojis.errors.espera})
+                    ]});
+                    return await browser.close()
+
+                } else if (tiomeout.status() === 502) {
+                    msg.edit({
+                    embeds: [
+                        new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription(textoyemojis.errors.error502)
+                            .setFooter({text: textoyemojis.errors.espera})
+                    ]});
+                    return await browser.close()
+                    
+                } else if (tiomeout.status() === 404) {
                     console.error('Usuario desconocido')
                     msg.edit({
                         embeds: [

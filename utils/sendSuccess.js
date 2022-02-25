@@ -12,9 +12,7 @@ function sendSuccess(message, msg) {
                     .setTimestamp()
                     .setDescription(msg)
             ]
-        }).then(msg => {
-            setTimeout(() => msg.delete() && message.delete(), 6000)
-          });
+        });
 }
 
 module.exports = {

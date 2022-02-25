@@ -11,7 +11,11 @@ module.exports = {
         noPerm: "¡No tienes permiso para hacer esto!",
         noChannel: "Debes especificar un canal",
         wrongUsage: "No has escrito nada. | **Intenta con:**",
-        unknown: "Un error desconocido"
+        unknown: "Un error desconocido",
+        error404: "Esa página no está disponible en el servidor. ``` Page Not Found | ERROR 404``",
+        error522: "Se agotó el tiempo de espera de Animeflv al intentar conectarse con el servidor. ```Connection timed out | ERROR 522```",
+        error502: "El servidor proxy no pudo obtener una respuesta válida del servidor de origen. ```Bad Gateway | ERROR 502```",
+        espera: "Espera un tiempo a que se solucione solo..."
     },
     messages:{
         description: "Descripción",
@@ -26,16 +30,6 @@ module.exports = {
         newvideo: "ha publicado nuevo video!"
     },
     commands:{
-        setLang: {
-            messages:{
-                success: "Language successfully changed to **English**",
-                available: "en / english"
-            },
-            errors:{
-                noLang: "Ese idioma no existe. | **Intenta con:**",
-                sameLang: " ya ha sido colocado. | **Disponibles:**"
-            }
-        },
         setPrefix: {
             messages:{
                 prefix: "El prefijo o prefix es ",

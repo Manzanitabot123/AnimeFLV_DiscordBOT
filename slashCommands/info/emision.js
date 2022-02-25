@@ -151,7 +151,39 @@ module.exports.run = (client, interaction, prefix) => {
                                 });
                             const page = await browser.newPage();
                             await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
-                            await page.goto(url);
+                            const tiomeout = await page.goto(url, {waitUntil: 'load', timeout: 0});
+
+                            if (tiomeout.status() === 522) {
+                                interaction.editReply({
+                                embeds: [
+                                    new MessageEmbed()
+                                        .setColor("DARK_RED")
+                                        .setDescription(textoyemojis.errors.error522)
+                                        .setFooter({text: textoyemojis.errors.espera})
+                                ]});
+                                return await browser.close()
+
+                            } else if (tiomeout.status() === 404) {
+                                interaction.editReply({
+                                embeds: [
+                                    new MessageEmbed()
+                                        .setColor("DARK_RED")
+                                        .setDescription(textoyemojis.errors.error404)
+                                        .setFooter({text: textoyemojis.errors.espera})
+                                ]});
+                                return await browser.close()
+                                
+                            } else if (tiomeout.status() === 502) {
+                                interaction.editReply({
+                                embeds: [
+                                    new MessageEmbed()
+                                        .setColor("DARK_RED")
+                                        .setDescription(textoyemojis.errors.error502)
+                                        .setFooter({text: textoyemojis.errors.espera})
+                                ]});
+                                return await browser.close()
+                                
+                            } else {
             
                             //Para el 1 __________________________________________________________________________________________________________________________________________________________________________________       
                             await page.waitForSelector(result1);
@@ -588,7 +620,7 @@ module.exports.run = (client, interaction, prefix) => {
                                                 await browser.close();
                                             
                             }
-            
+                            }
                             
                             catch(error)
                             {
