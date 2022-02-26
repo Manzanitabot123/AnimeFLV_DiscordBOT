@@ -637,7 +637,7 @@ module.exports.run = (client, interaction, prefix) => {
 }
 module.exports.conf = {
     "name": "emision",
-    "description": "Muestra los anime que se encuentran en emisión.",
+    "description": "Muestra los anime que se encuentran en emisión",
     "options": [],
     "category": "info"
 }

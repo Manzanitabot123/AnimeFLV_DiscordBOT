@@ -10,7 +10,7 @@ const { timeout } = require("cron");
 module.exports.run = (client, interaction, options) => {
     const args = options.nombre.value;
     const user_animeflv = args.replace(/ /g,"+");
-        //comprobar el canal adecuado
+    
         if(!args){
                 interaction.reply({
                     content: "Te falta escribir el usuario que quieres buscar", 
@@ -85,7 +85,7 @@ module.exports.run = (client, interaction, options) => {
                     interaction.editReply({
                         embeds: [
                             new MessageEmbed()
-                                .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
+                                .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                 .setColor("DARK_RED")
                                 .setDescription("No existe nadie llamado **" + args.join(' ') + "** D:")
                         ]});

@@ -8,9 +8,7 @@ module.exports = async(guild) => {
     if(channel.permissionsFor(guild.me).has('VIEW_CHANNEL') && channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.type == 'GUILD_TEXT') listedChannels.push(channel.id);
     });
     const wcanal = listedChannels[0];
-    guild.channels.cache.get(wcanal).send(`**¡Gracias por usar AnimeFLV Bot!** Para saber como ver información y descargar animes clásicos, actuales y populares, escribe: \n\`/help\` o \`flvhelp\`. \nDe esta manera, también, obtendrás una lista de los comandos que puedes usar. \n*La página oficial de animes es* https://www3.animeflv.net `).then(msg => {
-        setTimeout(() => msg.delete(), 60000)
-      });
+    guild.channels.cache.get(wcanal).send(`**¡Gracias por usar AnimeFLV Bot!** Para saber como ver información y descargar animes clásicos, actuales y populares, escribe: \n\`/help\` o \`flvhelp\`. \nDe esta manera, también, obtendrás una lista de los comandos que puedes usar. \n*La página oficial de animes es* https://www3.animeflv.net `);
       
     
     let client = guild.client

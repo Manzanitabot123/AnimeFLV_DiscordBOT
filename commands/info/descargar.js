@@ -623,12 +623,12 @@ module.exports.run = async(client, message, args) => {
                             new MessageEmbed()
                                 .setColor("YELLOW")
                                 .setThumbnail(miniatura)
-                                .setDescription("Recopilando información del episodio **" +  value + "** ..." + "\n **¿Como descargo un archivo de Mega o Stapé?**")
+                                .setDescription("Recopilando información del episodio **" +  value + "** ..." + "\n **¿Cómo descargo un archivo de Mega o Stapé?**")
                                 .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
                         ], components:[]})
                     const result = await page.goto("https://www3.animeflv.net/ver/" + urlone[0].replace('/anime/','') + "-"+ value);
                     if (result.status() === 404) {
-                    console.error('Episodio desconocido');
+                    console.log('Episodio desconocido');
                     msg.edit({
                         embeds: [
                             new MessageEmbed()

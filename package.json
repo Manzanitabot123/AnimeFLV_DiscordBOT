@@ -27,8 +27,8 @@
     "zs-extract": "^1.4.1"
   },
   "devDependencies": {
-    "simple-get": ">=3.1.1",
     "nth-check": ">=2.0.1",
+    "simple-get": ">=3.1.1",
     "tar": ">=6.1.9"
   }
 }

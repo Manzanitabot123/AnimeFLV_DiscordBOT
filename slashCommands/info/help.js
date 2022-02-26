@@ -32,7 +32,7 @@ module.exports.run =  (client,interaction) => {
     const embed = new MessageEmbed()
             .setColor('RANDOM')
             .setAuthor({name: `${interaction.guild.me.displayName}`, iconURL: interaction.guild.iconURL()})
-            .setThumbnail(client.user.displayAvatarURL());
+            .setThumbnail(interaction.user.displayAvatarURL({ dynamic: false }));
             let commandNames = [];
             client.commands.forEach(c => {
                 commandNames.push(c.conf.name);
@@ -59,7 +59,7 @@ module.exports.run =  (client,interaction) => {
 }
 module.exports.conf = {
     "name": "help",
-    "description": "Ve información detallada del Bot y sus comandos.",
+    "description": "Ve información detallada del Bot y sus comandos",
     "options":[],
     "category": "info"
 }

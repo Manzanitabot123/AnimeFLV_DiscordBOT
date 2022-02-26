@@ -11,14 +11,10 @@ client.aliases = new Collection();
 client.slash = new Collection();
 client.on('ready', () => {
   console.log(`PRENDIDO: ${client.user.tag}`);
-  client.user.setStatus("idle")
-  setInterval(() => {
-    const randomstatus = ["en AnimeFLV 〢 flvhelp", "en AnimeFLV 〢 /help", `en AnimeFLV 〢 ${client.guilds.cache.map(g => g.memberCount)} usuarios`, `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`, "en AnimeFLV 〢 flvhelp", "en AnimeFLV 〢 animeflv.net"]
-    const randomname = randomstatus[Math.floor(Math.random() * randomstatus.length)];
-	client.user.setActivity({ name: randomname,  type: 'WATCHING' })
-    }, 60000);
-  let clientguilds = client.guilds.cache
-  console.log(clientguilds.map(g => `${g.id} | ${g.name}`) || "Ningun servidor")
+  client.user.setStatus("idle");
+  client.user.setActivity({ name: "en AnimeFLV 〢 flvhelp",  type: 'WATCHING' });
+  let clientguilds = client.guilds.cache;
+  console.log(clientguilds.map(g => `${g.id} | ${g.name} | ${g.memberCount} usuarios`) || "Ningun servidor")
   require('./utils/handler')(client)
   require('./utils/event')(client)
 });
@@ -52,8 +48,10 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
         });
 });
 
+
 var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
     console.log("Feliz jueves.");
+    client.user.setActivity({ name: "Feliz jueves",  type: 'WATCHING' })
     var testchart = `https://media.discordapp.net/attachments/946075296069730385/946436742473457664/felizjueves.gif`;
     client.guilds.cache.forEach(guild => {
         try {
@@ -100,8 +98,20 @@ var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
         console.log('No se pudo enviar el mensaje a ' + guild.name + '.');
     }
     });
-  }, null, true, 'America/Lima');
+}, null, true, 'America/Lima');
+
+var randomstate = new cron.CronJob('30 * * * * *', function() {
+    var randomstatus = new Array();
+    randomstatus[0] = `en AnimeFLV 〢 flvhelp`;
+    randomstatus[1] = `en AnimeFLV 〢 ${client.users.cache.size} usuarios`;
+    randomstatus[2] = `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`;
+    randomstatus[3] = `en AnimeFLV 〢 animeflv.net`;
+    randomstatus[4] = `en AnimeFLV 〢 /help`;
+    const randomnumber = Math.floor(randomstatus.length * Math.random());
+	client.user.setActivity({ name: randomstatus[randomnumber],  type: 'WATCHING' })
+}, null, true, 'America/Lima');
 
 job.start();
+randomstate.start();
 
 client.login(token);

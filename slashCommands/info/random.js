@@ -1,41 +1,42 @@
-const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const { Client, Interaction, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const puppeteer = require('puppeteer');
 const getColors = require('get-image-colors');
 const { captureRejections } = require("events");
 const random = require('random');
-/** 
+/**
  * @param {Client} client
- * @param {Message} message
+ * @param {Interaction} interaction
  */
-module.exports.run = async(client, message, args) => {
-        randomanime();
+module.exports.run = (client, interaction, prefix) => {
+    randomanimeslash();
 
-        //función de busqueda
-        const otros_nombres = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3)";
-        const imagen = "body > div.Wrapper > div > div > div.Container > div > aside > div.AnimeCover > div > figure > img";
-        const estado = "body > div.Wrapper > div > div > div.Container > div > aside > p > span";
-        const descripción = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > div.Description > p";
-        const seguidores = "body > div.Wrapper > div > div > div.Container > div > aside > section > div > div > span";
-        const nombresdelosseguidores = "body > div.Wrapper > div > div > div.Container > div > aside > section > ul";
-        const estrellitas = "#votes_prmd";
-        const votos = "#votes_nmbr";
-        const imagen_referencial = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Bg";
-
-        async function randomanime(){
+    //función de busqueda
+    const otros_nombres = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3)";
+    const imagen = "body > div.Wrapper > div > div > div.Container > div > aside > div.AnimeCover > div > figure > img";
+    const estado = "body > div.Wrapper > div > div > div.Container > div > aside > p > span";
+    const descripción = "body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > div.Description > p";
+    const seguidores = "body > div.Wrapper > div > div > div.Container > div > aside > section > div > div > span";
+    const nombresdelosseguidores = "body > div.Wrapper > div > div > div.Container > div > aside > section > ul";
+    const estrellitas = "#votes_prmd";
+    const votos = "#votes_nmbr";
+    const imagen_referencial = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Bg";
+           
+    async function randomanimeslash(){
                 //mensaje de espera (cargando...)
-                const msg = await message.reply({
+                await interaction.deferReply();
+                interaction.editReply({
                     embeds: [
                         new MessageEmbed()
                             .setColor("YELLOW")
                             .setDescription("Buscando un anime al azar ...")
                     ], components:[]});
-
+                
                 const pagina = random.int((min = 1), (max = 146));
 
                 try{
-                const url = `https://www3.animeflv.net/browse?page=${pagina}`;
-                
-                //info
+                    const url = `https://www3.animeflv.net/browse?page=${pagina}`;
+                            
+                   //info
                 const browser = await puppeteer.launch({
                     headless: true,
                     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
@@ -45,7 +46,7 @@ module.exports.run = async(client, message, args) => {
                 const tiomeout = await page.goto(url, {waitUntil: 'load', timeout: 0});
 
                     if (tiomeout.status() === 522) {
-                        msg.edit({
+                        interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
@@ -55,7 +56,7 @@ module.exports.run = async(client, message, args) => {
                         return await browser.close()
     
                     } else if (tiomeout.status() === 404) {
-                        msg.edit({
+                        interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
@@ -65,7 +66,7 @@ module.exports.run = async(client, message, args) => {
                         return await browser.close()
                         
                     } else if (tiomeout.status() === 502) {
-                        msg.edit({
+                        interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
@@ -109,8 +110,7 @@ module.exports.run = async(client, message, args) => {
                                 .setLabel("Ver original")
                                 .setStyle('LINK')
                                 );
-                            message.channel.sendTyping();
-                            msg.edit({
+                            interaction.editReply({
                                     embeds: [
                                         new MessageEmbed()
                                         .setDescription(`Se ha elejido ${grantipo}:` + "```" + grantitulo + "| ⭐"+ calificacion +"```" + `Cargando información...`)
@@ -121,14 +121,14 @@ module.exports.run = async(client, message, args) => {
                             await page.goto(link);
                             const eltitulo = grantitulo;
                             const eltipo = valor5;
-                            await respuesta5_1(browser, page, msg, urlrandom, eltitulo, eltipo, detallesrandom)
+                            await respuesta5_1(browser, page, urlrandom, eltitulo, eltipo, detallesrandom)
 
                             }
                 }
                 
                 catch(error)
                 {
-                    msg.edit({
+                    interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
@@ -138,9 +138,8 @@ module.exports.run = async(client, message, args) => {
                     console.log(error)
                 }
             }
-            
             //___________________________________________________________________________________________________________
-            async function respuesta5_1(browser, page, msg, urlrandom, eltitulo, eltipo, detallesrandom)
+            async function respuesta5_1(browser, page, urlrandom, eltitulo, eltipo, detallesrandom)
             {   
                 try{
 
@@ -309,7 +308,7 @@ module.exports.run = async(client, message, args) => {
                 .addField(`Seguidores:`, `( ${followers5_1} ) ${allfollowers5_1}, etc.`, false)
                 .addField('Calificación:', `( ${littlestars5_1} ) ${littlestarssymbols5_1}`, false)
                 .setFooter({text: `Votos: 🗳️ ${votes5_1}`});
-                msg.edit({
+                interaction.editReply({
                     embeds: [resultado5_1], components:[detallesrandom] 
                 });
 
@@ -326,7 +325,7 @@ module.exports.run = async(client, message, args) => {
                     const gaxd2x = await page.$("#main-nav > nav > ul > li.nav-tab.nav-tab--primary.tab-conversation.active > a > span.comment-count");
                     let gaxdx = await page.evaluate(el => el.textContent.replace(' comentarios',''), gaxd2x);
 
-                msg.edit({
+                interaction.editReply({
                     embeds: [resultado5_1.addField("Reacciones:", gaxd, true).addField("Comentarios:", gaxdx, true)], components:[detallesrandom]
                 });
                 await browser.close();
@@ -335,7 +334,7 @@ module.exports.run = async(client, message, args) => {
                 
             catch(error)
             {
-                msg.edit({
+                interaction.editReply({
                     embeds: [
                         new MessageEmbed()
                             .setColor("DARK_RED")
@@ -346,10 +345,9 @@ module.exports.run = async(client, message, args) => {
             }
             }
 }
-
 module.exports.conf = {
     "name": "random",
-    "description": [ "Genera un anime aleatrio del repositorio de animes" ],
-    "aliases": ["aleatorio"],
-    "usage": ["aleatorio"]
+    "description": "Muestra los últimos animes agregados a AnimeFLV.",
+    "options": [],
+    "category": "info"
 }

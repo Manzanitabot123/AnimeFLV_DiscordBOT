@@ -1,41 +1,79 @@
-const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const { Client, Interaction, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const puppeteer = require('puppeteer');
+const getColors = require('get-image-colors');
 const { captureRejections } = require("events");
 const zsExtract = require('zs-extract');
-
 /**
  * @param {Client} client
- * @param {Message} message
+ * @param {Interaction} interaction
  */
-module.exports.run = async(client, message, args) => {
-            const member = message.member;
-            ultimocap();
-
-            async function ultimocap(){
+module.exports.run = (client, interaction, options) => {
+    const página = options.capitulo.value
+    const args = options.anime.value;
+    //remplazar el mensaje por una url
+    const anime = args.replace(/ /g,"+");
+    const member = interaction.member;
+    //comprobar el canal adecuado
+    if(!args){
+                interaction.reply({
+                    content: "Te falta escribir el usuario que quieres buscar", 
+                    ephemeral: true
+                })
+                return;
+        } else if(args.length < 3){
+                interaction.reply({
+                    content: "Ese nombre es muy corto", 
+                    ephemeral: true
+                })
+                return;
+        } else if(args.length > 40){
+                interaction.reply({
+                    content: "Es un nombre muy largo", 
+                    ephemeral: true
+                })
+                return;
+        } else if(args.includes(`\n`)){
+                interaction.reply({
+                    content: "Tu busqueda contiene más de un reglón", 
+                    ephemeral: true
+                })
+                return;
+        } else {
+                searchdownslash()
+        }
+        
+        async function searchdownslash(){
                 //mensaje de espera (cargando...)
-                const msg = await message.reply({
+                await interaction.deferReply();
+                interaction.editReply({
                     embeds: [
                         new MessageEmbed()
                             .setColor("YELLOW")
-                            .setDescription("Recapitulando ultimos 5 episodios...")
+                            .setDescription("Buscando **" +  args + "** ...")
                     ], components:[]});
+
                 try{
-                const url = `https://www3.animeflv.net`;
+                    const url = `https://www3.animeflv.net/browse?q=${anime}`;
 
-                const resultadouno = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(1) > a > strong";
-                const episodionumero1 = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(1) > a > span.Capi"
-
-                const resultadodos = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(2) > a > strong";
-                const episodionumero2 = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(2) > a > span.Capi"
-
-                const resultadotres = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(3) > a > strong";
-                const episodionumero3 = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(3) > a > span.Capi"
-
-                const resultadocuatro = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(4) > a > strong";
-                const episodionumero4 = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(4) > a > span.Capi"
-
-                const resultadocinco = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(5) > a > strong";
-                const episodionumero5 = "body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(5) > a > span.Capi"
+                const resultadouno = "body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > h3";
+                const pelianime1 = "body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > div > span";
+                const stars1 = "body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > div > p:nth-child(2) > span.Vts.fa-star";
+                
+                const resultadodos = "body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a > h3";
+                const pelianime2 = "body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a > div > span";
+                const stars2 = "body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > div > p:nth-child(2) > span.Vts.fa-star";
+                
+                const resultadotres = "body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a > h3";
+                const pelianime3 = "body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a > div > span";
+                const stars3 = "body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > div > p:nth-child(2) > span.Vts.fa-star";
+                
+                const resultadocuatro = "body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a > h3";
+                const pelianime4 = "body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a > div > span";
+                const stars4 = "body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > div > p:nth-child(2) > span.Vts.fa-star";
+                
+                const resultadocinco = "body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a > h3";
+                const pelianime5 = "body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a > div > span";
+                const stars5 = "body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > div > p:nth-child(2) > span.Vts.fa-star";
                 
                 //info
                 const browser = await puppeteer.launch({
@@ -47,7 +85,7 @@ module.exports.run = async(client, message, args) => {
                 const tiomeout = await page.goto(url, {waitUntil: 'load', timeout: 0});
 
                 if (tiomeout.status() === 522) {
-                    msg.edit({
+                    interaction.editReply({
                     embeds: [
                         new MessageEmbed()
                             .setColor("DARK_RED")
@@ -57,7 +95,7 @@ module.exports.run = async(client, message, args) => {
                     return await browser.close()
 
                 } else if (tiomeout.status() === 404) {
-                    msg.edit({
+                    interaction.editReply({
                     embeds: [
                         new MessageEmbed()
                             .setColor("DARK_RED")
@@ -67,7 +105,7 @@ module.exports.run = async(client, message, args) => {
                     return await browser.close()
                     
                 } else if (tiomeout.status() === 502) {
-                    msg.edit({
+                    interaction.editReply({
                     embeds: [
                         new MessageEmbed()
                             .setColor("DARK_RED")
@@ -76,78 +114,109 @@ module.exports.run = async(client, message, args) => {
                     ]});
                     return await browser.close()
                     
-                } else {
-
-                //Para 1 resultado ___________________________________________________________________________________________________________________________________________________________________________________
+                } else if (await page.$(resultadouno) !== null) {
                     //Para la miniatura
-                    const imgs1 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(1) > a > span.Image > img", imgs => imgs.map(img => img.getAttribute('src')));
-                    const miniatura1 = "https://www3.animeflv.net" + imgs1[0];
+                    const imgs1 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                    const miniatura1 = imgs1[0]
+                    
                     await page.waitForSelector(resultadouno)
                     let element1 = await page.$(resultadouno)
                     let value1 = await page.evaluate(el => el.textContent, element1)
-                    let output1 = value1;
-                    await page.waitForSelector(episodionumero1)
-                    let numepisodio1 = await page.$(episodionumero1)
-                    let valordeepisodio1 = await page.evaluate(el => el.textContent, numepisodio1)
-                    let epi1 = valordeepisodio1;
+                    let output1 = value1
+                    
+                    await page.waitForSelector(pelianime1)
+                    let tipo1 = await page.$(pelianime1)
+                    let valor1 = await page.evaluate(el => el.textContent, tipo1)
+                    
+                    await page.waitForSelector(stars1)
+                    const estrellas1 = await page.$(stars1)
+                    let calificacion1 = await page.evaluate(el => el.textContent, estrellas1)
 
-                    const url1 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(1) > a", urlone => urlone.map(href => href.getAttribute('href')));
+                    if(valor1 == "Anime") {valor1 = "🌈 Anime"} else if(valor1 == "OVA") {valor1 = "📀 OVA"} else {valor1 = "🎬 Película"}
                     
                     //Para 2 resultados ___________________________________________________________________________________________________________________________________________________________________________________
-                        const imgs2 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(2) > a > span.Image > img", imgs => imgs.map(img => img.getAttribute('src')));
-                        const miniatura2 = "https://www3.animeflv.net" + imgs2[0];
+                    if (await page.$(resultadodos) !== null) {
+                        //Para la miniatura
+                        const imgs2 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                        const miniatura2 = imgs2[0]
+
                         await page.waitForSelector(resultadodos)
                         let element2 = await page.$(resultadodos)
                         let value2 = await page.evaluate(el => el.textContent, element2)
-                        let output2 = value2;
-                        await page.waitForSelector(episodionumero2)
-                        let numepisodio2 = await page.$(episodionumero2)
-                        let valordeepisodio2 = await page.evaluate(el => el.textContent, numepisodio2)
-                        let epi2 = valordeepisodio2;
+                        let output2 = value2
 
-                        const url2 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(2) > a", urlone => urlone.map(href => href.getAttribute('href')));
+                        await page.waitForSelector(pelianime2)
+                        let tipo2 = await page.$(pelianime2)
+                        let valor2 = await page.evaluate(el => el.textContent, tipo2)
+
+                        await page.waitForSelector(stars2)
+                        const estrellas2 = await page.$(stars2)
+                        let calificacion2 = await page.evaluate(el => el.textContent, estrellas2)
+
+                        if(valor2 == "Anime") {valor2 = "🌈 Anime"} else if(valor2 == "OVA") {valor2 = "📀 OVA"} else {valor2 = "🎬 Película"}
                         
                         //Para 3 resultados ___________________________________________________________________________________________________________________________________________________________________________________
-                            const imgs3 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(3) > a > span.Image > img", imgs => imgs.map(img => img.getAttribute('src')));
-                            const miniatura3 = "https://www3.animeflv.net" + imgs3[0];
+                        if (await page.$(resultadotres) !== null) {
+                            //Para la miniatura
+                            const imgs3 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                            const miniatura3 = imgs3[0]
+
                             await page.waitForSelector(resultadotres)
                             let element3 = await page.$(resultadotres)
                             let value3 = await page.evaluate(el => el.textContent, element3)
-                            let output3 = value3;
-                            await page.waitForSelector(episodionumero3)
-                            let numepisodio3 = await page.$(episodionumero3)
-                            let valordeepisodio3 = await page.evaluate(el => el.textContent, numepisodio3)
-                            let epi3 = valordeepisodio3;
+                            let output3 = value3
 
-                            const url3 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(3) > a", urlone => urlone.map(href => href.getAttribute('href')));
+                            await page.waitForSelector(pelianime3)
+                            let tipo3 = await page.$(pelianime3)
+                            let valor3 = await page.evaluate(el => el.textContent, tipo3)
+
+                            await page.waitForSelector(stars3)
+                            const estrellas3 = await page.$(stars3)
+                            let calificacion3 = await page.evaluate(el => el.textContent, estrellas3)
+
+                            if(valor3 == "Anime") {valor3 = "🌈 Anime"} else if(valor3 == "OVA") {valor3 = "📀 OVA"} else {valor3 = "🎬 Película"}
                             
                             //Para 4 resultados ___________________________________________________________________________________________________________________________________________________________________________________
-                                const imgs4 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(4) > a > span.Image > img", imgs => imgs.map(img => img.getAttribute('src')));
-                                const miniatura4 = "https://www3.animeflv.net" + imgs4[0];
+                            if (await page.$(resultadocuatro) !== null) {
+                                //Para la miniatura
+                                const imgs4 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                                const miniatura4 = imgs4[0]
+
                                 await page.waitForSelector(resultadocuatro)
                                 let element4 = await page.$(resultadocuatro)
                                 let value4 = await page.evaluate(el => el.textContent, element4)
-                                let output4 = value4;
-                                await page.waitForSelector(episodionumero4)
-                                let numepisodio4 = await page.$(episodionumero4)
-                                let valordeepisodio4 = await page.evaluate(el => el.textContent, numepisodio4)
-                                let epi4 = valordeepisodio4;
+                                let output4 = value4
+                                
+                                await page.waitForSelector(pelianime4)
+                                let tipo4 = await page.$(pelianime4)
+                                let valor4 = await page.evaluate(el => el.textContent, tipo4)
 
-                                const url4 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(4) > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                await page.waitForSelector(stars4)
+                                const estrellas4 = await page.$(stars4)
+                                let calificacion4 = await page.evaluate(el => el.textContent, estrellas4)
+
+                                if(valor4 == "Anime") {valor4 = "🌈 Anime"} else if(valor4 == "OVA") {valor4 = "📀 OVA"} else {valor4 = "🎬 Película"}
 
                                 //Para 5 resultados ___________________________________________________________________________________________________________________________________________________________________________________
-                                    const imgs5 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(5) > a > span.Image > img", imgs => imgs.map(img => img.getAttribute('src')));
-                                    const miniatura5 = "https://www3.animeflv.net" + imgs5[0];
+                                if (await page.$(resultadocinco) !== null) {
+                                    //Para la miniatura
+                                    const imgs5 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
+                                    const miniatura5 = imgs5[0]
+
                                     await page.waitForSelector(resultadocinco)
                                     let element5 = await page.$(resultadocinco)
                                     let value5 = await page.evaluate(el => el.textContent, element5)
-                                    let output5 = value5;
-                                    await page.waitForSelector(episodionumero5)
-                                    let numepisodio5 = await page.$(episodionumero5)
-                                    let valordeepisodio5 = await page.evaluate(el => el.textContent, numepisodio5)
-                                    let epi5 = valordeepisodio5;
-                                    
-                                    const url5 = await page.$$eval("body > div.Wrapper > div > div > div > main > ul.ListEpisodios.AX.Rows.A06.C04.D03 > li:nth-child(5) > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                    let output5 = value5
+
+                                    await page.waitForSelector(pelianime5)
+                                    let tipo5 = await page.$(pelianime5)
+                                    let valor5 = await page.evaluate(el => el.textContent, tipo5)
+
+                                    await page.waitForSelector(stars5)
+                                    const estrellas5 = await page.$(stars5)
+                                    let calificacion5 = await page.evaluate(el => el.textContent, estrellas5)
+
+                                    if(valor5 == "Anime") {valor5 = "🌈 Anime"} else if(valor5 == "OVA") {valor5 = "📀 OVA"} else {valor5 = "🎬 Película"}
                                     
                                     //Para 5 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
                                     const row5 = new MessageActionRow().addComponents(
@@ -174,14 +243,15 @@ module.exports.run = async(client, message, args) => {
                                         );
                                     
                                         const resultado5 = new MessageEmbed()
-                                        .setAuthor({name: "Los ultimos capitulos de hoy son los siguientes: ", iconURL: message.author.displayAvatarURL()})
-                                        .setTitle("Por favor elige el anime que deseas descargar o ver")
+                                        .setAuthor({name: "Tu busqueda fue: 🔎 " + args, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
+                                        .setTitle("Por favor elige el anime que deseas descargar")
                                         .setColor("DARK_GREEN")
-                                        .setDescription('[１] ('+ epi1 +") - "+ `[**${output1}**](https://www3.animeflv.net${url1})` + `\n\n` + '[２] ('+ epi2 +") - "+ `[**${output2}**](https://www3.animeflv.net${url2})` + `\n\n` + '[３] ('+ epi3 +") - "+ `[**${output3}**](https://www3.animeflv.net${url3})` + `\n\n` + '[４] ('+ epi4 +") - "+ `[**${output4}**](https://www3.animeflv.net${url4})` + `\n\n` + '[５] ('+ epi5 +") - "+ `[**${output5}**](https://www3.animeflv.net${url5})`)
+                                        .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```' + '```' + '[５] ('+ valor5 +") - "+ output5 + " │ ⭐" + calificacion5 + '```')
+                                        .setURL("https://www3.animeflv.net/browse?q=" + args.replace(/ /g,"+"))
                                         .setThumbnail(miniatura1)
                                         .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         
-                                        msg.edit({embeds: [resultado5], components:[row5]}).then(message => {
+                                        interaction.editReply({embeds: [resultado5], components:[row5]}).then(message => {
                                             const filter = (button5) => button5.user.id === member.id;
                                             const collector5 = message.createMessageComponentCollector({
                                                 filter,
@@ -193,28 +263,28 @@ module.exports.run = async(client, message, args) => {
                                                 collector5.on('collect', async b => {
                                                     await b.deferUpdate()      
                                                     if (b.customId === "one5") {
-                                                        const urlone = "https://www3.animeflv.net" + url1;
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output1;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura1, epi1)
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura1)
                                                     } else if (b.customId === "two5") {
-                                                        const urlone = "https://www3.animeflv.net" + url2;
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output2;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura2, epi2)
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura2)
                                                         
                                                     } else if (b.customId === "three5") {
-                                                        const urlone = "https://www3.animeflv.net" + url3;
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output3;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura3, epi3)
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura3)
 
                                                     } else if (b.customId === "four5") {
-                                                        const urlone = "https://www3.animeflv.net" + url4;
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output4;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura4, epi4)
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura4)
                                                       
                                                     } else if (b.customId === "five5") {
-                                                        const urlone = "https://www3.animeflv.net" + url5;
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output5;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura5, epi5)
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura5)
                                                       
                                                     }
                                                 });
@@ -222,60 +292,333 @@ module.exports.run = async(client, message, args) => {
                         
                                                 collector5.on('end', async(collected, reason) => {
                                                     if (collected.size < 1) {
+                                                    console.log("Timeout 5");
                                                     await browser.close();
-                                                    message.edit({
+                                                    interaction.editReply({
                                                         embeds: [
                                                             new MessageEmbed()
-                                                            .setAuthor({name: "Los ultimos capitulos de hoy son los siguientes: ", iconURL: message.author.displayAvatarURL()})
-                                                            .setColor("DARK_GREEN")
-                                                            .setDescription('[１] ('+ epi1 +") - "+ `[**${output1}**](https://www3.animeflv.net${url1})` + `\n\n` + '[２] ('+ epi2 +") - "+ `[**${output2}**](https://www3.animeflv.net${url2})` + `\n\n` + '[３] ('+ epi3 +") - "+ `[**${output3}**](https://www3.animeflv.net${url3})` + `\n\n` + '[４] ('+ epi4 +") - "+ `[**${output4}**](https://www3.animeflv.net${url4})` + `\n\n` + '[５] ('+ epi5 +") - "+ `[**${output5}**](https://www3.animeflv.net${url5})`)
-                                                            .setThumbnail(miniatura1)
+                                                                .setColor("RED")
+                                                                .setDescription("Te tardaste mucho en elejir...")
                                                         ], components:[]})
                                                     }
                                                 });
                                             })
                                     //Para 5 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
 
+                                } else {
+                                    //Para 4 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
+                                    const row4 = new MessageActionRow().addComponents(
+                                        new MessageButton()
+                                        .setCustomId('one4')
+                                        .setEmoji("1️⃣")
+                                        .setStyle('PRIMARY'),
+                                        new MessageButton()
+                                        .setCustomId('two4')
+                                        .setEmoji("2️⃣")
+                                        .setStyle('SECONDARY'),
+                                        new MessageButton()
+                                        .setCustomId('three4')
+                                        .setEmoji("3️⃣")
+                                        .setStyle('PRIMARY'),
+                                        new MessageButton()
+                                        .setCustomId('four4')
+                                        .setEmoji("4️⃣")
+                                        .setStyle('SECONDARY')
+                                        );
+                        
+                                        const resultado4 = new MessageEmbed()
+                                        .setAuthor({name: "Tu busqueda fue: 🔎 " + args, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
+                                        .setTitle("Por favor elige el anime que deseas descargar")
+                                        .setColor("DARK_GREEN")
+                                        .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```' + '```' + '[４] ('+ valor4 +") - "+ output4 + " │ ⭐" + calificacion4 + '```')
+                                        .setURL("https://www3.animeflv.net/browse?q=" + args.replace(/ /g,"+"))
+                                        .setThumbnail(miniatura1)
+                                        .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
+                                        interaction.editReply({embeds: [resultado4], components:[row4]}).then(message => {
+                                            const filter = (button4) => button4.user.id === member.id;
+                                            const collector4 = message.createMessageComponentCollector({
+                                                filter,
+                                                max: 1,
+                                                time: 18000,
+                                                errors: ['time']
+                                            });
+                                                //Collector On
+                                                collector4.on('collect', async b => {
+                                                    await b.deferUpdate()      
+                                                    if (b.customId === "one4") {
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        const eltitulo = output1;
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura1)
 
-                                    }
+                                                    } else if (b.customId === "two4") {
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        const eltitulo = output2;
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura2)
+                                                        
+                                                    } else if (b.customId === "three4") {
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        const eltitulo = output3;
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura3)
+
+                                                    } else if (b.customId === "four4") {
+                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        const eltitulo = output4;
+                                                        collectormsg(page, browser, urlone, eltitulo, miniatura4)
+
+                                                    }
+                                                });
+                                                //Collector Off
+                        
+                                                collector4.on('end', async(collected, reason) => {
+                                                    if (collected.size < 1) {
+                                                    console.log("Timeout 4");
+                                                    await browser.close();
+                                                    interaction.editReply({
+                                                        embeds: [
+                                                            new MessageEmbed()
+                                                                .setColor("RED")
+                                                                .setDescription("Te tardaste mucho en elejir...")
+                                                        ], components:[]})
+                                                    }
+                                                });
+                                            });
+                                    //Para 4 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
+                                };
+                                
+                            } else {
+                                //Para 3 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
+                                const row3 = new MessageActionRow().addComponents(
+                                    new MessageButton()
+                                    .setCustomId('one3')
+                                    .setEmoji("1️⃣")
+                                    .setStyle('PRIMARY'),
+                                    new MessageButton()
+                                    .setCustomId('two3')
+                                    .setEmoji("2️⃣")
+                                    .setStyle('SECONDARY'),
+                                    new MessageButton()
+                                    .setCustomId('three3')
+                                    .setEmoji("3️⃣")
+                                    .setStyle('PRIMARY')
+                                    );
+                    
+                                    const resultado3 = new MessageEmbed()
+                                    .setAuthor({name: "Tu busqueda fue: 🔎 " + args, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
+                                    .setTitle("Por favor elige el anime que deseas descargar")
+                                    .setColor("DARK_GREEN")
+                                    .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' + '[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```' + '```' + '[３] ('+ valor3 +") - "+ output3 + " │ ⭐" + calificacion3 + '```')
+                                    .setURL("https://www3.animeflv.net/browse?q=" + args.replace(/ /g,"+"))
+                                    .setThumbnail(miniatura1)
+                                    .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
+                                    interaction.editReply({embeds: [resultado3], components:[row3]}).then(message => {
+                                        const filter = (button3) => button3.user.id === member.id;
+                                        const collector3 = message.createMessageComponentCollector({
+                                            filter,
+                                            max: 1,
+                                            time: 18000,
+                                            errors: ['time']
+                                        });
+                                            //Collector On
+                                            collector3.on('collect', async b => {
+                                                await b.deferUpdate()      
+                                                if (b.customId === "one3") { 
+                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    const eltitulo = output1;
+                                                    collectormsg(page, browser, urlone, eltitulo, miniatura1)
+
+                                                } else if (b.customId === "two3") {
+                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    const eltitulo = output2;
+                                                    collectormsg(page, browser, urlone, eltitulo, miniatura2)
+                                                    
+                                                } else if (b.customId === "three3") {
+                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    const eltitulo = output3;
+                                                    collectormsg(page, browser, urlone, eltitulo, miniatura3)
+                        
+                                                }
+                                            });
+                                            //Collector Off
+                    
+                                            collector3.on('end', async(collected, reason) => {
+                                                if (collected.size < 1) {
+                                                console.log("Timeout 4");
+                                                await browser.close();
+                                                interaction.editReply({
+                                                    embeds: [
+                                                        new MessageEmbed()
+                                                            .setColor("RED")
+                                                            .setDescription("Te tardaste mucho en elejir...")
+                                                    ], components:[]})
+                                                }
+                                            });
+                                        });
+                                //Para 3 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
+                            };
+
+                        } else {
+                            //Para 2 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
+                            const row2 = new MessageActionRow().addComponents(
+                                new MessageButton()
+                                .setCustomId('one2')
+                                .setEmoji("1️⃣")
+                                .setStyle('PRIMARY'),
+                                new MessageButton()
+                                .setCustomId('two2')
+                                .setEmoji("2️⃣")
+                                .setStyle('SECONDARY')
+                                );
+                
+                                const resultado2 = new MessageEmbed()
+                                .setAuthor({name: "Tu busqueda fue: 🔎 " + args, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
+                                .setTitle("Por favor elige el anime que deseas descargar")
+                                .setColor("DARK_GREEN")
+                                .setDescription('```'+'[１] ('+ valor1 +") - "+ output1 + " │ ⭐" + calificacion1 + '```' + '```' +'[２] ('+ valor2 +") - "+ output2 + " │ ⭐" + calificacion2 + '```')
+                                .setURL("https://www3.animeflv.net/browse?q=" + args.replace(/ /g,"+"))
+                                .setThumbnail(miniatura1)
+                                .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
+                                interaction.editReply({embeds: [resultado2], components:[row2]}).then(message => {
+                                    const filter = (button2) => button2.user.id === member.id;
+                                    const collector2 = message.createMessageComponentCollector({
+                                        filter,
+                                        max: 1,
+                                        time: 18000,
+                                        errors: ['time']
+                                    });
+                                        //Collector On
+                                        collector2.on('collect', async b => {
+                                            await b.deferUpdate()      
+                                            if (b.customId === "one2") { 
+                                                const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                const eltitulo = output1;
+                                                collectormsg(page, browser, urlone, eltitulo, miniatura1)
+
+                                            } else if (b.customId === "two2") {
+                                                const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                const eltitulo = output2;
+                                                collectormsg(page, browser, urlone, eltitulo, miniatura2)
+                                                
+                                            }
+                                        });
+                                        //Collector Off
+                
+                                        collector2.on('end', async(collected, reason) => {
+                                            if (collected.size < 1) {
+                                            console.log("Timeout 4");
+                                            await browser.close();
+                                            interaction.editReply({
+                                                embeds: [
+                                                    new MessageEmbed()
+                                                        .setColor("RED")
+                                                        .setDescription("Te tardaste mucho en elejir...")
+                                                ], components:[]})
+                                            }
+                                        });
+                                    });
+                            //Para 2 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
+                        };
+
+                    } else {
+                        //Para 1 respuesta ___________________________________________________________________________________________________________________________________________________________________________________
+                        const row1 = new MessageActionRow().addComponents(
+                            new MessageButton()
+                            .setCustomId('one1')
+                            .setEmoji("1️⃣")
+                            .setStyle('PRIMARY')
+                            );
+            
+                            const resultado1 = new MessageEmbed()
+                            .setAuthor({name: "Tu busqueda fue: 🔎 " + args, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
+                            .setTitle("Por favor elige el anime que deseas descargar")
+                            .setDescription('```'+'[１] ('+ valor1 +") │ "+ output1 + " │ ⭐" + calificacion1 +'```')
+                            .setColor("DARK_GREEN")
+                            .setURL("https://www3.animeflv.net/browse?q=" + args.replace(/ /g,"+"))
+                            .setThumbnail(miniatura1)
+                            .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
+                            interaction.editReply({embeds: [resultado1], components:[row1]}).then(message => {
+                                const filter = (button1) => button1.user.id === member.id;
+                                const collector1 = message.createMessageComponentCollector({
+                                    filter,
+                                    max: 1,
+                                    time: 18000,
+                                    errors: ['time']
+                                });
+                                    //Collector On
+                                    collector1.on('collect', async b => {
+                                        await b.deferUpdate()
+                                        if (b.customId === "one1") {
+                                            const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                            const eltitulo = output1;
+                                            collectormsg(page, browser, urlone, eltitulo, miniatura1)
+
+                                        }
+                                    });
+                                    //Collector Off
+            
+                                    collector1.on('end', async(collected, reason) => {
+                                        if (collected.size < 1) {
+                                        console.log("Timeout 4");
+                                        await browser.close();
+                                        interaction.editReply({
+                                            embeds: [
+                                                new MessageEmbed()
+                                                    .setColor("RED")
+                                                    .setDescription("Te tardaste mucho en elejir...")
+                                            ], components:[]})
+                                        }
+                                    });
+                                });
+                        //Para 1 respuesta ___________________________________________________________________________________________________________________________________________________________________________________
+                    };
+                } else {interaction.editReply({
+                    embeds: [
+                        new MessageEmbed()
+                            .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
+                            .setColor("DARK_RED")
+                            .setTimestamp()
+                            .setDescription("No se encontraron coincidencias para **" + args + "** D:")
+                    ]});
+                    return await browser.close()
+                };
+
+
                 }
+
                 
                 catch(error)
                 {
-                    msg.edit({
+                    interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
                                 .setTimestamp()
-                                .setDescription("Hubo un error al cargar los ultimos capitulos")
+                                .setDescription("Hubo un error al buscar **" + args+"**")
                         ]});
                 }
-            };
-
-            //Para recoletar el numero de página __________________________________________ _________________________________________________________________________________________________________________________________________
-            async function collectormsg(msg, page, browser, urlone, eltitulo, miniatura, episodio) {
-                try {
-                message.channel.sendTyping();
-                msg.edit({
+            }
+            //Pone el numero de la página ___________________________________________________________________________________________________________________________________________________________________________________
+            async function collectormsg(page, browser, urlone, eltitulo, miniatura) {
+                interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("YELLOW")
-                                .setDescription("Recopilando información del **" + episodio+"** ..." + "\n **¿Cómo descargo un archivo de Mega o Stapé?**")
                                 .setThumbnail(miniatura)
+                                .setDescription("Recopilando información del episodio **" +  página + "** ..." + "\n **¿Cómo descargo un archivo de Mega o Stapé?**")
                                 .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
                         ], components:[]})
-                const result = await page.goto(urlone);
+                    const result = await page.goto("https://www3.animeflv.net/ver/" + urlone[0].replace('/anime/','') + "-"+ página);
                     if (result.status() === 404) {
-                    msg.edit({
+                    console.log('Episodio desconocido');
+                    interaction.editReply({
                         embeds: [
                             new MessageEmbed()
-                                .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL()})
+                                .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                 .setColor("DARK_RED")
-                                .setDescription("No existe ese episodio o aún no esta disponible")
+                                .setDescription("No existe un episodio **" + página + "** o aún no esta disponible")
                         ]});
                     return await browser.close()
                   } else {
-                    const enlaceoriginal = urlone;
+                    const enlaceoriginal = "https://www3.animeflv.net/ver/" + urlone[0].replace('/anime/','') + "-"+ página;
                     const detallesraros = new MessageActionRow().addComponents(
                         new MessageButton()
                         .setURL(enlaceoriginal)
@@ -336,6 +679,7 @@ module.exports.run = async(client, message, args) => {
                         {
                             /*nada*/
                         }
+                    
                     //PARA DOS LINKS _______________________________________________________________________________________________________________________________________________________________________
                     if(await page.evaluate(() => Array.from(document.querySelectorAll("#DwsldCn > div > table > tbody > tr:nth-child(2)"), el => el.textContent)[0]) !== undefined) {
                         //Nombre
@@ -543,7 +887,7 @@ module.exports.run = async(client, message, args) => {
                                         {
                                             /*nada*/
                                         }
-
+                                    
                                     //PARA SEIS LINKS _______________________________________________________________________________________________________________________________________________________________________
                                     if(await page.evaluate(() => Array.from(document.querySelectorAll("#DwsldCn > div > table > tbody > tr:nth-child(6)"), el => el.textContent)[0]) !== undefined) {
                                         //Nombre
@@ -596,14 +940,14 @@ module.exports.run = async(client, message, args) => {
                                                 /*nada*/
                                             }
 
-                                        msg.edit({
+                                        interaction.editReply({
                                             embeds: [
                                                 new MessageEmbed()
                                                     .setColor("DARK_GREEN")
                                                     .setTitle("Enlaces de descarga")
-                                                    .setThumbnail(miniatura)
                                                     .setURL(enlaceoriginal)
-                                                    .setDescription("**"+ eltitulo + "** | " + episodio)
+                                                    .setThumbnail(miniatura)
+                                                    .setDescription("**"+ eltitulo + "** | EPISODIO " + página)
                                                     .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
                                                     .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                                     .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
@@ -617,16 +961,16 @@ module.exports.run = async(client, message, args) => {
                                         await browser.close();
                     
                                         } else {
-                                        msg.edit({
+                                        interaction.editReply({
                                         embeds: [
                                             new MessageEmbed()
                                                 .setColor("DARK_GREEN")
                                                 .setTitle("Enlaces de descarga")
                                                 .setThumbnail(miniatura)
                                                 .setURL(enlaceoriginal)
-                                                .setDescription("**"+ eltitulo + "** | " + episodio)
+                                                .setDescription("**"+ eltitulo + "** | EPISODIO " + página)
                                                 .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
-                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
+                                                .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                                 .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                                 .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                                                 .addField("3. "+nombreenlace3, tamañoenlace3 + " en **" + Formatoenlace3 +`** [Click para descargar](${linkenlace3})`, false)
@@ -638,16 +982,16 @@ module.exports.run = async(client, message, args) => {
                                         };
                 
                                     } else {
-                                    msg.edit({
+                                    interaction.editReply({
                                     embeds: [
                                         new MessageEmbed()
                                             .setColor("DARK_GREEN")
                                             .setTitle("Enlaces de descarga")
                                             .setThumbnail(miniatura)
                                             .setURL(enlaceoriginal)
-                                            .setDescription("**"+ eltitulo + "** | " + episodio)
+                                            .setDescription("**"+ eltitulo + "** | EPISODIO " + página)
                                             .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
-                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
+                                            .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                             .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                             .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                                             .addField("3. "+nombreenlace3, tamañoenlace3 + " en **" + Formatoenlace3 +`** [Click para descargar](${linkenlace3})`, false)
@@ -658,16 +1002,16 @@ module.exports.run = async(client, message, args) => {
                                     };
                                 
                                 } else {
-                                msg.edit({
+                                interaction.editReply({
                                 embeds: [
                                     new MessageEmbed()
                                         .setColor("DARK_GREEN")
                                         .setTitle("Enlaces de descarga")
-                                        .setThumbnail(miniatura)
                                         .setURL(enlaceoriginal)
-                                        .setDescription("**"+ eltitulo + "** | " + episodio)
+                                        .setThumbnail(miniatura)
+                                        .setDescription("**"+ eltitulo + "** | EPISODIO " + página)
                                         .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
-                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
+                                        .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                         .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                         .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                                         .addField("3. "+nombreenlace3, tamañoenlace3 + " en **" + Formatoenlace3 +`** [Click para descargar](${linkenlace3})`, false)
@@ -677,16 +1021,16 @@ module.exports.run = async(client, message, args) => {
                                 };
         
                             } else {
-                            msg.edit({
+                            interaction.editReply({
                             embeds: [
                                 new MessageEmbed()
                                     .setColor("DARK_GREEN")
                                     .setTitle("Enlaces de descarga")
-                                    .setThumbnail(miniatura)
                                     .setURL(enlaceoriginal)
-                                    .setDescription("**"+ eltitulo + "** | " + episodio)
+                                    .setThumbnail(miniatura)
+                                    .setDescription("**"+ eltitulo + "** | EPISODIO " + página)
                                     .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
-                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
+                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                     .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                                     .addField("2. "+nombreenlace2, tamañoenlace2 + " en **" + Formatoenlace2 +`** [Click para descargar](${linkenlace2})`, false)
                             ], components:[detallesraros]})
@@ -695,16 +1039,16 @@ module.exports.run = async(client, message, args) => {
                             };
     
                         } else {
-                        msg.edit({
+                        interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_GREEN")
                                 .setTitle("Enlaces de descarga")
-                                .setThumbnail(miniatura)
                                 .setURL(enlaceoriginal)
-                                .setDescription("**"+ eltitulo + "** | " + episodio)
+                                .setThumbnail(miniatura)
+                                .setDescription("**"+ eltitulo + "** | EPISODIO " + página)
                                 .setImage("https://media.discordapp.net/attachments/946075296069730385/946829146535911576/como_puedo_descargar.gif?width=1049&height=471")
-                                                    .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
+                                .setFooter({text: "Si la descarga de Zippyshare o Mediafire no comienza, prueba copiando la dirección de enlace y pegandolo en otra pestaña"})
                                 .addField("1. "+nombreenlace1, tamañoenlace1 + " en **" + Formatoenlace1 +`** [Click para descargar](${linkenlace1})`, false)
                         ], components:[detallesraros]})
                     
@@ -712,33 +1056,35 @@ module.exports.run = async(client, message, args) => {
                         };
 
                     } else {
-                    msg.edit({
+                    interaction.editReply({
                         embeds: [
                             new MessageEmbed()
                                 .setColor("DARK_RED")
-                                .setDescription("No hay enlaces de descarga para el **" +  episodio + "** ...")
+                                .setThumbnail(miniatura)
+                                .setDescription("No hay enlaces de descarga episodio **" +  página + "** ...")
                         ], components:[detallesraros]})
                     
                     await browser.close();
                     };
                     }
-                }
-                catch(error)
-                {
-                    msg.edit({
-                        embeds: [
-                            new MessageEmbed()
-                                .setColor("DARK_RED")
-                                .setTimestamp()
-                                .setDescription("Hubo un error mientras cargaba los enlaces de descarga")
-                        ]});
-                    console.log(error)
-                }
             }
-};
+}
 module.exports.conf = {
-    "name": "ultimocap",
-    "description": [ "Muestra los episodios mas recientes del día" ],
-    "aliases": ["ultimocapitulo", "capitulonuevo", "capnuevo", "ultimoscaps"],
-    "usage": [ "ultimocap" ]
+    "name": "descargar",
+    "description": "Obtén enlaces de descarga de cualquier anime.",
+    "options":[
+        {
+            "name": "anime",
+            "description": "El nombre del anime que deseas descargar",
+            "type": 3,
+            "required": true
+        },
+        {
+            "name": "capitulo",
+            "description": "El número del episodio que deseas descargar",
+            "type": 10,
+            "required": true
+        }
+    ],
+    "category": "info"
 }

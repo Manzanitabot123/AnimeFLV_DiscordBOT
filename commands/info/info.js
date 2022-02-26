@@ -12,7 +12,7 @@ module.exports.run = async(client, message, args) => {
             //remplazar el mensaje por una url
             const anime = args.join(' ').replace(/ /g,"+");
             const member = message.member;
-            //comprobar el canal adecuado
+            
             if(!args.join(' ') || !args[0]){
                 message.reply("Te falta escribir el anime que quieres buscar")
                 return;

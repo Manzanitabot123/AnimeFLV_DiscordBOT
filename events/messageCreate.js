@@ -1,12 +1,30 @@
-//This template created by cFyt https://github.com/cFyt/discord.js-13-bot-template
+const { MessageEmbed } = require('discord.js');
 const { timeout } = require('../config.json');
 const { getPrefix } = require('../utils/getprefix');
 const lastuse = new Set();
 
 module.exports = message => {
-    let client = message.client
-    if (message.author.type == "bot") return
     let prefix = getPrefix(message)
+    let client = message.client
+    const mentionregexp = new RegExp(`<@!?${message.client.user.id}>`);
+    if (mentionregexp && message.content.startsWith("<@")){
+        const exampleEmbed = new MessageEmbed()
+            .setColor('YELLOW')
+            .setAuthor({name:`Hola ${message.author.username}`, iconURL: message.author.displayAvatarURL()})
+            .setDescription(`Para poder ver información y descargar animes clásicos, animes del momento y animes populares de AnimeFLV en **${message.guild.name}** es necesario que utilices: \`${prefix}\` como prefijo o el comando slash (/). `)
+            .setThumbnail(client.user.displayAvatarURL())
+        message.reply({embeds: [exampleEmbed]
+        })
+    } else if (message.content.startsWith("prefix") && message.content.includes("prefix")) {
+        const exampleEmbed = new MessageEmbed()
+            .setColor('YELLOW')
+            .setAuthor({name:`Hola ${message.author.username}`, iconURL: message.author.displayAvatarURL()})
+            .setDescription(`Mi prefijo original es: \`flv\` . Para **${message.guild.name}** es necesario que utilices: \`${prefix}\` como prefijo o el comando slash (/). `)
+            .setThumbnail(client.user.displayAvatarURL())
+        message.reply({embeds: [exampleEmbed]
+        })
+    };
+    if (message.author.type == "bot") return
     if (!message.content.startsWith(prefix)) return
     if (lastuse.has(message.author.username)) return
     let command = message.content.slice(prefix.length).split(' ')[0]

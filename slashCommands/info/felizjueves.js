@@ -158,7 +158,7 @@ module.exports.run = (client, interaction, options) => {
 }
 module.exports.conf = {
     "name": "felizjueves",
-    "description": "Activa/desactiva el mensaje semanal de Feliz jueves.",
+    "description": "Activa/desactiva el mensaje semanal de Feliz jueves",
     "options":[
         {
             "name": "activo",
