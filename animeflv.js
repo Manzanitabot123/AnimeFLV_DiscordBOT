@@ -101,10 +101,13 @@ var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
 }, null, true, 'America/Lima');
 
 var randomstate = new cron.CronJob('30 * * * * *', function() {
+    var xd = 0;
+    const totaldesrvs = client.guilds.cache.size;
+    const totaldeusers = client.guilds.cache.map(g => xd += g.memberCount)[totaldesrvs - 1];
     var randomstatus = new Array();
     randomstatus[0] = `en AnimeFLV 〢 flvhelp`;
-    randomstatus[1] = `en AnimeFLV 〢 ${client.users.cache.size} usuarios`;
-    randomstatus[2] = `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`;
+    randomstatus[1] = `en AnimeFLV 〢 ${totaldeusers} usuarios`;
+    randomstatus[2] = `en AnimeFLV 〢 ${totaldesrvs} servidores`;
     randomstatus[3] = `en AnimeFLV 〢 animeflv.net`;
     randomstatus[4] = `en AnimeFLV 〢 /help`;
     const randomnumber = Math.floor(randomstatus.length * Math.random());
