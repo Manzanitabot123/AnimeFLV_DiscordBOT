@@ -4,7 +4,8 @@ module.exports = {
         media_estrella: "<a:media_estrellaFLV:945409376523526164>",
         animeflv: "<a:AnimeFLV1:945675767369568266><a:AnimeFLV2:945675765138202664><a:AnimeFLV3:945675764957872159><a:AnimeFLV4:945675765435994192>",
         izquierda: "<:IzquierdaFLV:945696417526218783>",
-        derecha: "<:DerechaFLV:945696417740116018>"
+        derecha: "<:DerechaFLV:945696417740116018>",
+        listo: "<a:ListoFLV:947173571699044402>"
     },
     errors:{
         error: "ERROR",

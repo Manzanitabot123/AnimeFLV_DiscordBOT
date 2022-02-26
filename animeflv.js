@@ -11,8 +11,17 @@ client.aliases = new Collection();
 client.slash = new Collection();
 client.on('ready', () => {
   console.log(`PRENDIDO: ${client.user.tag}`);
-  client.user.setStatus("idle");
-  client.user.setActivity({ name: "en AnimeFLV 〢 flvhelp",  type: 'WATCHING' });
+  client.user.setPresence(
+    { 
+        activities: [
+            { 
+                name: "en AnimeFLV 〢 flvhelp" , 
+                type: 'WATCHING' 
+            }
+        ], 
+        status: "idle"
+    }
+  ) 
   let clientguilds = client.guilds.cache;
   console.log(clientguilds.map(g => `${g.id} | ${g.name} | ${g.memberCount} usuarios`) || "Ningun servidor")
   require('./utils/handler')(client)
@@ -49,7 +58,7 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
 });
 
 
-var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
+var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
     console.log("Feliz jueves.");
     client.user.setActivity({ name: "Feliz jueves",  type: 'WATCHING' })
     var testchart = `https://media.discordapp.net/attachments/946075296069730385/946436742473457664/felizjueves.gif`;
@@ -100,21 +109,35 @@ var job = new cron.CronJob('08 08 08 1-31 0-11 4', function() {
     });
 }, null, true, 'America/Lima');
 
-var randomstate = new cron.CronJob('30 * * * * *', function() {
+var state1 = new cron.CronJob('* 00 * * * *', function() {
     var xd = 0;
     const totaldesrvs = client.guilds.cache.size;
     const totaldeusers = client.guilds.cache.map(g => xd += g.memberCount)[totaldesrvs - 1];
-    var randomstatus = new Array();
-    randomstatus[0] = `en AnimeFLV 〢 flvhelp`;
-    randomstatus[1] = `en AnimeFLV 〢 ${totaldeusers} usuarios`;
-    randomstatus[2] = `en AnimeFLV 〢 ${totaldesrvs} servidores`;
-    randomstatus[3] = `en AnimeFLV 〢 animeflv.net`;
-    randomstatus[4] = `en AnimeFLV 〢 /help`;
-    const randomnumber = Math.floor(randomstatus.length * Math.random());
-	client.user.setActivity({ name: randomstatus[randomnumber],  type: 'WATCHING' })
+	client.user.setActivity({ name: `en AnimeFLV 〢 ${totaldeusers} usuarios`,  type: 'WATCHING' })
+}, null, true, 'America/Lima');
+
+var state2 = new cron.CronJob('* 12 * * * *', function() {
+	client.user.setActivity({ name: `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`,  type: 'WATCHING' })
+}, null, true, 'America/Lima');
+
+var state3 = new cron.CronJob('* 24 * * * *', function() {
+	client.user.setActivity({ name: `en AnimeFLV 〢 /help`,  type: 'WATCHING' })
+}, null, true, 'America/Lima');
+
+var state4 = new cron.CronJob('* 36 * * * *', function() {
+	client.user.setActivity({ name: `en AnimeFLV 〢 animeflv.net`,  type: 'WATCHING' })
+}, null, true, 'America/Lima');
+
+
+var state5 = new cron.CronJob('* 48 * * * *', function() {
+	client.user.setActivity({ name: `en AnimeFLV 〢 flvhelp`,  type: 'WATCHING' })
 }, null, true, 'America/Lima');
 
 job.start();
-randomstate.start();
+state1.start();
+state2.start();
+state3.start();
+state4.start();
+state5.start();
 
 client.login(token);

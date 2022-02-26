@@ -16,7 +16,7 @@ module.exports.run = (client, message, args, prefix) => {
         let wprefix = args[0]
         if(wprefix.length > 3) return sendError(message, textoyemojis.commands.setPrefix.errors.long)
         if(prefix !== wprefix){
-            db.set(`prefix.${message.guild.id}`, wprefix)
+            db.set(`prefixflv.${message.guild.id}`, wprefix)
             sendSuccess(message, textoyemojis.commands.setPrefix.messages.newPrefix+"**"+wprefix+"**")
             return
         }else{ 

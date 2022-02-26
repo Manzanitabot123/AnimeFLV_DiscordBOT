@@ -39,7 +39,7 @@ module.exports.run =  (client,interaction) => {
             })
 
             var fprefix;
-            let prefix = db.get(`prefix.${interaction.guildId}`)
+            let prefix = db.get(`prefixflv.${interaction.guildId}`)
             if (prefix) {
                 fprefix = prefix
             } else {
