@@ -52,7 +52,7 @@ module.exports.run = (client, interaction, options) => {
                             .setColor("DARK_GREEN")
                             .setAuthor({name: `${interaction.guild.me.displayName}`, iconURL: interaction.guild.iconURL()})
                             .setTimestamp()
-                            .setDescription(textoyemojis.commands.felizjueves.messages.sigueConfig +"**Activada** ." +`\n`+ textoyemojis.commands.felizjueves.messages.newChannel + `<#${canalelejido1}>`)
+                            .setDescription(textoyemojis.commands.felizjueves.messages.sigueConfig +"**Activado** ." +`\n`+ textoyemojis.commands.felizjueves.messages.newChannel + `<#${canalelejido1}>`)
                     ]
                 })
             } else { 

@@ -90,7 +90,7 @@ var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
                     attachment: testchart,
                     name: 'feliz_jueves.gif'
                 }],
-                content:`**Feliz jueves a todos**`,
+                content:`**Feliz jueves a todos** みんなにハッピー木曜日 `,
             });
         } else if (channel && ffelizjueves !== "falso" && chfelizjueves !== "random") {
             client.channels.cache.get(chfelizjueves).send({
@@ -98,7 +98,7 @@ var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
                     attachment: testchart,
                     name: 'feliz_jueves.gif'
                 }],
-                content:`**Feliz jueves a todos**`,
+                content:`**Feliz jueves a todos** みんなにハッピー木曜日 `,
             });
         } else {
             console.log('El server ' + guild.name + ' no tiene canales disponibles o ha desactivado el felizjueves');

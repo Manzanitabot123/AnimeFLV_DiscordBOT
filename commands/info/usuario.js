@@ -82,7 +82,8 @@ module.exports.run = async(client, message, args) => {
                     return await browser.close()
                   } else {
 
-                    const urlminuscula = await page.mainFrame().url();
+                    const urlsinminuscula = await page.mainFrame().url();
+                    const urlminuscula = urlsinminuscula.toLowerCase();
 
                     //link
                     const linkdelpfp = await page.evaluate(() => Array.from(document.querySelectorAll('body > div.Wrapper > div > div > div > aside > div > div > figure > a[href]'), a => a.getAttribute('href'))[0])
