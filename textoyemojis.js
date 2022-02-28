@@ -10,7 +10,12 @@ module.exports = {
         canal: "<:CanalFLV:947286971095605248>",
         dado: "<a:DadoFLV:947287706642317332>",
         encendido: "<:EncendidoFLV:947306164469788702>",
-        apagado: "<:ApagadoFLV:947306164440412211>"
+        apagado: "<:ApagadoFLV:947306164440412211>",
+        animeflv_icon: "<:AnimeFLV:945855622669287534>",
+        facebook_icon: "<:FacebookFLV:945855771135082546>",
+        twitter_icon: "<:TwitterFLV:945856036064067586>",
+        instagram_icon: "<:InstagramFLV:947687993399980102>",
+        youtube_icon: "<:YoutubeFLV:947686135419793469>"
     },
     errors:{
         error: "ERROR",

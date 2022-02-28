@@ -38,7 +38,7 @@ module.exports = async (client) => {
                     files.forEach(file => {
                         let prob = require('../slashCommands/' + catefile + "/" + file)
                         client.slash.set(prob.conf.name, prob)
-                        cmds.push({ name: prob.conf.name, description: prob.conf.description[1], options: prob.conf.options })
+                        cmds.push({ name: prob.conf.name, description: prob.conf.description, options: prob.conf.options })
 
                     })
 

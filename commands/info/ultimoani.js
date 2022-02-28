@@ -421,5 +421,6 @@ module.exports.conf = {
     "name": "ultimoani",
     "description": [ "Muestra los últimos animes agregados a AnimeFLV." ],
     "aliases": ["ultimoanime", "animenuevo"],
-    "usage": [ "ultimoanime" ]
+    "usage": [ "ultimoanime" ],
+    "category": "info"
 }

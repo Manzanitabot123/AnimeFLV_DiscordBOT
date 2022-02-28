@@ -587,5 +587,6 @@ module.exports.conf = {
     "name": "usuario",
     "description": [ "Revisa perfiles de usuarios de  AnimeFLV" ],
     "aliases": ["user"],
-    "usage": ["latencia"]
+    "usage": ["latencia"],
+    "category": "info"
 }

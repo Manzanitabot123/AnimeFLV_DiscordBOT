@@ -740,5 +740,6 @@ module.exports.conf = {
     "name": "ultimocap",
     "description": [ "Muestra los episodios mas recientes del día" ],
     "aliases": ["ultimocapitulo", "capitulonuevo", "capnuevo", "ultimoscaps"],
-    "usage": [ "ultimocap" ]
+    "usage": [ "ultimocap" ],
+    "category": "info"
 }

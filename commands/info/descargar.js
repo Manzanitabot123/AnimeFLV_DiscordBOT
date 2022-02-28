@@ -1118,5 +1118,6 @@ module.exports.conf = {
     "name": "descargar",
     "description": [ "Obtén enlaces de descarga de cualquier anime." ],
     "aliases": ["download", "descarga", "desc", "down"],
-    "usage": [ "descargar" ]
+    "usage": [ "descargar" ],
+    "category": "info"
 }

@@ -639,5 +639,6 @@ module.exports.conf = {
     "name": "emision",
     "description": [ "Muestra los anime que se encuentran en emisión." ],
     "aliases": [ "enemision", "actual" ],
-    "usage": [ "emision" ]
+    "usage": [ "emision" ],
+    "category": "info"
 }

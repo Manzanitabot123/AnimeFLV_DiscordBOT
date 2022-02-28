@@ -928,5 +928,6 @@ module.exports.conf = {
     "name": "info",
     "description": [ "Busca y obtén información de un anime." ],
     "aliases": ["animeinfo", "infoanime","information", "search", "buscar"],
-    "usage": [ "info" ]
+    "usage": [ "info" ],
+    "category": "info"
 }

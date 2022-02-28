@@ -30,5 +30,6 @@ module.exports.conf = {
     "name": "prefix",
     "description": ["Ve o establece el prefijo del bot."],
     "aliases": ["setprefix", "sprefix", "prefijo"],
-    "usage": ["prefijo ?p / prefijo"]
+    "usage": ["prefijo ?p / prefijo"],
+    "category": "settings"
 }

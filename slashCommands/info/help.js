@@ -2,31 +2,34 @@ const { Client, Interaction, MessageEmbed, MessageButton, MessageActionRow } = r
 const db = require('quick.db');
 require("dotenv").config();
 const defprefix = process.env.PREFIX;
+const { AnimeWallpaper } = require("anime-wallpapers");
+const wall = new AnimeWallpaper();
 /**
  * @param {Client} client
  * @param {Interaction} interaction
  */
-module.exports.run =  (client,interaction) => {
+module.exports.run =  async(client,interaction) => {
+    const wallpaperslash = await wall.getAnimeWall3()
     const detallesurl = new MessageActionRow().addComponents(
         new MessageButton()
         .setURL('https://www.animeflv.net/')
-        .setLabel("Sitio web")
-        .setEmoji('<:AnimeFLV:945855622669287534>')
+        .setEmoji(`${textoyemojis.emojis.animeflv_icon}`)
         .setStyle('LINK'),
         new MessageButton()
         .setURL('https://www.facebook.com/groups/armyanime')
-        .setLabel("Facebook")
-        .setEmoji('<:FacebookFLV:945855771135082546>')
+        .setEmoji(`${textoyemojis.emojis.facebook_icon}`)
         .setStyle('LINK'),
         new MessageButton()
         .setURL('https://twitter.com/ArmyAnime_')
-        .setLabel("Twitter")
-        .setEmoji('<:TwitterFLV:945856036064067586>')
+        .setEmoji(`${textoyemojis.emojis.twitter_icon}`)
         .setStyle('LINK'),
         new MessageButton()
         .setURL('https://www.instagram.com/animearmy.jp/')
-        .setLabel("Instagram")
-        .setEmoji('<:InstagramFLV:945856237969506304>')
+        .setEmoji(`${textoyemojis.emojis.instagram_icon}`)
+        .setStyle('LINK'),
+        new MessageButton()
+        .setURL('https://www.youtube.com/c/kudasai')
+        .setEmoji(`${textoyemojis.emojis.youtube_icon}`)
         .setStyle('LINK')
     );
     const embed = new MessageEmbed()
@@ -51,7 +54,8 @@ module.exports.run =  (client,interaction) => {
                 embed.setDescription(`**El prefijo actual es \`${fprefix}\`**\n\nEs un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 10 comandos:`)
                 embed.addField(`☆ ${emote}`, cmds.map(c => `*${c.conf.description}* \n ( Aliases: ${(c.conf.aliases).join("; ")} )`).join(" "));
             });
-            embed.setImage('https://latarde.com/wp-content/uploads/2021/04/alternativas-a-AnimeFLV.jpg');
+            embed.setImage(wallpaperslash[0].image);
+            embed.setFooter({text: "Imagen: "+wallpaperslash[0].title})
             embed.setTimestamp();
 
             return interaction.reply({embeds: [embed], components:[detallesurl]});

@@ -1,6 +1,6 @@
 {
   "name": "animeflv_bot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Un Bot de Discord (no oficial 🤖) de Animeflv para ver información y descargar animes clásicos, actuales y populares.",
   "main": "main.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@discordjs/rest": "^0.1.0-canary.0",
+    "anime-wallpapers": "^1.0.1",
     "ascii-table": "^0.0.9",
     "common-tags": "^1.8.2",
     "cron": "^1.8.2",
@@ -29,9 +30,9 @@
     "zs-extract": "^1.4.1"
   },
   "devDependencies": {
+    "node-fetch": ">=2.6.7",
     "nth-check": ">=2.0.1",
     "simple-get": ">=3.1.1",
-    "tar": ">=6.1.9",
-    "node-fetch": ">=2.6.7"
+    "tar": ">=6.1.9"
   }
 }

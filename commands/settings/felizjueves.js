@@ -243,5 +243,6 @@ module.exports.conf = {
     "name": "felizjueves",
     "description": [ "Activa/desactiva el mensaje semanal de Feliz jueves." ],
     "aliases": ["feliz-jueves"],
-    "usage": ["felizjueves"]
+    "usage": ["felizjueves"],
+    "category": "settings"
 }

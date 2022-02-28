@@ -37,7 +37,8 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
 
             if (err) return logger.error(`Ocurrió un erro al cargar los comandos: ${err.stack}`);
 
-            if (!files) return logger.warn(`[ADVERTENCIA]: No se encontraron archivos en el directorio "${folder.toUpperCase()}"`);
+            if (!files) { return logger.warn(`[ADVERTENCIA]: No se encontraron archivos en el directorio "${folder.toUpperCase()}"`)
+            } else { console.log(files.length+" comandos") };
 
             files.forEach((file) => {
 

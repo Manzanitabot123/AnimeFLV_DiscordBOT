@@ -173,5 +173,5 @@ module.exports.conf = {
             "required": false,
         }
     ],
-    "category": "info"
+    "category": "settings"
 } 
