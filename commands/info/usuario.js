@@ -14,8 +14,20 @@ module.exports.run = async(client, message, args) => {
         const member = message.member;
         //comprobar el canal adecuado
         if(!args.join(' ') || !args[0]){
+            const defurl = "notiene";
+            var finalvalidarurl;
+            let validarurl = db.get(`userdeanimeflv.${message.author.id}`)
+            if (validarurl) {
+                finalvalidarurl = validarurl
+            } else {
+                finalvalidarurl = defurl
+            };
+
+            if (finalvalidarurl === 'notiene') {
                 message.reply("Te falta escribir el usuario que quieres buscar")
-                return;
+            } else if (finalvalidarurl !== 'notiene') {
+                usuario(`${finalvalidarurl}`);
+            }
         } else if(args.join(' ').length < 3){
                 message.reply("Ese nombre es muy corto")
                 return;
@@ -26,20 +38,20 @@ module.exports.run = async(client, message, args) => {
                 message.reply("Tu busqueda contiene más de un reglón")
                 return;
         } else {
-                usuario();
+                usuario(`https://www3.animeflv.net/perfil/${user_animeflv}`);
         }
 
-        async function usuario(){
+        async function usuario(urlfinal){
                 //mensaje de espera (cargando...)
                 message.channel.sendTyping();
                 const msg = await message.reply({
                     embeds: [
                         new MessageEmbed()
                             .setColor("YELLOW")
-                            .setDescription("Buscando al usuario **" +  args.join(' ') + "** ...")
+                            .setDescription("Buscando...")
                     ], components:[]});
                 try{
-                const url = `https://www3.animeflv.net/perfil/${user_animeflv}`;
+                const url = urlfinal;
                 
                 //info
                 const browser = await puppeteer.launch({
@@ -488,7 +500,7 @@ module.exports.run = async(client, message, args) => {
                         }
                     } else {
                         if ( finaluserid === "000000000000000000" ) {
-                                if (finalvalidar === "sitiene") {
+                                if (finalvalidar !== "notiene") {
                                         msg.edit({
                                         embeds: [
                                             new MessageEmbed()
@@ -536,7 +548,7 @@ module.exports.run = async(client, message, args) => {
                                                     await b.deferUpdate()
                                                     if (b.customId === "add") {
                                                         db.set(`useridflv.${urlminuscula}`, `${message.author.id}`)
-                                                        db.set(`userdeanimeflv.${message.author.id}`, "sitiene")
+                                                        db.set(`userdeanimeflv.${message.author.id}`, `${urlminuscula}`)
                                                         let useridadd = db.get(`useridflv.${urlminuscula}`)
                                                         mensaje.edit({
                                                             embeds: [

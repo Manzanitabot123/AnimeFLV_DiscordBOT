@@ -10,49 +10,60 @@ const db = require('quick.db');
  * @param {Interaction} interaction
  */
 module.exports.run = (client, interaction, options) => {
-    const args = options.nombre.value;
-    const user_animeflv = args.replace(/ /g,"+");
     const member = interaction.member;
     
-        if(!args){
+        if(!options.nombre){
+            const defurl = "notiene";
+            var finalvalidarurl;
+            let validarurl = db.get(`userdeanimeflv.${interaction.user.id}`)
+            if (validarurl) {
+                finalvalidarurl = validarurl
+            } else {
+                finalvalidarurl = defurl
+            };
+
+            if (finalvalidarurl === 'notiene') {
                 interaction.reply({
                     content: "Te falta escribir el usuario que quieres buscar", 
                     ephemeral: true
                 })
-                return;
-        } else if(args.length < 3){
+            } else if (finalvalidarurl !== 'notiene') {
+                usuarioslash(`${finalvalidarurl}`)
+            }
+        } else if(options.nombre.value.length < 3){
                 interaction.reply({
                     content: "Ese nombre es muy corto", 
                     ephemeral: true
                 })
                 return;
-        } else if(args.length > 40){
+        } else if(options.nombre.value.length > 40){
                 interaction.reply({
                     content: "Es un nombre muy largo", 
                     ephemeral: true
                 })
                 return;
-        } else if(args.includes(`\n`)){
+        } else if(options.nombre.value.includes(`\n`)){
                 interaction.reply({
                     content: "Tu busqueda contiene más de un reglón", 
                     ephemeral: true
                 })
                 return;
         } else {
-                usuarioslash()
+                const user_animeflv = options.nombre.value.replace(/ /g,"+")
+                usuarioslash(`https://www3.animeflv.net/perfil/${user_animeflv}`)
         }
 
-        async function usuarioslash(){
+        async function usuarioslash(urlfinal){
             //mensaje de espera (cargando...)
             await interaction.deferReply();
             interaction.editReply({
                 embeds: [
                     new MessageEmbed()
                         .setColor("YELLOW")
-                        .setDescription("Buscando al usuario **" +  args + "** ...")
+                        .setDescription("Buscando...")
                 ], components:[]});
             try{
-            const url = `https://www3.animeflv.net/perfil/${user_animeflv}`;
+            const url = urlfinal;
             
             //info
             const browser = await puppeteer.launch({
@@ -90,7 +101,7 @@ module.exports.run = (client, interaction, options) => {
                             new MessageEmbed()
                                 .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                 .setColor("DARK_RED")
-                                .setDescription("No existe nadie llamado **" + args.join(' ') + "** D:")
+                                .setDescription("No existe nadie llamado **" + options.nombre.join(' ') + "** D:")
                         ]});
                     return await browser.close()
                   } else {
@@ -397,6 +408,15 @@ module.exports.run = (client, interaction, options) => {
                     finaluserid = defuserid
                 };
 
+                const defvalidar = "notiene";
+                    var finalvalidar;
+                    let validar = db.get(`userdeanimeflv.${interaction.user.id}`)
+                    if (validar) {
+                        finalvalidar = validar
+                    } else {
+                        finalvalidar = defvalidar
+                    };
+
                 if( finaluserid !== "000000000000000000" ) {
                     if ( finaluserid === interaction.user.id ) {
                         const detallesyunjoin = new MessageActionRow().addComponents(
@@ -435,6 +455,7 @@ module.exports.run = (client, interaction, options) => {
                                     collector5.on('collect', async b => {
                                         await b.deferUpdate()
                                         db.set(`useridflv.${urlminuscula}`, "000000000000000000")
+                                        db.set(`userdeanimeflv.${interaction.user.id}`, "notiene")
                                         if (b.customId === "unjoin") {
                                             interaction.editReply({
                                                 embeds: [
@@ -492,41 +513,76 @@ module.exports.run = (client, interaction, options) => {
                     }
                 } else {
                     if ( finaluserid === "000000000000000000" ) {
+                        if (finalvalidar !== "notiene") {
+                            interaction.editReply({
+                            embeds: [
+                                new MessageEmbed()
+                                .setTitle(`Perfil de ${nombre_original}`)
+                                .setURL(enlacedelpfp)
+                                .setImage(enlacedellogo)
+                                .setColor(colorhex[0])
+                                .setThumbnail(Thumbnail1)
+                                .addField('Animes favoritos:', animes_favoritos, false)
+                                .addField('Animes seguidos:', animes_seguidos, false)
+                                .addField('Animes pendientes:', animes_pendientes, false)
+                            ], components:[detalles]})
+                        } else if (finalvalidar === "notiene") {
                         const detallesyadd = new MessageActionRow().addComponents(
-                        new MessageButton()
-                        .setURL(enlacedelpfp)
-                        .setLabel("Ir al perfil")
-                        .setStyle('LINK'),
-                        new MessageButton()
-                        .setCustomId('add')
-                        .setLabel("Vincular con Discord")
-                        .setStyle('SUCCESS')
-                        );
-                        interaction.editReply({
-                        embeds: [
-                            new MessageEmbed()
-                            .setTitle(`Perfil de ${nombre_original}`)
+                            new MessageButton()
                             .setURL(enlacedelpfp)
-                            .setImage(enlacedellogo)
-                            .setColor(colorhex[0])
-                            .setThumbnail(Thumbnail1)
-                            .addField('Animes favoritos:', animes_favoritos, false)
-                            .addField('Animes seguidos:', animes_seguidos, false)
-                            .addField('Animes pendientes:', animes_pendientes, false)
-                        ], components:[detallesyadd]}).then(mensaje => {
-                            const filter = (button) => button.user.id === member.id;
-                            const collector5 = mensaje.createMessageComponentCollector({
-                                filter,
-                                max: 1,
-                                time: 18000,
-                                errors: ['time']
-                            });
-                                //Collector On
-                                collector5.on('collect', async b => {
-                                    await b.deferUpdate()
-                                    db.set(`useridflv.${urlminuscula}`, `${interaction.user.id}`)
-                                    let useridadd = db.get(`useridflv.${urlminuscula}`)
-                                    if (b.customId === "add") {
+                            .setLabel("Ir al perfil")
+                            .setStyle('LINK'),
+                            new MessageButton()
+                            .setCustomId('add')
+                            .setLabel("Vincular con Discord")
+                            .setStyle('SUCCESS')
+                            );
+                            interaction.editReply({
+                            embeds: [
+                                new MessageEmbed()
+                                .setTitle(`Perfil de ${nombre_original}`)
+                                .setURL(enlacedelpfp)
+                                .setImage(enlacedellogo)
+                                .setColor(colorhex[0])
+                                .setThumbnail(Thumbnail1)
+                                .addField('Animes favoritos:', animes_favoritos, false)
+                                .addField('Animes seguidos:', animes_seguidos, false)
+                                .addField('Animes pendientes:', animes_pendientes, false)
+                            ], components:[detallesyadd]}).then(mensaje => {
+                                const filter = (button) => button.user.id === member.id;
+                                const collector5 = mensaje.createMessageComponentCollector({
+                                    filter,
+                                    max: 1,
+                                    time: 18000,
+                                    errors: ['time']
+                                });
+                                    //Collector On
+                                    collector5.on('collect', async b => {
+                                        await b.deferUpdate()
+                                        if (b.customId === "add") {
+                                            db.set(`useridflv.${urlminuscula}`, `${interaction.user.id}`)
+                                            db.set(`userdeanimeflv.${interaction.user.id}`, `${urlminuscula}`)
+                                            let useridadd = db.get(`useridflv.${urlminuscula}`)
+                                            interaction.editReply({
+                                                embeds: [
+                                                    new MessageEmbed()
+                                                    .setTitle(`Perfil de ${nombre_original}`)
+                                                    .setURL(enlacedelpfp)
+                                                    .setImage(enlacedellogo)
+                                                    .setColor(colorhex[0])
+                                                    .setThumbnail(Thumbnail1)
+                                                    .addField('Animes favoritos:', animes_favoritos, false)
+                                                    .addField('Animes seguidos:', animes_seguidos, false)
+                                                    .addField('Animes pendientes:', animes_pendientes, false)
+                                                    .addField('Usuario en Discord:', "```"+`${client.users.cache.get(useridadd).tag}`+"```" + textoyemojis.emojis.listo + " Ha sido vinculado a tu cuenta", false)
+                                                    .setFooter({text: "Usuario de Discord desde el " + moment(client.users.cache.get(useridadd).createdAt).locale("es").format('dddd, do MMMM YYYY'), iconURL: client.users.cache.get(useridadd).displayAvatarURL({ dynamic: false })})
+                                                ], components:[detalles]})
+                                        }
+                                    });
+                                    //Collector Off
+            
+                                    collector5.on('end', async(collected, reason) => {
+                                        if (collected.size < 1) {
                                         interaction.editReply({
                                             embeds: [
                                                 new MessageEmbed()
@@ -538,30 +594,12 @@ module.exports.run = (client, interaction, options) => {
                                                 .addField('Animes favoritos:', animes_favoritos, false)
                                                 .addField('Animes seguidos:', animes_seguidos, false)
                                                 .addField('Animes pendientes:', animes_pendientes, false)
-                                                .addField('Usuario en Discord:', "```"+`${client.users.cache.get(useridadd).tag}`+"```" + textoyemojis.emojis.listo + " Ha sido vinculado a tu cuenta", false)
-                                                .setFooter({text: "Usuario de Discord desde el " + moment(client.users.cache.get(useridadd).createdAt).locale("es").format('dddd, do MMMM YYYY'), iconURL: client.users.cache.get(useridadd).displayAvatarURL({ dynamic: false })})
                                             ], components:[detalles]})
-                                    }
+                                        }
+                                    });
                                 });
-                                //Collector Off
-        
-                                collector5.on('end', async(collected, reason) => {
-                                    if (collected.size < 1) {
-                                    interaction.editReply({
-                                        embeds: [
-                                            new MessageEmbed()
-                                            .setTitle(`Perfil de ${nombre_original}`)
-                                            .setURL(enlacedelpfp)
-                                            .setImage(enlacedellogo)
-                                            .setColor(colorhex[0])
-                                            .setThumbnail(Thumbnail1)
-                                            .addField('Animes favoritos:', animes_favoritos, false)
-                                            .addField('Animes seguidos:', animes_seguidos, false)
-                                            .addField('Animes pendientes:', animes_pendientes, false)
-                                        ], components:[detalles]})
-                                    }
-                                });
-                            });
+                        }
+
                         } else {
                             interaction.editReply({
                                 embeds: [
@@ -590,7 +628,7 @@ module.exports.run = (client, interaction, options) => {
                         new MessageEmbed()
                             .setColor("DARK_RED")
                             .setTimestamp()
-                            .setDescription("Hubo un error mientras buscaba al usuario **" + args+"**")
+                            .setDescription("Hubo un error en la búsqueda")
                     ]});
                 console.log(error)
             }
@@ -605,7 +643,7 @@ module.exports.conf = {
             "name": "nombre",
             "description": "Escribe el nombre del usuario",
             "type": 3,
-            "required": true
+            "required": false
         }
     ],
     "category": "info"
