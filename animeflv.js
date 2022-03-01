@@ -61,7 +61,7 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
 
 var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
     console.log("Feliz jueves.");
-    client.user.setActivity({ name: "Feliz jueves",  type: 'WATCHING' })
+    client.user.setPresence({ activities: [{ name: "Feliz jueves" , type: 'WATCHING' }]})
     var testchart = `https://media.discordapp.net/attachments/946075296069730385/946436742473457664/felizjueves.gif`;
     client.guilds.cache.forEach(guild => {
         try {
@@ -114,24 +114,24 @@ var state1 = new cron.CronJob('* 00 * * * *', function() {
     var xd = 0;
     const totaldesrvs = client.guilds.cache.size;
     const totaldeusers = client.guilds.cache.map(g => xd += g.memberCount)[totaldesrvs - 1];
-	client.user.setActivity({ name: `en AnimeFLV 〢 ${totaldeusers} usuarios`,  type: 'WATCHING' })
+	client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 ${totaldeusers} usuarios`,  type: 'WATCHING' }]})
 }, null, true, 'America/Lima');
 
 var state2 = new cron.CronJob('* 12 * * * *', function() {
-	client.user.setActivity({ name: `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`,  type: 'WATCHING' })
+	client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`,  type: 'WATCHING' }]})
 }, null, true, 'America/Lima');
 
 var state3 = new cron.CronJob('* 24 * * * *', function() {
-	client.user.setActivity({ name: `en AnimeFLV 〢 /help`,  type: 'WATCHING' })
+	client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 /help`,  type: 'WATCHING' }]})
 }, null, true, 'America/Lima');
 
 var state4 = new cron.CronJob('* 36 * * * *', function() {
-	client.user.setActivity({ name: `en AnimeFLV 〢 animeflv.net`,  type: 'WATCHING' })
+	client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 animeflv.net`,  type: 'WATCHING' }]})
 }, null, true, 'America/Lima');
 
 
 var state5 = new cron.CronJob('* 48 * * * *', function() {
-	client.user.setActivity({ name: `en AnimeFLV 〢 flvhelp`,  type: 'WATCHING' })
+	client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 flvhelp`,  type: 'WATCHING' }]})
 }, null, true, 'America/Lima');
 
 job.start();

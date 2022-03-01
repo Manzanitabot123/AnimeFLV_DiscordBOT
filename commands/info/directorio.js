@@ -8,10 +8,31 @@ const random = require('random');
  * @param {Message} message
  */
 module.exports.run = async(client, message, args) => {
-            directorio()
+            var numerodepagina;
+            if ((!args.join(' ')) || (!args[0])){
+                numerodepagina = 1;
+                directorio(numerodepagina - 1)
+            } else if(args.join(' ').length > 3){
+                message.reply("Tiene que ser un numero entre 1 y 146")
+            } else if(message.content.includes(`\n`)){
+                message.reply("Tu búsqueda contiene más de un reglón")
+            } else {
+                var text = args[0];
+                var pointNum = parseFloat(text);
+                if (isNaN(pointNum)) {
+                    message.reply("Tiene que ser un numero")
+                } else if (pointNum < 1) {
+                    message.reply("El número debe ser mayor a 0")
+                } else if ( pointNum > 146) {
+                    message.reply("El número debe ser menor a 146")
+                } else { 
+                    numerodepagina = pointNum;
+                    directorio(numerodepagina - 1)
+                }
+            }
             
             //función de busqueda
-            async function directorio(){
+            async function directorio(numerodepg){
                 //mensaje de espera (cargando...)
                 const msg = await message.reply({
                     embeds: [
@@ -22,7 +43,7 @@ module.exports.run = async(client, message, args) => {
                 message.channel.sendTyping();
 
                 try{
-                            const url = `https://www3.animeflv.net/browse?page=1`;
+                            const url = `https://www3.animeflv.net/browse?page=${numerodepg+1}`;
                             //info
                             const browser = await puppeteer.launch({
                                 headless: true,
@@ -92,7 +113,7 @@ module.exports.run = async(client, message, args) => {
                                                         button2
                                                     ]
                                                 
-                                                paginationEmbed(browser, msg, page, pages, buttonList);
+                                                paginationEmbed(numerodepg, browser, msg, page, pages, buttonList);
                                             
                                             }
                             }
@@ -111,7 +132,7 @@ module.exports.run = async(client, message, args) => {
                         }
 
 
-                        async function paginationEmbed (browser, msg, pagina, pages, buttonList) {
+                        async function paginationEmbed (numerodepg, browser, msg, pagina, pages, buttonList) {
                             if (!msg && !msg.channel) throw new Error("El canal es innacesible");
                             if (!pages) throw new Error("No hay páginas");
                             if (!buttonList) throw new Error("No hay botones");
@@ -121,7 +142,7 @@ module.exports.run = async(client, message, args) => {
                               );
                             if (buttonList.length !== 2) throw new Error("Se necesitan dos botones");
                           
-                            let page = 0;
+                            let page = numerodepg;
 
                             const row = new MessageActionRow().addComponents(buttonList);
 

@@ -7,11 +7,31 @@ const random = require('random');
  * @param {Client} client
  * @param {Interaction} interaction
  */
-module.exports.run = (client, interaction, prefix) => {
-    directorioslash()
+module.exports.run = (client, interaction, options) => {
+    var numerodepagina;
+            if (!options.página){
+                numerodepagina = 1;
+                directorioslash(numerodepagina - 1)
+            } else {
+                var pointNum = options.página.value;
+                if (pointNum < 1) {
+                    interaction.reply({
+                      content: "El número debe ser mayor a 0", 
+                      ephemeral: true
+                  })
+                } else if ( pointNum > 146) {
+                    interaction.reply({
+                      content: "El número debe ser menor a 146", 
+                      ephemeral: true
+                  })
+                } else { 
+                    numerodepagina = pointNum;
+                    directorioslash(numerodepagina - 1)
+                }
+            }
             
             //función de busqueda
-            async function directorioslash(){
+            async function directorioslash(numerodepg){
                 //mensaje de espera (cargando...)
                 await interaction.deferReply();
                 interaction.editReply({
@@ -22,7 +42,7 @@ module.exports.run = (client, interaction, prefix) => {
                     ], components:[]});
 
                 try{
-                            const url = `https://www3.animeflv.net/browse?page=1`;
+                            const url = `https://www3.animeflv.net/browse?page=${numerodepg+1}`;
                             //info
                             const browser = await puppeteer.launch({
                                 headless: true,
@@ -92,7 +112,7 @@ module.exports.run = (client, interaction, prefix) => {
                                                         button2
                                                     ]
                                                 
-                                                    paginationEmbed(browser, page, interaction, pages, buttonList)
+                                                    paginationEmbed(numerodepg, browser, page, interaction, pages, buttonList)
                                             
                                             }
                             }
@@ -111,7 +131,7 @@ module.exports.run = (client, interaction, prefix) => {
                         }
 
 
-                        async function paginationEmbed (browser, pagina, interaction, pages, buttonList) {
+                        async function paginationEmbed (numerodepg, browser, pagina, interaction, pages, buttonList) {
                             if (!pages) throw new Error("No hay páginas");
                             if (!buttonList) throw new Error("No hay botones");
                             if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
@@ -120,7 +140,7 @@ module.exports.run = (client, interaction, prefix) => {
                               );
                             if (buttonList.length !== 2) throw new Error("Se necesitan dos botones");
                           
-                            let page = 0;
+                            let page = numerodepg;
                           
                             const row = new MessageActionRow().addComponents(buttonList);
                             
@@ -908,6 +928,13 @@ module.exports.run = (client, interaction, prefix) => {
 module.exports.conf = {
     "name": "directorio",
     "description": "Navega por el directorio de AnimeFLV",
-    "options": [],
+    "options":[
+        {
+            "name": "página",
+            "description": "El número de la página al que quieres ir",
+            "type": 10,
+            "required": false
+        }
+    ],
     "category": "info"
 }
