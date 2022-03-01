@@ -25,10 +25,11 @@ module.exports.run = (client, interaction, prefix) => {
                             const url = `https://www3.animeflv.net/browse?page=1`;
                             //info
                             const browser = await puppeteer.launch({
-                                headless: false,
+                                headless: true,
                                 args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
                                 });
                             const page = await browser.newPage();
+                            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
                             const tiomeout = await page.goto(url, {waitUntil: 'load', timeout: 0});
 
                             if (tiomeout.status() === 522) {
