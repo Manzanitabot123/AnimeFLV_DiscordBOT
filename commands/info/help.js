@@ -1,5 +1,4 @@
 const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { stripIndents } = require('common-tags');
 const { AnimeWallpaper } = require("anime-wallpapers");
 const wall = new AnimeWallpaper();
 /**
