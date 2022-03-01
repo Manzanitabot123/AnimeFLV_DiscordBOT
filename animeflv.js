@@ -38,7 +38,7 @@ let folders = fs.readdirSync(`${__dirname}/commands`);
             if (err) return logger.error(`Ocurrió un erro al cargar los comandos: ${err.stack}`);
 
             if (!files) { return logger.warn(`[ADVERTENCIA]: No se encontraron archivos en el directorio "${folder.toUpperCase()}"`)
-            } else { console.log(files.length+" comandos") };
+            } else { console.log(files.length+" comandos") }
 
             files.forEach((file) => {
 
@@ -65,7 +65,7 @@ var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
     var testchart = `https://media.discordapp.net/attachments/946075296069730385/946436742473457664/felizjueves.gif`;
     client.guilds.cache.forEach(guild => {
         try {
-        const channel = guild.channels.cache.find(channel => channel.permissionsFor(guild.me).has('VIEW_CHANNEL') && channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.type == 'GUILD_TEXT') || guild.channels.cache.first();
+        const channelfj = guild.channels.cache.find(channel => channel.permissionsFor(guild.me).has('VIEW_CHANNEL') && channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.type == 'GUILD_TEXT') || guild.channels.cache.first();
         
         let felizjuevesconfig = "verdad";
         let siono = db.get(`felizjueves.${guild.id}`)
@@ -74,7 +74,7 @@ var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
         ffelizjueves = siono
         } else {
         ffelizjueves = felizjuevesconfig
-        };
+        }
 
         let felizjuevesconfigcanal = "random";
         let canal_felizjueves = db.get(`felizjueves_canal.${guild.id}`)
@@ -83,17 +83,17 @@ var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
         chfelizjueves = canal_felizjueves
         } else {
         chfelizjueves = felizjuevesconfigcanal
-        };
+        }
 
-        if (channel && ffelizjueves !== "falso" && chfelizjueves === "random") {
-            channel.send({
+        if (channelfj && ffelizjueves !== "falso" && chfelizjueves === "random") {
+            channelfj.send({
                 files: [{
                     attachment: testchart,
                     name: 'feliz_jueves.gif'
                 }],
                 content:`**Feliz jueves a todos** みんなにハッピー木曜日 `,
             });
-        } else if (channel && ffelizjueves !== "falso" && chfelizjueves !== "random") {
+        } else if (channelfj && ffelizjueves !== "falso" && chfelizjueves !== "random") {
             client.channels.cache.get(chfelizjueves).send({
                 files: [{
                     attachment: testchart,

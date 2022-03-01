@@ -14,30 +14,26 @@ module.exports.run = (client, interaction, options) => {
     const anime = args.replace(/ /g,"+");
     const member = interaction.member;
     //comprobar el canal adecuado
-    if(!args){
-                interaction.reply({
-                    content: "Te falta escribir el usuario que quieres buscar", 
+        if(!args){
+            return interaction.reply({
+                    content: "Te falta escribir el anime que quieres buscar", 
                     ephemeral: true
                 })
-                return;
         } else if(args.length < 3){
-                interaction.reply({
+            return interaction.reply({
                     content: "Ese nombre es muy corto", 
                     ephemeral: true
                 })
-                return;
         } else if(args.length > 40){
-                interaction.reply({
+            return interaction.reply({
                     content: "Es un nombre muy largo", 
                     ephemeral: true
                 })
-                return;
         } else if(args.includes(`\n`)){
-                interaction.reply({
+            return interaction.reply({
                     content: "Tu busqueda contiene más de un reglón", 
                     ephemeral: true
                 })
-                return;
         } else {
                 searchdownslash()
         }
@@ -115,6 +111,7 @@ module.exports.run = (client, interaction, options) => {
                     return await browser.close()
                     
                 } else if (await page.$(resultadouno) !== null) {
+                    var oneurl;
                     //Para la miniatura
                     const imgs1 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
                     const miniatura1 = imgs1[0]
@@ -263,28 +260,28 @@ module.exports.run = (client, interaction, options) => {
                                                 collector5.on('collect', async b => {
                                                     await b.deferUpdate()      
                                                     if (b.customId === "one5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output1;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura1)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura1)
                                                     } else if (b.customId === "two5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output2;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura2)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura2)
                                                         
                                                     } else if (b.customId === "three5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output3;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura3)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura3)
 
                                                     } else if (b.customId === "four5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output4;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura4)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura4)
                                                       
                                                     } else if (b.customId === "five5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output5;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura5)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura5)
                                                       
                                                     }
                                                 });
@@ -346,24 +343,24 @@ module.exports.run = (client, interaction, options) => {
                                                 collector4.on('collect', async b => {
                                                     await b.deferUpdate()      
                                                     if (b.customId === "one4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output1;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura1)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura1)
 
                                                     } else if (b.customId === "two4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output2;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura2)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura2)
                                                         
                                                     } else if (b.customId === "three4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output3;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura3)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura3)
 
                                                     } else if (b.customId === "four4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output4;
-                                                        collectormsg(page, browser, urlone, eltitulo, miniatura4)
+                                                        collectormsg(page, browser, oneurl, eltitulo, miniatura4)
 
                                                     }
                                                 });
@@ -422,19 +419,19 @@ module.exports.run = (client, interaction, options) => {
                                             collector3.on('collect', async b => {
                                                 await b.deferUpdate()      
                                                 if (b.customId === "one3") { 
-                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output1;
-                                                    collectormsg(page, browser, urlone, eltitulo, miniatura1)
+                                                    collectormsg(page, browser, oneurl, eltitulo, miniatura1)
 
                                                 } else if (b.customId === "two3") {
-                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output2;
-                                                    collectormsg(page, browser, urlone, eltitulo, miniatura2)
+                                                    collectormsg(page, browser, oneurl, eltitulo, miniatura2)
                                                     
                                                 } else if (b.customId === "three3") {
-                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output3;
-                                                    collectormsg(page, browser, urlone, eltitulo, miniatura3)
+                                                    collectormsg(page, browser, oneurl, eltitulo, miniatura3)
                         
                                                 }
                                             });
@@ -489,14 +486,14 @@ module.exports.run = (client, interaction, options) => {
                                         collector2.on('collect', async b => {
                                             await b.deferUpdate()      
                                             if (b.customId === "one2") { 
-                                                const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                 const eltitulo = output1;
-                                                collectormsg(page, browser, urlone, eltitulo, miniatura1)
+                                                collectormsg(page, browser, oneurl, eltitulo, miniatura1)
 
                                             } else if (b.customId === "two2") {
-                                                const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                 const eltitulo = output2;
-                                                collectormsg(page, browser, urlone, eltitulo, miniatura2)
+                                                collectormsg(page, browser, oneurl, eltitulo, miniatura2)
                                                 
                                             }
                                         });
@@ -516,7 +513,7 @@ module.exports.run = (client, interaction, options) => {
                                         });
                                     });
                             //Para 2 respuestas ___________________________________________________________________________________________________________________________________________________________________________________
-                        };
+                        }
 
                     } else {
                         //Para 1 respuesta ___________________________________________________________________________________________________________________________________________________________________________________
@@ -547,9 +544,9 @@ module.exports.run = (client, interaction, options) => {
                                     collector1.on('collect', async b => {
                                         await b.deferUpdate()
                                         if (b.customId === "one1") {
-                                            const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                            oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                             const eltitulo = output1;
-                                            collectormsg(page, browser, urlone, eltitulo, miniatura1)
+                                            collectormsg(page, browser, oneurl, eltitulo, miniatura1)
 
                                         }
                                     });

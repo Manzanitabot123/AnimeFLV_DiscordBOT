@@ -1,17 +1,17 @@
-const { Client, Message, MessageEmbed, Permissions, MessageButton, MessageActionRow, MessageSelectMenu } = require("discord.js");
-const { captureRejections } = require("events");
+const { Client, Interaction, MessageEmbed, Permissions, MessageButton, MessageActionRow, MessageSelectMenu } = require("discord.js");
 const { version, author } = require('../../package.json');
 const { release, cpus } = require('os');
 const db = require('quick.db');
+
 /**
  * @param {Client} client
- * @param {Message} message
+ * @param {Interaction} interaction
  */
-module.exports.run = async(client, message, args) => {
-  const { heapUsed, heapTotal } = process.memoryUsage();
-  const mensaje = db.get(`estadoanimeflv.${client.user.id}`)
+module.exports.run = (client, interaction, prefix) => {
+    const { heapUsed, heapTotal } = process.memoryUsage();
+    const mensaje = db.get(`estadoanimeflv.${client.user.id}`)
 
-  message.reply({
+    interaction.reply({
     embeds: [
     new MessageEmbed()
     .setColor('#e09c2c')
@@ -22,7 +22,7 @@ module.exports.run = async(client, message, args) => {
         name: '👥\u2000USUARIOS', value: [
           `Total:\u2000\u2000**${client.guilds.cache.reduce((acc, cur) => acc + cur.memberCount, 0)}**`,
           `En cache:\u2000\u2000**${client.users.cache.size}**`,
-          `Aquí:\u2000\u2000**${message.guild.memberCount}**`
+          `Aquí:\u2000\u2000**${interaction.guild.memberCount}**`
         ].join('\n'), inline: true,
       },{
         name: '🧠\u2000MEMORIA', value: [
@@ -44,8 +44,7 @@ module.exports.run = async(client, message, args) => {
 }
 module.exports.conf = {
     "name": "estado",
-    "description": [ "Muestra el estado actual del bot." ],
-    "aliases": ["stats", "status"],
-    "usage": ["latencia"],
+    "description": "Muestra el estado actual del bot",
+    "options": [],
     "category": "info"
 }

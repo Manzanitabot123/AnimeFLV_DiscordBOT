@@ -390,7 +390,7 @@ module.exports.run = (client, interaction, options) => {
                 
                 const defuserid = "000000000000000000";
                 var finaluserid;
-                let userid = db.get(`useriddiscordflv.${urlminuscula}`)
+                let userid = db.get(`useridflv.${urlminuscula}`)
                 if (userid) {
                     finaluserid = userid
                 } else {
@@ -409,7 +409,7 @@ module.exports.run = (client, interaction, options) => {
                             .setLabel("Desvincular de Discord")
                             .setStyle('DANGER')
                             );
-                        let useridnice = db.get(`useriddiscordflv.${urlminuscula}`)
+                        let useridnice = db.get(`useridflv.${urlminuscula}`)
                         interaction.editReply({
                             embeds: [
                                 new MessageEmbed()
@@ -434,7 +434,7 @@ module.exports.run = (client, interaction, options) => {
                                     //Collector On
                                     collector5.on('collect', async b => {
                                         await b.deferUpdate()
-                                        db.set(`useriddiscordflv.${urlminuscula}`, "000000000000000000")
+                                        db.set(`useridflv.${urlminuscula}`, "000000000000000000")
                                         if (b.customId === "unjoin") {
                                             interaction.editReply({
                                                 embeds: [
@@ -455,7 +455,7 @@ module.exports.run = (client, interaction, options) => {
             
                                     collector5.on('end', async(collected, reason) => {
                                         if (collected.size < 1) {
-                                        let useridforever = db.get(`useriddiscordflv.${urlminuscula}`)
+                                        let useridforever = db.get(`useridflv.${urlminuscula}`)
                                         interaction.editReply({
                                             embeds: [
                                                 new MessageEmbed()
@@ -474,7 +474,7 @@ module.exports.run = (client, interaction, options) => {
                                     });
                                 });
                     } else {
-                        let useridxd = db.get(`useriddiscordflv.${urlminuscula}`)
+                        let useridxd = db.get(`useridflv.${urlminuscula}`)
                         interaction.editReply({
                             embeds: [
                                 new MessageEmbed()
@@ -524,8 +524,8 @@ module.exports.run = (client, interaction, options) => {
                                 //Collector On
                                 collector5.on('collect', async b => {
                                     await b.deferUpdate()
-                                    db.set(`useriddiscordflv.${urlminuscula}`, `${interaction.user.id}`)
-                                    let useridadd = db.get(`useriddiscordflv.${urlminuscula}`)
+                                    db.set(`useridflv.${urlminuscula}`, `${interaction.user.id}`)
+                                    let useridadd = db.get(`useridflv.${urlminuscula}`)
                                     if (b.customId === "add") {
                                         interaction.editReply({
                                             embeds: [

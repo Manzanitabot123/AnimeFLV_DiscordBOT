@@ -21,7 +21,7 @@ module.exports.run = async(client, message, args) => {
         new MessageButton()
         .setCustomId('verdad')
         .setEmoji(textoyemojis.emojis.encendido)
-        .setLabel("Encendido")
+        .setLabel("Encender")
         .setStyle('SUCCESS')
         );
 
@@ -29,7 +29,7 @@ module.exports.run = async(client, message, args) => {
         new MessageButton()
         .setCustomId('falso')
         .setEmoji(textoyemojis.emojis.apagado)
-        .setLabel("Apagado")
+        .setLabel("Apagar")
         .setStyle('DANGER'),
         new MessageButton()
         .setCustomId('verdad')

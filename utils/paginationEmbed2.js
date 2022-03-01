@@ -13,7 +13,7 @@ const {
  * @param {number} timeout
  * @returns
  */
-const paginationEmbed2 = async (
+const paginationEmbed2 = async(
   interaction,
   pages,
   buttonList,
@@ -30,11 +30,6 @@ const paginationEmbed2 = async (
   let page = 0;
 
   const row = new MessageActionRow().addComponents(buttonList);
-
-  //has the interaction already been deferred? If not, defer the reply.
-  if (interaction.deferred == false) {
-    await interaction.deferReply();
-  }
 
   const curPage = await interaction.editReply({
     embeds: [pages[page].setFooter({text: `Página: ${page + 1} / ${pages.length}`})],

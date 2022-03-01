@@ -42,7 +42,7 @@ module.exports.run = async(client, message, args, prefix) => {
             commandNames.forEach(comandos => {
                 let cmds = client.commands.filter(c => (c.conf.category === "info") && (c.conf.name === (comandos)));
                 embed.addField(`☆ ${comandos}`, cmds.map(c => `*${c.conf.description}* \n ( Aliases: ${(c.conf.aliases).join("; ")} )`).join(" "));
-                embed.setDescription(`**El prefijo actual es \`${prefix}\`**\n\nEs un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 12 comandos:`);
+                embed.setDescription(`**El prefijo actual es \`${prefix}\`**\n\nEs un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 14 comandos:`);
             });
             embed.setImage(wallpaper[0].image);
             embed.setFooter({text: "Imagen: "+wallpaper[0].title})

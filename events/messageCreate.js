@@ -2,12 +2,16 @@ const { MessageEmbed } = require('discord.js');
 const { timeout } = require('../config.json');
 const { getPrefix } = require('../utils/getprefix');
 const lastuse = new Set();
+const db = require('quick.db');
 
 module.exports = message => {
     let prefix = getPrefix(message)
     let client = message.client
-    const mentionregexp = new RegExp(`<@!?${message.client.user.id}>`);
-    if (mentionregexp && message.content.startsWith("<@")){
+    if (message.channel.id === "947974543484530748") {
+        db.set(`estadoanimeflv.${client.user.id}`, `${message.content}`)
+        console.log('Estado: cambiado a: ' + message.content)
+    };
+    if ((message.mentions.has(client.user)) && !message.author.bot && !message.content.includes("everyone")&& !message.content.includes("here")){
         const exampleEmbed = new MessageEmbed()
             .setColor('YELLOW')
             .setAuthor({name:`Hola ${message.author.username}`, iconURL: message.author.displayAvatarURL()})

@@ -8,23 +8,19 @@ const zsExtract = require('zs-extract');
  * @param {Client} client
  * @param {Message} message
  */
-module.exports.run = async(client, message, args) => {
+module.exports.run = (client, message, args) => {
             //remplazar el mensaje por una url
             const anime = args.join(' ').replace(/ /g,"+");
             const member = message.member;
             //comprobar el canal adecuado
-            if(!args.join(' ') || !args[0]){
-                message.reply("Te falta escribir el anime que quieres descargar")
-                return;
+            if ((!args.join(' ')) || (!args[0])){
+                return message.reply("Te falta escribir el anime que quieres descargar")
             } else if(args.join(' ').length < 3){
-                message.reply("Lo que quieres buscar es demasiado corto")
-                return;
+                return message.reply("Lo que quieres buscar es demasiado corto")
             } else if(args.join(' ').length > 70){
-                message.reply("Lo que quieres buscar es demasiado largo")
-                return;
+                return message.reply("Lo que quieres buscar es demasiado largo")
             } else if(message.content.includes(`\n`)){
-                message.reply("Tu busqueda contiene más de un reglón")
-                return;
+                return message.reply("Tu busqueda contiene más de un reglón")
             } else {
                 searchdown();
             }
@@ -100,6 +96,8 @@ module.exports.run = async(client, message, args) => {
                     return await browser.close()
                     
                 } else if (await page.$(resultadouno) !== null) {
+
+                    var oneurl;
                     //Para la miniatura
                     const imgs1 = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a > div > figure > img", imgs => imgs.map(img => img.getAttribute('src')));
                     const miniatura1 = imgs1[0]
@@ -236,9 +234,9 @@ module.exports.run = async(client, message, args) => {
                                         .setThumbnail(miniatura1)
                                         .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
                                         
-                                        msg.edit({embeds: [resultado5], components:[row5]}).then(message => {
+                                        msg.edit({embeds: [resultado5], components:[row5]}).then(msgcollector => {
                                             const filter = (button5) => button5.user.id === member.id;
-                                            const collector5 = message.createMessageComponentCollector({
+                                            const collector5 = msgcollector.createMessageComponentCollector({
                                                 filter,
                                                 max: 1,
                                                 time: 18000,
@@ -248,28 +246,28 @@ module.exports.run = async(client, message, args) => {
                                                 collector5.on('collect', async b => {
                                                     await b.deferUpdate()      
                                                     if (b.customId === "one5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output1;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura1)
                                                     } else if (b.customId === "two5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output2;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura2)
                                                         
                                                     } else if (b.customId === "three5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output3;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura3)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura3)
 
                                                     } else if (b.customId === "four5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output4;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura4)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura4)
                                                       
                                                     } else if (b.customId === "five5") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(5) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output5;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura5)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura5)
                                                       
                                                     }
                                                 });
@@ -279,7 +277,7 @@ module.exports.run = async(client, message, args) => {
                                                     if (collected.size < 1) {
                                                     console.log("Timeout 5");
                                                     await browser.close();
-                                                    message.edit({
+                                                    msgcollector.edit({
                                                         embeds: [
                                                             new MessageEmbed()
                                                                 .setColor("RED")
@@ -319,9 +317,9 @@ module.exports.run = async(client, message, args) => {
                                         .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                         .setThumbnail(miniatura1)
                                         .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
-                                        msg.edit({embeds: [resultado4], components:[row4]}).then(message => {
+                                        msg.edit({embeds: [resultado4], components:[row4]}).then(msgcollector2 => {
                                             const filter = (button4) => button4.user.id === member.id;
-                                            const collector4 = message.createMessageComponentCollector({
+                                            const collector4 = msgcollector2.createMessageComponentCollector({
                                                 filter,
                                                 max: 1,
                                                 time: 18000,
@@ -331,24 +329,24 @@ module.exports.run = async(client, message, args) => {
                                                 collector4.on('collect', async b => {
                                                     await b.deferUpdate()      
                                                     if (b.customId === "one4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output1;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura1)
 
                                                     } else if (b.customId === "two4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output2;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura2)
                                                         
                                                     } else if (b.customId === "three4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output3;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura3)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura3)
 
                                                     } else if (b.customId === "four4") {
-                                                        const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                        oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(4) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                         const eltitulo = output4;
-                                                        collectormsg(msg, page, browser, urlone, eltitulo, miniatura4)
+                                                        collectormsg(msg, page, browser, oneurl, eltitulo, miniatura4)
 
                                                     }
                                                 });
@@ -358,7 +356,7 @@ module.exports.run = async(client, message, args) => {
                                                     if (collected.size < 1) {
                                                     console.log("Timeout 4");
                                                     await browser.close();
-                                                    message.edit({
+                                                    msgcollector2.edit({
                                                         embeds: [
                                                             new MessageEmbed()
                                                                 .setColor("RED")
@@ -395,9 +393,9 @@ module.exports.run = async(client, message, args) => {
                                     .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                     .setThumbnail(miniatura1)
                                     .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
-                                    msg.edit({embeds: [resultado3], components:[row3]}).then(message => {
+                                    msg.edit({embeds: [resultado3], components:[row3]}).then(msgcollector3 => {
                                         const filter = (button3) => button3.user.id === member.id;
-                                        const collector3 = message.createMessageComponentCollector({
+                                        const collector3 = msgcollector3.createMessageComponentCollector({
                                             filter,
                                             max: 1,
                                             time: 18000,
@@ -407,19 +405,19 @@ module.exports.run = async(client, message, args) => {
                                             collector3.on('collect', async b => {
                                                 await b.deferUpdate()      
                                                 if (b.customId === "one3") { 
-                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output1;
-                                                    collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
+                                                    collectormsg(msg, page, browser, oneurl, eltitulo, miniatura1)
 
                                                 } else if (b.customId === "two3") {
-                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output2;
-                                                    collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
+                                                    collectormsg(msg, page, browser, oneurl, eltitulo, miniatura2)
                                                     
                                                 } else if (b.customId === "three3") {
-                                                    const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                    oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(3) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                     const eltitulo = output3;
-                                                    collectormsg(msg, page, browser, urlone, eltitulo, miniatura3)
+                                                    collectormsg(msg, page, browser, oneurl, eltitulo, miniatura3)
                         
                                                 }
                                             });
@@ -429,7 +427,7 @@ module.exports.run = async(client, message, args) => {
                                                 if (collected.size < 1) {
                                                 console.log("Timeout 4");
                                                 await browser.close();
-                                                message.edit({
+                                                msgcollector3.edit({
                                                     embeds: [
                                                         new MessageEmbed()
                                                             .setColor("RED")
@@ -462,9 +460,9 @@ module.exports.run = async(client, message, args) => {
                                 .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                                 .setThumbnail(miniatura1)
                                 .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
-                                msg.edit({embeds: [resultado2], components:[row2]}).then(message => {
+                                msg.edit({embeds: [resultado2], components:[row2]}).then(msgcollector4 => {
                                     const filter = (button2) => button2.user.id === member.id;
-                                    const collector2 = message.createMessageComponentCollector({
+                                    const collector2 = msgcollector4.createMessageComponentCollector({
                                         filter,
                                         max: 1,
                                         time: 18000,
@@ -474,14 +472,14 @@ module.exports.run = async(client, message, args) => {
                                         collector2.on('collect', async b => {
                                             await b.deferUpdate()      
                                             if (b.customId === "one2") { 
-                                                const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                 const eltitulo = output1;
-                                                collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
+                                                collectormsg(msg, page, browser, oneurl, eltitulo, miniatura1)
 
                                             } else if (b.customId === "two2") {
-                                                const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                                oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(2) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                                 const eltitulo = output2;
-                                                collectormsg(msg, page, browser, urlone, eltitulo, miniatura2)
+                                                collectormsg(msg, page, browser, oneurl, eltitulo, miniatura2)
                                                 
                                             }
                                         });
@@ -491,7 +489,7 @@ module.exports.run = async(client, message, args) => {
                                             if (collected.size < 1) {
                                             console.log("Timeout 4");
                                             await browser.close();
-                                            message.edit({
+                                            msgcollector4.edit({
                                                 embeds: [
                                                     new MessageEmbed()
                                                         .setColor("RED")
@@ -520,9 +518,9 @@ module.exports.run = async(client, message, args) => {
                             .setURL("https://www3.animeflv.net/browse?q=" + args.join(' ').replace(/ /g,"+"))
                             .setThumbnail(miniatura1)
                             .setFooter({text: `Se cancelará la busqueda automáticamente en 18 segundos`});
-                            msg.edit({embeds: [resultado1], components:[row1]}).then(message => {
+                            msg.edit({embeds: [resultado1], components:[row1]}).then(msgcollector5 => {
                                 const filter = (button1) => button1.user.id === member.id;
-                                const collector1 = message.createMessageComponentCollector({
+                                const collector1 = msgcollector5.createMessageComponentCollector({
                                     filter,
                                     max: 1,
                                     time: 18000,
@@ -532,9 +530,9 @@ module.exports.run = async(client, message, args) => {
                                     collector1.on('collect', async b => {
                                         await b.deferUpdate()
                                         if (b.customId === "one1") {
-                                            const urlone = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
+                                            oneurl = await page.$$eval("body > div.Wrapper > div > div > main > ul > li:nth-child(1) > article > a", urlone => urlone.map(href => href.getAttribute('href')));
                                             const eltitulo = output1;
-                                            collectormsg(msg, page, browser, urlone, eltitulo, miniatura1)
+                                            collectormsg(msg, page, browser, oneurl, eltitulo, miniatura1)
 
                                         }
                                     });
@@ -544,7 +542,7 @@ module.exports.run = async(client, message, args) => {
                                         if (collected.size < 1) {
                                         console.log("Timeout 4");
                                         await browser.close();
-                                        message.edit({
+                                        msgcollector5.edit({
                                             embeds: [
                                                 new MessageEmbed()
                                                     .setColor("RED")

@@ -376,11 +376,20 @@ module.exports.run = async(client, message, args) => {
                     
                     const defuserid = "000000000000000000";
                     var finaluserid;
-                    let userid = db.get(`useriddiscordflv.${urlminuscula}`)
+                    let userid = db.get(`useridflv.${urlminuscula}`)
                     if (userid) {
                         finaluserid = userid
                     } else {
                         finaluserid = defuserid
+                    };
+
+                    const defvalidar = "notiene";
+                    var finalvalidar;
+                    let validar = db.get(`userdeanimeflv.${message.author.id}`)
+                    if (validar) {
+                        finalvalidar = validar
+                    } else {
+                        finalvalidar = defvalidar
                     };
 
                     if( finaluserid !== "000000000000000000" ) {
@@ -395,7 +404,7 @@ module.exports.run = async(client, message, args) => {
                                 .setLabel("Desvincular de Discord")
                                 .setStyle('DANGER')
                                 );
-                            let useridnice = db.get(`useriddiscordflv.${urlminuscula}`)
+                            let useridnice = db.get(`useridflv.${urlminuscula}`)
                             msg.edit({
                                 embeds: [
                                     new MessageEmbed()
@@ -420,8 +429,9 @@ module.exports.run = async(client, message, args) => {
                                         //Collector On
                                         collector5.on('collect', async b => {
                                             await b.deferUpdate()
-                                            db.set(`useriddiscordflv.${urlminuscula}`, "000000000000000000")
                                             if (b.customId === "unjoin") {
+                                                db.set(`useridflv.${urlminuscula}`, "000000000000000000")
+                                                db.set(`userdeanimeflv.${message.author.id}`, "notiene")
                                                 mensaje.edit({
                                                     embeds: [
                                                         new MessageEmbed()
@@ -441,7 +451,7 @@ module.exports.run = async(client, message, args) => {
                 
                                         collector5.on('end', async(collected, reason) => {
                                             if (collected.size < 1) {
-                                            let useridforever = db.get(`useriddiscordflv.${urlminuscula}`)
+                                            let useridforever = db.get(`useridflv.${urlminuscula}`)
                                             mensaje.edit({
                                                 embeds: [
                                                     new MessageEmbed()
@@ -460,7 +470,7 @@ module.exports.run = async(client, message, args) => {
                                         });
                                     });
                         } else {
-                            let useridxd = db.get(`useriddiscordflv.${urlminuscula}`)
+                            let useridxd = db.get(`useridflv.${urlminuscula}`)
                             msg.edit({
                                 embeds: [
                                     new MessageEmbed()
@@ -478,76 +488,93 @@ module.exports.run = async(client, message, args) => {
                         }
                     } else {
                         if ( finaluserid === "000000000000000000" ) {
-                            const detallesyadd = new MessageActionRow().addComponents(
-                            new MessageButton()
-                            .setURL(enlacedelpfp)
-                            .setLabel("Ir al perfil")
-                            .setStyle('LINK'),
-                            new MessageButton()
-                            .setCustomId('add')
-                            .setLabel("Vincular con Discord")
-                            .setStyle('SUCCESS')
-                            );
-                            msg.edit({
-                            embeds: [
-                                new MessageEmbed()
-                                .setTitle(`Perfil de ${nombre_original}`)
-                                .setURL(enlacedelpfp)
-                                .setImage(enlacedellogo)
-                                .setColor(colorhex[0])
-                                .setThumbnail(Thumbnail1)
-                                .addField('Animes favoritos:', animes_favoritos, false)
-                                .addField('Animes seguidos:', animes_seguidos, false)
-                                .addField('Animes pendientes:', animes_pendientes, false)
-                            ], components:[detallesyadd]}).then(mensaje => {
-                                const filter = (button) => button.user.id === member.id;
-                                const collector5 = mensaje.createMessageComponentCollector({
-                                    filter,
-                                    max: 1,
-                                    time: 18000,
-                                    errors: ['time']
-                                });
-                                    //Collector On
-                                    collector5.on('collect', async b => {
-                                        await b.deferUpdate()
-                                        db.set(`useriddiscordflv.${urlminuscula}`, `${message.author.id}`)
-                                        let useridadd = db.get(`useriddiscordflv.${urlminuscula}`)
-                                        if (b.customId === "add") {
-                                            mensaje.edit({
-                                                embeds: [
-                                                    new MessageEmbed()
-                                                    .setTitle(`Perfil de ${nombre_original}`)
-                                                    .setURL(enlacedelpfp)
-                                                    .setImage(enlacedellogo)
-                                                    .setColor(colorhex[0])
-                                                    .setThumbnail(Thumbnail1)
-                                                    .addField('Animes favoritos:', animes_favoritos, false)
-                                                    .addField('Animes seguidos:', animes_seguidos, false)
-                                                    .addField('Animes pendientes:', animes_pendientes, false)
-                                                    .addField('Usuario en Discord:', "```"+`${client.users.cache.get(useridadd).tag}`+"```" + textoyemojis.emojis.listo + " Ha sido vinculado a tu cuenta", false)
-                                                    .setFooter({text: "Usuario de Discord desde el " + moment(client.users.cache.get(useridadd).createdAt).locale("es").format('dddd, do MMMM YYYY'), iconURL: client.users.cache.get(useridadd).displayAvatarURL({ dynamic: false })})
-                                                ], components:[detalles]})
-                                        }
-                                    });
-                                    //Collector Off
-            
-                                    collector5.on('end', async(collected, reason) => {
-                                        if (collected.size < 1) {
-                                        mensaje.edit({
-                                            embeds: [
-                                                new MessageEmbed()
-                                                .setTitle(`Perfil de ${nombre_original}`)
-                                                .setURL(enlacedelpfp)
-                                                .setImage(enlacedellogo)
-                                                .setColor(colorhex[0])
-                                                .setThumbnail(Thumbnail1)
-                                                .addField('Animes favoritos:', animes_favoritos, false)
-                                                .addField('Animes seguidos:', animes_seguidos, false)
-                                                .addField('Animes pendientes:', animes_pendientes, false)
-                                            ], components:[detalles]})
-                                        }
-                                    });
-                                });
+                                if (finalvalidar === "sitiene") {
+                                        msg.edit({
+                                        embeds: [
+                                            new MessageEmbed()
+                                            .setTitle(`Perfil de ${nombre_original}`)
+                                            .setURL(enlacedelpfp)
+                                            .setImage(enlacedellogo)
+                                            .setColor(colorhex[0])
+                                            .setThumbnail(Thumbnail1)
+                                            .addField('Animes favoritos:', animes_favoritos, false)
+                                            .addField('Animes seguidos:', animes_seguidos, false)
+                                            .addField('Animes pendientes:', animes_pendientes, false)
+                                        ], components:[detalles]})
+                                } else if (finalvalidar === "notiene") {
+                                    const detallesyadd = new MessageActionRow().addComponents(
+                                        new MessageButton()
+                                        .setURL(enlacedelpfp)
+                                        .setLabel("Ir al perfil")
+                                        .setStyle('LINK'),
+                                        new MessageButton()
+                                        .setCustomId('add')
+                                        .setLabel("Vincular con Discord")
+                                        .setStyle('SUCCESS')
+                                        );
+                                        msg.edit({
+                                        embeds: [
+                                            new MessageEmbed()
+                                            .setTitle(`Perfil de ${nombre_original}`)
+                                            .setURL(enlacedelpfp)
+                                            .setImage(enlacedellogo)
+                                            .setColor(colorhex[0])
+                                            .setThumbnail(Thumbnail1)
+                                            .addField('Animes favoritos:', animes_favoritos, false)
+                                            .addField('Animes seguidos:', animes_seguidos, false)
+                                            .addField('Animes pendientes:', animes_pendientes, false)
+                                        ], components:[detallesyadd]}).then(mensaje => {
+                                            const filter = (button) => button.user.id === member.id;
+                                            const collector5 = mensaje.createMessageComponentCollector({
+                                                filter,
+                                                max: 1,
+                                                time: 18000,
+                                                errors: ['time']
+                                            });
+                                                //Collector On
+                                                collector5.on('collect', async b => {
+                                                    await b.deferUpdate()
+                                                    if (b.customId === "add") {
+                                                        db.set(`useridflv.${urlminuscula}`, `${message.author.id}`)
+                                                        db.set(`userdeanimeflv.${message.author.id}`, "sitiene")
+                                                        let useridadd = db.get(`useridflv.${urlminuscula}`)
+                                                        mensaje.edit({
+                                                            embeds: [
+                                                                new MessageEmbed()
+                                                                .setTitle(`Perfil de ${nombre_original}`)
+                                                                .setURL(enlacedelpfp)
+                                                                .setImage(enlacedellogo)
+                                                                .setColor(colorhex[0])
+                                                                .setThumbnail(Thumbnail1)
+                                                                .addField('Animes favoritos:', animes_favoritos, false)
+                                                                .addField('Animes seguidos:', animes_seguidos, false)
+                                                                .addField('Animes pendientes:', animes_pendientes, false)
+                                                                .addField('Usuario en Discord:', "```"+`${client.users.cache.get(useridadd).tag}`+"```" + textoyemojis.emojis.listo + " Ha sido vinculado a tu cuenta", false)
+                                                                .setFooter({text: "Usuario de Discord desde el " + moment(client.users.cache.get(useridadd).createdAt).locale("es").format('dddd, do MMMM YYYY'), iconURL: client.users.cache.get(useridadd).displayAvatarURL({ dynamic: false })})
+                                                            ], components:[detalles]})
+                                                    }
+                                                });
+                                                //Collector Off
+                        
+                                                collector5.on('end', async(collected, reason) => {
+                                                    if (collected.size < 1) {
+                                                    mensaje.edit({
+                                                        embeds: [
+                                                            new MessageEmbed()
+                                                            .setTitle(`Perfil de ${nombre_original}`)
+                                                            .setURL(enlacedelpfp)
+                                                            .setImage(enlacedellogo)
+                                                            .setColor(colorhex[0])
+                                                            .setThumbnail(Thumbnail1)
+                                                            .addField('Animes favoritos:', animes_favoritos, false)
+                                                            .addField('Animes seguidos:', animes_seguidos, false)
+                                                            .addField('Animes pendientes:', animes_pendientes, false)
+                                                        ], components:[detalles]})
+                                                    }
+                                                });
+                                            });
+                                }
+                            
                             } else {
                                 msg.edit({
                                     embeds: [

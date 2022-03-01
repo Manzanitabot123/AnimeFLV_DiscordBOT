@@ -51,7 +51,7 @@ module.exports.run =  async(client,interaction) => {
 
             commandNames.forEach(emote => {
                 let cmds = client.commands.filter(c => c.conf.name === (emote));
-                embed.setDescription(`**El prefijo actual es \`${fprefix}\`**\n\nEs un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 10 comandos:`)
+                embed.setDescription(`**El prefijo actual es \`${fprefix}\`**\n\nEs un bot de Discord 2022 para ver información y descargar animes clásicos, animes del momento, animes más populares, todo basado y extraido de AnimeFLV. \nActualmente contiene 14 comandos:`)
                 embed.addField(`☆ ${emote}`, cmds.map(c => `*${c.conf.description}* \n ( Aliases: ${(c.conf.aliases).join("; ")} )`).join(" "));
             });
             embed.setImage(wallpaperslash[0].image);

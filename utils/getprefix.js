@@ -6,6 +6,7 @@ const defprefix = process.env.PREFIX;
  * @param {Message} message
  */
 function getPrefix(message) {
+    var fprefix;
     let prefix = db.get(`prefixflv.${message.guild.id}`)
     if (prefix) {
         fprefix = prefix
