@@ -1,4 +1,5 @@
 module.exports = {
+    embedColor: "RANDOM",
     emojis:{
         estrella: "<a:estrellaFLV:945408753249968169>",
         media_estrella: "<a:media_estrellaFLV:945409376523526164>",
@@ -15,7 +16,16 @@ module.exports = {
         facebook_icon: "<:FacebookFLV:945855771135082546>",
         twitter_icon: "<:TwitterFLV:945856036064067586>",
         instagram_icon: "<:InstagramFLV:947687993399980102>",
-        youtube_icon: "<:YoutubeFLV:947686135419793469>"
+        youtube_icon: "<:YoutubeFLV:947686135419793469>",
+        comando_icon: "<:comandomcFLV:982393744231903262>",
+        pin_icon: "<a:pinFLV:982394281899737209>",
+        escribiendo_icon:"<a:escribiendoFLV:982394277491531776>",
+        cutelove:"<a:cute:982394279924211742>",
+        nesuko:"<a:nesukoFLV:982472564569935873>",
+        cursor:"<a:CursorFLV:982818673653870612>",
+        textorandom:"<:TextoFLV:982818156915589181>",
+        play:"<a:PlayFLV:983158611494731806>",
+        pensando:"<a:PensandoFLV:983855943781589052>"
     },
     errors:{
         error: "ERROR",
@@ -26,7 +36,10 @@ module.exports = {
         error404: "Esa página no está disponible en el servidor. ``` Page Not Found | ERROR 404``",
         error522: "Se agotó el tiempo de espera de Animeflv al intentar conectarse con el servidor. ```Connection timed out | ERROR 522```",
         error502: "El servidor proxy no pudo obtener una respuesta válida del servidor de origen. ```Bad Gateway | ERROR 502```",
-        espera: "Espera un tiempo a que se solucione solo..."
+        espera: "Espera un tiempo a que se solucione solo...",
+        errorlink: "Ese anime o link no existe o no esta dissponible",
+        errorcap: "Ese capítulo o anime no existe o no esta dissponible",
+        trylink: "Verifica el nombre o el link e intentalo de nuevo"
     },
     messages:{
         description: "Descripción",

@@ -1,6 +1,6 @@
-<img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" alt="Karma" src="https://images-ext-2.discordapp.net/external/jvx_k1NDHP1CnM8T0I1nJRk8CFHboari-7iKARCiDb0/https/cdn.discordapp.com/avatars/938856255416569946/0039ce1fba54f17f9448a6659bbc138c.webp"> 
+<img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" alt="Animeflv" src="https://cdn.discordapp.com/avatars/938856255416569946/17e93fb724c1728d379e5ee6331f4ec6.webp"> 
 
-# AnimeFLV Discord Bot
+# AnimeFLV Discord Bot v2.3.0
 
 [![Discord](https://img.shields.io/badge/discord.js-v13.0.1-blue.svg?logo=npm)](https://github.com/discordjs)
 [![Estrellas](https://img.shields.io/github/stars/Manzanitabot123/AnimeFLV_DiscordBOT.svg)](https://github.com/Manzanitabot123/AnimeFLV_DiscordBOT)
@@ -8,22 +8,7 @@
 [![Licencia](https://img.shields.io/github/license/Manzanitabot123/AnimeFLV_DiscordBOT.svg)](https://github.com/Manzanitabot123/AnimeFLV_DiscordBOT/blob/master/LICENSE)
 
 > Un Bot de Discord (no oficial 🤖) para ver información y descargar animes clásicos, actuales y populares de AnimeFLV.
-
-Actualmente se encuentra en fase **Alpha** por lo que puede contener errores.
-
-### Lista de comandos 💫 
-
-AnimeFLV Bot tiene un total de 10 comandos: (Aún no cuenta con categorias)
-
-*   ⬇️️ **Descargar**: `Obtén enlaces de descarga de cualquier anime.`
-*   🟢 **Emision**: `Muestra los anime que se encuentran en emisión.`
-*   👨 **Usuario**: `Revisa perfiles de usuarios de AnimeFLV`
-*   🔲 **Info** : `Busca y obtén información de un anime.`
-*   🎲 **Random**: `Genera un anime aleatrio del repositorio de animes.`
-*   💬 **Ping**: `Muestra el ping del bot.`
-*   📺️ **Ultimoani**: `Muestra los últimos animes agregados a AnimeFLV.`
-*   🔟 **Ultimocap**: `Muestra los últimos episodios del día.`
-*   ✉️ **Help**: `Ve información del bot y los comandos.`
+rores.
 
 ## Estado 📥
 

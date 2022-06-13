@@ -7,6 +7,8 @@ Actualmente se admite con actualizaciones de seguridad.
 
 | Versión | Estable            |
 | ------- | ------------------ |
+| 2.3.x   | :white_check_mark: |
+| 2.2.x   | :x:                |
 | 2.0.x   | :x:                |
 | 2.0.0   | :white_check_mark: |
 | < 1.0   | :x:                |

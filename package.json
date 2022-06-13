@@ -1,26 +1,30 @@
 {
   "name": "animeflv_bot",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Un Bot de Discord (no oficial 🤖) de Animeflv para ver información y descargar animes clásicos, actuales y populares.",
   "main": "animeflv.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
-  },
   "author": "Manzanitabot123",
+  "repository": "github:Manzanitabot123/AnimeFLV_DiscordBOT",
+  "homepage": "https://github.com/Manzanitabot123/AnimeFLV_DiscordBOT",
+  "bugs": "https://github.com/Manzanitabot123/AnimeFLV_DiscordBOT/issues",
   "license": "MIT",
+  "scripts": {
+    "index": "node animeflv.js",
+    "deploy": "node deploy.js"
+  },
+  "engines": {
+    "node": "16.14.0"
+  },
   "dependencies": {
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "anime-wallpapers": "^1.0.1",
-    "cron": "^1.8.2",
-    "discord.js": "^13.0.1",
-    "dotenv": "^10.0.0",
+    "@discordjs/builders": "^0.13.0",
+    "@discordjs/rest": "^0.4.1",
+    "discord-api-types": "^0.33.1",
+    "discord.js": "^13.7.0",
+    "dotenv": "^16.0.1",
     "fs": "^0.0.1-security",
     "get-image-colors": "^4.0.1",
-    "moment-timezone": "^0.5.34",
-    "puppeteer": "^13.4.1",
-    "quick.db": "^7.1.3",
-    "random": "^3.0.6",
-    "zs-extract": "^1.4.1"
+    "nodemon": "^2.0.16",
+    "puppeteer": "1.19.0",
+    "random": "^3.0.6"
   }
 }

@@ -1,138 +1,43 @@
-const { Client, Intents, Collection, MessageEmbed, MessageAttachment } = require('discord.js');
-require("dotenv").config();
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES], partials: ['MESSAGE', "CHANNEL"] });
-const token = process.env.CLIENT_TOKEN;
-const cron = require('cron');
-const fs = require('fs')
-const db = require('quick.db');
-const path = require('path');
-client.commands = new Collection();
-client.aliases = new Collection();
-client.slash = new Collection();
-client.on('ready', () => {
-  console.log(`PRENDIDO: ${client.user.tag}`);
-  client.user.setPresence(
-    { 
-        activities: [
-            { 
-                name: "en AnimeFLV 〢 flvhelp" , 
-                type: 'WATCHING' 
-            }
-        ], 
-        status: "idle"
-    }
-  ) 
-  let clientguilds = client.guilds.cache;
-  console.log(clientguilds.map(g => `${g.id} | ${g.name} | ${g.memberCount} usuarios`) || "Ningun servidor")
-  const testchart = new MessageAttachment('recursos/feliz_jueves.gif');
+const newLocal = require('fs');
+const fs = newLocal;
+const Discord = require('discord.js');
+const dotenv = require('dotenv');
+const crypto = require('crypto').webcrypto;
+dotenv.config();
 
-  var job = new cron.CronJob('30 00 08 1-31 0-11 4', function() {
-    console.log("Feliz jueves.");
-    client.user.setPresence({ activities: [{ name: "Feliz jueves" , type: 'WATCHING' }]})
-    client.guilds.cache.forEach(guild => {
-        try {
-        const channelfj = guild.channels.cache.find(channel => channel.permissionsFor(guild.me).has('VIEW_CHANNEL') && channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.type == 'GUILD_TEXT') || guild.channels.cache.first();
-        
-        let felizjuevesconfig = "verdad";
-        let siono = db.get(`felizjueves.${guild.id}`)
-        var ffelizjueves;
-        if (siono) {
-        ffelizjueves = siono
-        } else {
-        ffelizjueves = felizjuevesconfig
-        }
-
-        let felizjuevesconfigcanal = "random";
-        let canal_felizjueves = db.get(`felizjueves_canal.${guild.id}`)
-        var chfelizjueves;
-        if (canal_felizjueves) {
-        chfelizjueves = canal_felizjueves
-        } else {
-        chfelizjueves = felizjuevesconfigcanal
-        }
-
-        if (channelfj && ffelizjueves !== "falso" && chfelizjueves === "random") {
-            channelfj.send({
-                content:`**Feliz jueves a todos** みんなにハッピー木曜日 `,
-                files: [testchart]
-            });
-        } else if (channelfj && ffelizjueves !== "falso" && chfelizjueves !== "random") {
-            client.channels.cache.get(chfelizjueves).send({
-                content:`**Feliz jueves a todos** みんなにハッピー木曜日 `,
-                files: [testchart]
-            });
-        } else {
-            console.log('El server ' + guild.name + ' no tiene canales disponibles o ha desactivado el felizjueves');
-        }
-    } catch (err) {
-        console.log('No se pudo enviar el mensaje a ' + guild.name + '.');
-    }
-    });
-    }, null, true, 'America/Lima');
-
-    var state1 = new cron.CronJob('* 00 * * * *', function() {
-        var xd = 0;
-        const totaldesrvs = client.guilds.cache.size;
-        const totaldeusers = client.guilds.cache.map(g => xd += g.memberCount)[totaldesrvs - 1];
-        client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 ${totaldeusers} usuarios`,  type: 'WATCHING' }]})
-    }, null, true, 'America/Lima');
-
-    var state2 = new cron.CronJob('* 12 * * * *', function() {
-        client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 ${client.guilds.cache.size} servidores`,  type: 'WATCHING' }]})
-    }, null, true, 'America/Lima');
-
-    var state3 = new cron.CronJob('* 24 * * * *', function() {
-        client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 /help`,  type: 'WATCHING' }]})
-    }, null, true, 'America/Lima');
-
-    var state4 = new cron.CronJob('* 36 * * * *', function() {
-        client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 animeflv.net`,  type: 'WATCHING' }]})
-    }, null, true, 'America/Lima');
-
-
-    var state5 = new cron.CronJob('* 48 * * * *', function() {
-        client.user.setPresence({ activities: [{ name: `en AnimeFLV 〢 flvhelp`,  type: 'WATCHING' }]})
-    }, null, true, 'America/Lima');
-
-    job.start();
-    state1.start();
-    state2.start();
-    state3.start();
-    state4.start();
-    state5.start();
-  
-    require('./utils/handler')(client)
-    require('./utils/event')(client)
-});
-
+//EMOJIS Y TEXTO
 global.textoyemojis = require('./recursos/textoyemojis');
 
-let folders = fs.readdirSync(`${__dirname}/commands`);
+const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_BANS', 'GUILD_MESSAGES' ,'GUILD_INTEGRATIONS', 'GUILD_WEBHOOKS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGE_REACTIONS', 'DIRECT_MESSAGE_TYPING'], partials: ['MESSAGE', 'CHANNEL'] });
+client.commands = new Discord.Collection();
 
-    folders.forEach((folder) => {
-        fs.readdir(`${__dirname}/commands/${folder}`, (err, files) => {
+const commandFiles = fs.readdirSync('./comandos').filter(file => file.endsWith('.js'));
 
-            if (err) return logger.error(`Ocurrió un erro al cargar los comandos: ${err.stack}`);
+for (const file of commandFiles) {
+	const command = require(`./comandos/${file}`);
+	client.commands.set(command.data.name, command);
+}
 
-            if (!files) { return logger.warn(`[ADVERTENCIA]: No se encontraron archivos en el directorio "${folder.toUpperCase()}"`)
-            } else { console.log(files.length+" comandos") }
-
-            files.forEach((file) => {
-
-                let props = require(`./commands/${folder}/${file}`);
-
-                /* Name */
-                if (!props.conf || !props.conf.name) return logger.error(`[ADVERTENCIA]: ${file} no tiene suficientes propiedades.`);
-
-                client.commands.set(props.conf.name, props);
-
-                /* Aliases */
-                if (!props.conf.aliases) return logger.warn(`[ADVERTENCIA]: ${file} no tiene suficientes alias.`);
-                
-                client.aliases.set(props.conf.aliases, props.conf.name);
-            });
-            console.log(`[CARGADO]: Folder - ${folder}`);
-        });
+//INICIANDO
+client.once('ready', () => {
+	console.log(`[ANIMEFLV] Iniciado como ${client.user.tag}\n[ANIMEFLV] Sirviendo a ${client.users.cache.size} usuarios y en ${client.channels.cache.size} canales de ${client.guilds.cache.size} servidores`);
+	console.log(client.guilds.cache.map(g => `[SERVIDOR] ${g.name}`).join('\n'))
+	client.user.setStatus("idle")
+	client.user.setActivity({ name: "en AnimeFLV 〢 flvhelp",  type: 'WATCHING' })
+  	setInterval(() => {
+    const randomstatus = [
+	"en AnimeFLV 〢 flvhelp", 
+	"en AnimeFLV 〢 /help", 
+	`en AnimeFLV 〢 ${client.users.cache.size} usuarios`, 
+	`en AnimeFLV 〢 ${client.guilds.cache.size} servidores`, 
+	"en AnimeFLV 〢 flvhelp", "en AnimeFLV 〢 animeflv.net"]
+    const randomname = randomstatus[Math.floor((crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295) * randomstatus.length)];
+	client.user.setActivity({ name: randomname,  type: 'WATCHING' })
+    }, 900000);
+	require('./utilidades/deploy')(client);
+	require('./utilidades/evento')(client);
 });
 
-client.login(token);
+client.login(process.env.CLIENT_TOKEN);
+
+//https://discord.com/oauth2/authorize?client_id=768651822113357854&permissions=1497295481975&scope=bot%20applications.commands
