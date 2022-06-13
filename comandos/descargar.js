@@ -30,12 +30,6 @@ module.exports = {
 	execute (interaction) {
 		const args = interaction.options.getString('anime');
         const cap = interaction.options.getNumber("capítulo");
-        const regex = new RegExp('^(https?:\\/\\/)?'+ // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
         const anime = args.replace(/ /g,"+");
         //comprobar el canal adecuado
             if(!args){
@@ -56,7 +50,7 @@ module.exports = {
                         ephemeral: true
                     })
                     return;
-            } else if(regex.test(args)){
+            } else if(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(args)){
                 if(args.startsWith("https://www3.animeflv.net/anime/")) {
                 (async () => {
                 privado(interaction, new MessageEmbed()

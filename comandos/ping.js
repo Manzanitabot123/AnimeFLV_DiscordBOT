@@ -20,10 +20,12 @@ module.exports = {
 	example: ['**/ping**'],
 	guildOnly: false,
 	execute (interaction) {
+		try{
 		const embed = new MessageEmbed()
 				.setDescription(`${textoyemojis.emojis.escribiendo_icon} *Calculando latencia...* ${textoyemojis.emojis.nesuko}`)
 				.setColor(textoyemojis.embedColor);
-			interaction.reply({ embeds: [embed], fetchReply: true, ephemeral: ((interaction.options.getBoolean('privado') === false)? false:true)}).then(itr => {
+		const private = interaction.options.getString('privado') // 'true';
+			interaction.reply({ embeds: [embed], fetchReply: true, ephemeral: (!private||(private==='true')?true:false)}).then(itr => {
 				const timestamp = itr.createdTimestamp - interaction.createdTimestamp;
 				const newEmbed = new MessageEmbed()
 					.setTitle(`Ping de ${interaction.client.user.username}`)
@@ -36,4 +38,11 @@ module.exports = {
 					privado(interaction, newEmbed, false, true);
 			});
 		}
+		catch { 
+			const ErrEmbed = new MessageEmbed()
+					.setTitle(`Hubo un error al calcular el ping`)
+					.setColor('RED')
+			privado(interaction, ErrEmbed, false, true);
+		}
+	}
 };
