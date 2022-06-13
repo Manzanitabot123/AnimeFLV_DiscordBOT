@@ -12,7 +12,7 @@ const {
     urlSelected,
     episodio
   ) => {
-    var enlaceoriginal;
+    let enlaceoriginal;
     if (urlSelected.startsWith("https://www3.animeflv.net/ver/")) {
         enlaceoriginal = urlSelected;
     } else if (urlSelected.startsWith("https://www3.animeflv.net/anime/")){
@@ -71,15 +71,15 @@ const {
                 console.log("Titulo: " + ga.SUB[i].title + " >>> Link: " + ga.SUB[i].code);
             }; */
 
-            var a = await page.evaluate(() => { var xd; const enlacesDeVideo = document.querySelectorAll( 'script' );
+            const a = await page.evaluate(() => { var xd; const enlacesDeVideo = document.querySelectorAll( 'script' );
             for (let i = 0; i < enlacesDeVideo.length; i++) {
                 xd += enlacesDeVideo[i].innerText;  
                 };
             return xd;
             });
-            var convertirACadena = /{"SUB":([^\s]+[\w])/;
-            var match = a.match(convertirACadena);
-            var ga = JSON.parse(match[0]+'"}]}'); 
+            const convertirACadena = /{"SUB":([^\s]+[\w])/;
+            const match = a.match(convertirACadena);
+            const ga = JSON.parse(match[0]+'"}]}'); 
 
             const embed = new MessageEmbed()
             .setTitle("Enlaces de descarga")

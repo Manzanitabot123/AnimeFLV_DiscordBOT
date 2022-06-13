@@ -5,8 +5,9 @@ const privado = async(
     edit
   ) => {
     const private = interaction.options.getString('privado') // 'true';
-    if (private === 'false') {
-    edit ? (interaction.editReply({ embeds: (embed? [embed]:[]), components: (component? [component]:[]), ephemeral: false })) : (interaction.reply({ embeds: (embed? [embed]:[]), components: (component? [component]:[]), ephemeral: false }))
-    } else if (!private || private === 'true') { edit ? (interaction.editReply({ embeds: (embed? [embed]:[]), components: (component? [component]:[]), ephemeral: true })) : (interaction.reply({ embeds: (embed? [embed]:[]), components: (component? [component]:[]), ephemeral: true })) };
+    const embedxd = embed? [embed]:[];
+    const componentxd = component? [component]:[];
+    const privadoxd = !private||(private==='true')?true:false;
+    edit ? (interaction.editReply({ embeds: embedxd, components: componentxd, ephemeral: privadoxd})) : (interaction.reply({ embeds: embedxd, components: componentxd, ephemeral: privadoxd}))
   };
   module.exports = privado;

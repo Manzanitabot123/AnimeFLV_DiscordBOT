@@ -105,7 +105,7 @@ module.exports = {
                                 emisiónMenu
                             );
 
-                            var row25;
+                            let row25;
                             if(total > 25 ) {
                             for (let i = 26; i <= ((total > 50) ? 50 : total); i++) {
                                 const result25 = `//*[@id="mCSB_1_container"]/ul/li[${i}]/a/text()`;

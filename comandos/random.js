@@ -65,11 +65,11 @@ module.exports = {
 
                             //Cantidad de Paginas
                             const totaldepaginas = await page.evaluate(() => { return document.querySelector("body > div.Wrapper > div > div > main > div > ul > li:nth-child(13)").textContent})*1;
-                            const pagina = random.int((min = 1), (max = totaldepaginas));
+                            const pagina = random.int(1, totaldepaginas);
                             await page.goto(`${browserurl}page=${pagina}`, {waitUntil: 'load', timeout: 0})
                             //Cantidad de Animes
                             const totalderesultados = await page.evaluate(() => { return document.getElementsByClassName("ListAnimes AX Rows A03 C02 D02")[0].childElementCount})*1;
-                            const elejido = random.int((min = 1), (max = totalderesultados));
+                            const elejido = random.int(1, totalderesultados);
 
                             //nombre
                             await page.waitForSelector(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > div > div > strong`)
