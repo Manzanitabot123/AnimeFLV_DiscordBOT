@@ -35,7 +35,7 @@ const {
             .setDescription(textoyemojis.errors.error522)
             .setFooter({text: textoyemojis.errors.espera})
     ], components:[]});
-    return await browser.close();
+    return browser.close();
 
     } else if (timeout.status() === 404) {
         interaction.editReply({
@@ -45,7 +45,7 @@ const {
                 .setDescription(textoyemojis.errors.errorlink)
                 .setFooter({text: textoyemojis.errors.trylink})
         ], components:[]});
-        return await browser.close();
+        return browser.close();
         
     } else if (timeout.status() === 502) {
         interaction.editReply({
@@ -55,7 +55,7 @@ const {
                 .setDescription(textoyemojis.errors.error502)
                 .setFooter({text: textoyemojis.errors.espera})
         ], components:[]});
-        return await browser.close();
+        return browser.close();
         
     }
     
@@ -78,12 +78,12 @@ const {
                     .setStyle('LINK')
                 );
                 //capitulos
-                var episodios5_1;
+                let episodios5_1;
                 await page.waitForSelector("#episodeList");
                 const capitulos5_1 = await page.evaluate(() => Array.from(document.querySelectorAll("#episodeList"), el => el.childElementCount)[0]);
                 
                 //Estado
-                var next5_1;
+                let next5_1;
                 await page.waitForSelector(estado);
                 let estado5_1 = await page.$(estado);
                 let state5_1 = await page.evaluate(el => el.textContent, estado5_1);
@@ -98,22 +98,22 @@ const {
 
                 const proximo5_1 = await page.$("#episodeList > li.fa-play-circle.Next > a > span");
                 next5_1 = "Fecha del proximo episodio: **" + await page.evaluate(el => el.textContent, proximo5_1) + "**";
-                };
+                }
                 //URL
                 let url5_1 = urlSelected;
 
                 //otros nombres
-                var othernames5_1;
+                let othernames5_1;
                 await page.evaluate(() => Array.from(document.querySelectorAll("body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3) > span:nth-child(1)"), el => el.textContent)[0]);
                 if(await page.evaluate(() => Array.from(document.querySelectorAll("body > div.Wrapper > div > div > div.Ficha.fchlt > div.Container > div:nth-child(3) > span:nth-child(1)"), el => el.textContent)[0]) !== undefined) {
                     const otros_nombres5_1 = await page.$(otros_nombres);
                     othernames5_1 = await page.evaluate(el => el.textContent, otros_nombres5_1);
                 } else {
                     othernames5_1 = "No tiene otros nombres"
-                };
+                }
 
                 //géneros
-                var gender5_1;
+                let gender5_1;
                 if(await page.evaluate(() => Array.from(document.querySelectorAll('body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(1)[href]'), a => a.getAttribute('href'))[0]) !== undefined) {
                     await page.waitForSelector("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(1)");
                     const ungender5_1 = await page.$("body > div.Wrapper > div > div > div.Container > div > main > section:nth-child(1) > nav > a:nth-child(1)");
@@ -145,11 +145,11 @@ const {
                     }
                 } else { 
                     gender5_1 = "No tiene género";
-                };
+                }
 
                 
                 //imagen
-                const imgs = await page.$$eval(imagen, imgs => imgs.map(img => img.getAttribute('src')));
+                const imgs = await page.$$eval(imagen, imgsA => imgsA.map(img => img.getAttribute('src')));
                 const imagen5_1 = imgs[0];
 
                 //sinopsis
@@ -163,19 +163,19 @@ const {
                 let followers5_1 = await page.evaluate(el => el.textContent, seguidores5_1);
 
                 //losseguidores
-                var allfollowers5_1;
+                let allfollowers5_1;
                 await page.waitForSelector(nombresdelosseguidores);
                 if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(1) > a > img") !== null) {
-                    const unoseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(1) > a > img", unoseguidor5_1 => unoseguidor5_1.map(alt => alt.getAttribute('alt')));
+                    const unoseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(1) > a > img", unoseguidor5_1A => unoseguidor5_1A.map(alt => alt.getAttribute('alt')));
                     
                     if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(2) > a > img") !== null) {
-                        const dosseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(2) > a > img", dosseguidor5_1 => dosseguidor5_1.map(alt => alt.getAttribute('alt')));
+                        const dosseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(2) > a > img", dosseguidor5_1A => dosseguidor5_1A.map(alt => alt.getAttribute('alt')));
                         
                         if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(3) > a > img") !== null) {
-                            const tresseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(3) > a > img", tresseguidor5_1 => tresseguidor5_1.map(alt => alt.getAttribute('alt')));
+                            const tresseguidor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(3) > a > img", tresseguidor5_1A => tresseguidor5_1A.map(alt => alt.getAttribute('alt')));
                             
                             if(page.$("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(4) > a > img") !== null) {
-                                const cuatrosegudor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(4) > a > img", cuatrosegudor5_1 => cuatrosegudor5_1.map(alt => alt.getAttribute('alt')));
+                                const cuatrosegudor5_1 = await page.$$eval("body > div.Wrapper > div > div > div.Container > div > aside > section > ul > li:nth-child(4) > a > img", cuatrosegudor5_1A => cuatrosegudor5_1A.map(alt => alt.getAttribute('alt')));
                                     allfollowers5_1 = unoseguidor5_1[0] + ", " + dosseguidor5_1[0] + ", " + tresseguidor5_1[0] + ", " + cuatrosegudor5_1[0];
                             
                             } else {
@@ -200,14 +200,14 @@ const {
                 await page.waitForSelector(estrellitas);
                 const estrellitas5_1 = await page.$(estrellitas);
                 let littlestars5_1 = await page.evaluate(el => el.textContent, estrellitas5_1);
-                var littlestarssymbols5_1;
-                if(littlestars5_1 >= 0.0 && littlestars5_1 <= 0.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 0.6 && littlestars5_1 <= 1.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 1.1 && littlestars5_1 <= 1.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 1.6 && littlestars5_1 <= 2.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 2.1 && littlestars5_1 <= 2.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 2.6 && littlestars5_1 <= 3.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 3.1 && littlestars5_1 <= 3.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 3.6 && littlestars5_1 <= 4.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 4.1 && littlestars5_1 <= 4.7) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 4.8 && littlestars5_1 <= 5.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`};
+                let littlestarssymbols5_1;
+                if(littlestars5_1 >= 0.0 && littlestars5_1 <= 0.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 0.6 && littlestars5_1 <= 1.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 1.1 && littlestars5_1 <= 1.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 1.6 && littlestars5_1 <= 2.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 2.1 && littlestars5_1 <= 2.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 2.6 && littlestars5_1 <= 3.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 3.1 && littlestars5_1 <= 3.5) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 3.6 && littlestars5_1 <= 4.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else if(littlestars5_1 >= 4.1 && littlestars5_1 <= 4.7) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.media_estrella}`} else if(littlestars5_1 >= 4.8 && littlestars5_1 <= 5.0) {littlestarssymbols5_1 = `${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella} ${textoyemojis.emojis.estrella}`} else {littlestarssymbols5_1 = `${textoyemojis.emojis.media_estrella}`}
                 //imagen referencial
                 await page.waitForSelector(imagen_referencial);
                 const imagen_referencial5_1 = await page.evaluate(el => window.getComputedStyle(el).backgroundImage, await page.$(imagen_referencial));
                 const backgroundImage5_1 = imagen_referencial5_1.match(/url\("(.*)"/)[1];
                 
-                var backgroundImg5_1;
+                let backgroundImg5_1;
                 try{
                 if(await getColors(backgroundImage5_1).then(colors => colors[1]._rgb[0]) !== 40) {
                     backgroundImg5_1 = backgroundImage5_1;
@@ -216,7 +216,7 @@ const {
                 catch(error)
                 {
                 backgroundImg5_1 = "https://www3.animeflv.net/assets/animeflv/img/logo.png"
-                };
+                }
 
                 //votos
                 await page.waitForSelector(votos);

@@ -98,7 +98,7 @@ module.exports = {
                                         value: `${url}`,
                                     }
                                 ])
-                            }; 
+                            } 
 
                             const row = new MessageActionRow()
                             .addComponents(
@@ -130,7 +130,7 @@ module.exports = {
                                         value: `${url25}`,
                                     }
                                 ])
-                            };  
+                            }
                             row25 = new MessageActionRow()
                             .addComponents(
                                 emisiónMenu2
@@ -139,7 +139,7 @@ module.exports = {
 
 
                             interaction.editReply({ components: (total > 25) ? [row, row25] : [row] }).then(searchemision => {
-                                const filter = (interaction) => interaction.user.id === interaction.member.id;
+                                const filter = (interacción) => interacción.user.id === interaction.member.id;
                                 const collector = searchemision.createMessageComponentCollector({
                                     componentType: "SELECT_MENU",
                                     filter,
@@ -182,7 +182,7 @@ module.exports = {
                                         } else {interaction.editReply({ components:[]})}
                                         };
                                         await browser.close();
-                                    });
+                                    })
                                 })
 
                             }
@@ -203,6 +203,6 @@ module.exports = {
                                 console.log("ERROR EN EMISIÓN")
                                 console.log(error)
                             }
-            };
+            }
 		}
 };

@@ -16,8 +16,8 @@ module.exports = {
         if(mensaje.length > 200) return interaction.reply({ embeds: [new MessageEmbed()
             .setTitle(`Es un mensaje muy grande`)
             .setColor('RED')],ephemeral: true})
-        webhook();
-        async function webhook(){
+        slashwebhook();
+        async function slashwebhook(){
             const webhook = await interaction.channel.createWebhook(usuariolejido.username, {
                 avatar: interaction.client.users.cache.get(usuariolejido.id).displayAvatarURL({ dynamic: false }),
                 channel: interaction.channel.id

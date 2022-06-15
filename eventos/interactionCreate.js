@@ -36,8 +36,13 @@ module.exports = async(interaction) => {
 	try {
 		await command.execute(interaction);
 	}
-	catch (error) {
-		console.error(error);
-		await interaction.reply({ content: `${textoyemojis.emojis.cancelar} ¡Hubo un error al ejecutar este comando!` });
+	catch (err) {
+			await interaction.reply({ content: `${textoyemojis.emojis.cancelar} ¡Hubo un error al ejecutar este comando!`, ephemeral:true } );
+			if (interaction.user.bot) return
+			const embed = new Discord.MessageEmbed()
+				.setDescription("**"+err.message + "**\n Comando: "+interaction.commandName)
+				.setColor("RED")
+				.setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL()})
+			client.channels.cache.get('985927917789921360').send({ embeds: [embed]}).catch(console.error)
 	}
 }

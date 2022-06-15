@@ -36,11 +36,12 @@ module.exports = {
 				.setAuthor({name: `AYUDA DEL BOT`, iconURL: (interaction.guild === null ? interaction.user.displayAvatarURL({ dynamic: false }) : interaction.guild.iconURL())})
 				.setThumbnail(interaction.user.displayAvatarURL({ dynamic: false }))
 				.setDescription(`${textoyemojis.emojis.escribiendo_icon} **El prefijo actual es \`/\`**\n\nEs un bot de Discord 2022 para *ver información y descargar animes clásicos, animes del momento, animes más populares,* todo basado y extraido de AnimeFLV.` + "\n\n"+`${textoyemojis.emojis.pin_icon} **Nota:** Para obtener más información sobre un comando en específico, usa \`/help {comando}\``)
-				.addFields({ name: `${textoyemojis.emojis.cutelove} Commandos disponibles [${commands.map(command => command.data.name).length}]:`, value: `${commands.map(command => `**☆** \`${command.data.name}\`\n> ${command.data.description}`).join('\n')}` })
+				.addFields({ name: `${textoyemojis.emojis.cutelove} Commandos disponibles [${commands.map(commandA => commandA.data.name).length}]:`, value: `${commands.map(commandB => `**☆** \`${commandB.data.name}\`\n> ${commandB.data.description}`).join('\n')}` })
 				.setColor(textoyemojis.embedColor)
 				.setImage(wallpapers[num].url)
 				.setFooter({text: "Imagen: " + wallpapers[num].title})
             	.setTimestamp();
+			console.log(xddddddddddd)
 			const buttons = new MessageActionRow()
 			.addComponents(new MessageButton()
 			.setURL('https://www.animeflv.net/')

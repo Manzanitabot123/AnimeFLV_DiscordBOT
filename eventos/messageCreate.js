@@ -34,5 +34,5 @@ module.exports = message => {
             .setThumbnail("https://images.emojiterra.com/twitter/v13.1/512px/1f610.png")
         message.reply({embeds: [exampleEmbed]
         })
-    };
+    }
 }

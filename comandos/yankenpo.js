@@ -111,7 +111,7 @@ module.exports = {
                 }
             });
 
-            collector.on("end", (_, reason, data) => {
+            collector.on("end", (_, reason) => {
                 if (reason === "time") {
                     const tarde = new MessageEmbed()
                     .setTitle('¡Tardaste mucho!')

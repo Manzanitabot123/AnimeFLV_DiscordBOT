@@ -34,10 +34,12 @@ client.once('ready', () => {
     const randomname = randomstatus[Math.floor((crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295) * randomstatus.length)];
 	client.user.setActivity({ name: randomname,  type: 'WATCHING' })
     }, 900000);
+	//Actualizar comandos
 	require('./utilidades/deploy')(client);
+	//Eventos
 	require('./utilidades/evento')(client);
 });
 
 client.login(process.env.CLIENT_TOKEN);
 
-//https://discord.com/oauth2/authorize?client_id=768651822113357854&permissions=1497295481975&scope=bot%20applications.commands
+//https://discord.com/api/oauth2/authorize?client_id=938856255416569946&permissions=545352305777&scope=bot

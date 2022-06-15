@@ -24,17 +24,15 @@ module.exports = {
     execute (interaction) {
         const questionField = interaction.options.getString('8ball');
         if(!questionField){
-            interaction.reply({
+            return interaction.reply({
                 content: `${textoyemojis.emojis.cancelar} Te falta escribir la pregunta`, 
                 ephemeral: true
         })
-        return;
         } else if(questionField.length < 4){
-                interaction.reply({
+            return interaction.reply({
                     content: `${textoyemojis.emojis.pensando} ¿Es eso una pregunta?`, 
                     ephemeral: true
                 })
-                return;
         } else {
         const {answers} = require('../recursos/rpts.json');
         const rpts = Math.floor((crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295) * answers.length);

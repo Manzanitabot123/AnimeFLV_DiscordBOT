@@ -14,7 +14,7 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '9' }).setToken(process.env.CLIENT_TOKEN);
 
-module.exports = async (client) => {
+module.exports = async () => {
 rest.put(Routes.applicationCommands(process.env.APP_ID), { body: commands })
 	.then(() => console.log('[ANIMEFLV] Comandos slash actualizados con éxito'))
 	.catch(console.error);

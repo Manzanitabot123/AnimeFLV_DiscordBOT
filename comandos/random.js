@@ -96,7 +96,7 @@ module.exports = {
                             let seguidores = await page.evaluate(el => el.textContent, seguiendo);
 
                             //link
-                            const urlrandom = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > a`, urlrandom => urlrandom.map(href => href.getAttribute('href')));
+                            const urlrandom = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > a`, urlrandomA => urlrandomA.map(href => href.getAttribute('href')));
                             const link = "https://www3.animeflv.net" + urlrandom[0];
 
                             const detallesrandom = new MessageActionRow().addComponents(
@@ -108,7 +108,7 @@ module.exports = {
                             interaction.editReply({
                                     embeds: [
                                         new MessageEmbed()
-                                        .setDescription(`Se ha elejido ${grantipo}:\n\n> \`${grantitulo}\`${calificacion != 0.0?`\nCalificación: ${calificacion} \⭐`:""}${seguidores != 0?`\nSeguidores: ${seguidores} \👥`:""}`)
+                                        .setDescription(`Se ha elejido ${grantipo}:\n\n> \`${grantitulo}\``+(calificacion != 0.0? `\nCalificación: ${calificacion} \⭐`:"")+(seguidores != 0?`\nSeguidores: ${seguidores} \👥`:``))
                                         .setThumbnail(imagensita)
                                         .setFooter({text: "Cargando información más detallada...", iconURL:"https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif"})
                                     ], components:[detallesrandom]
@@ -133,6 +133,6 @@ module.exports = {
                                 console.log("ERROR EN RANDOM")
                                 console.log(error)
                             }
-            };
+            }
 		}
 };
