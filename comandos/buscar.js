@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const buscarAnime = require("../utilidades/buscarAnime");
 const privado = require("../utilidades/privado");
 const validUrl = require('valid-url');
-const ultimaSelección = new Set();
+const ultimaSelecciónBuscar = new Set();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -108,9 +108,9 @@ module.exports = {
                             try{
                             
                             //Cantidad
-                            const total = await page.evaluate(() => { return document.getElementsByClassName("ListAnimes AX Rows A03 C02 D02")[0].childElementCount});
+                            const totalenBuscar = await page.evaluate(() => { return document.getElementsByClassName("ListAnimes AX Rows A03 C02 D02")[0].childElementCount});
                             
-                            if(total === 0) {
+                            if(totalenBuscar === 0) {
                                 interaction.editReply({
                                 embeds: [
                                     new MessageEmbed()
@@ -137,11 +137,11 @@ module.exports = {
                                     .setColor("DARK_GREEN")
                                     .setURL("https://www3.animeflv.net/browse?q=" + args .replace(/ /g,"+"))
                                     .setThumbnail(miniatura)
-                                    .setDescription(total === 1? `**Se encontró solo 1 resultado**\nSeleccionalo para verlo detalladamente:`:`**Se encontraron ${total} resultados**\nElije uno de los resultados para verlo detalladamente:`)
+                                    .setDescription(totalenBuscar === 1? `**Se encontró solo 1 resultado**\nSeleccionalo para verlo detalladamente:`:`**Se encontraron ${totalenBuscar} resultados**\nElije uno de los resultados para verlo detalladamente:`)
                                     .setFooter({text: `Se cancelará la eleccion automáticamente en 40 segundos`})
                                 ]});
 
-                            for (let i = 1; i <= ((total > 24) ? 24 : total); i++) {
+                            for (let i = 1; i <= ((totalenBuscar > 24) ? 24 : totalenBuscar); i++) {
                                 const result= `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > h3`;
                                 const pelianime = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > div > span`;
                                 const stars = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > div > p:nth-child(2) > span.Vts.fa-star`;
@@ -178,21 +178,20 @@ module.exports = {
                             );
 
 
-                            interaction.editReply({ components: (total > 25) ? [row, row25] : [row] }).then(searchemision => {
-                                const filter = (interacción) => interacción.user.id === interaction.member.id;
-                                const collector = searchemision.createMessageComponentCollector({
+                            interaction.editReply({ components: (totalenBuscar > 25) ? [row, row25] : [row] }).then(searching => {
+                                const filterBuscar = (interacciónBuscar) => interacciónBuscar.user.id === interaction.member.id;
+                                const collectorBuscar = searching.createMessageComponentCollector({
                                     componentType: "SELECT_MENU",
-                                    filter,
-                                    time: 40000,
-                                    errors: ['time']
+                                    filterBuscar,
+                                    time: 40000
                                 });
                                     //Collector On
-                                    collector.on('collect', async(collected) => {
+                                    collectorBuscar.on('collect', async(collected) => {
                                         const value = collected.values[0];
-                                        if (ultimaSelección.has(interaction.user.id)) return collected.deferUpdate();
-                                        ultimaSelección.add(interaction.user.id)
+                                        if (ultimaSelecciónBuscar.has(interaction.user.id)) return collected.deferUpdate();
+                                        ultimaSelecciónBuscar.add(interaction.user.id)
                                         setTimeout(() => {
-                                            ultimaSelección.delete(interaction.user.id)
+                                            ultimaSelecciónBuscar.delete(interaction.user.id)
                                         }, 6000);
                                         await collected.deferUpdate();
                                         const redirecturl = "https://www3.animeflv.net"+value;
@@ -205,11 +204,11 @@ module.exports = {
                                             .setFooter({text: `Puedes elejir otro durante 40 segundos`})
                                         ]});
                                         buscarAnime(interaction, page, browser, redirecturl, [row]);
-                                        collector.resetTimer();
+                                        collectorBuscar.resetTimer();
                                     });
                                     //Collector Off
                     
-                                    collector.on('end', async(_, reason) => {
+                                    collectorBuscar.on('end', async(_, reason) => {
                                         if (reason === "time") {
                                         if (page.url() === busquedaurl){
                                             interaction.editReply({ embeds: [
@@ -227,20 +226,22 @@ module.exports = {
 
                             }
                             catch(error){
-                            await browser.close();
+                            let errEmbed = new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription("Hubo un error al cargar los resultados de la búsqueda");
+
                             interaction.editReply({
                                 embeds: [
-                                    new MessageEmbed()
-                                        .setColor("DARK_RED")
-                                        .setDescription("Hubo un error al cargar los resultados de la búsqueda")
+                                    errEmbed
                                 ]});
+                            await browser.close();
                             console.log(error)
                             }
                             }
                             
                             catch(error)
                             {
-                                console.log("ERROR EN BUSCAR")
+                                console.log("BUSCAR")
                                 console.log(error)
                             }
             }

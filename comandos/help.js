@@ -41,7 +41,6 @@ module.exports = {
 				.setImage(wallpapers[num].url)
 				.setFooter({text: "Imagen: " + wallpapers[num].title})
             	.setTimestamp();
-			console.log(xddddddddddd)
 			const buttons = new MessageActionRow()
 			.addComponents(new MessageButton()
 			.setURL('https://www.animeflv.net/')

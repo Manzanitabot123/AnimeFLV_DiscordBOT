@@ -70,6 +70,7 @@ const {
             for (let i = 0; i < ga.SUB.length; i++) {
                 console.log("Titulo: " + ga.SUB[i].title + " >>> Link: " + ga.SUB[i].code);
             }; */
+            const numberoCap = await page.evaluate(() => {return document.querySelector("#XpndCn > div.CpCnA > div.CapiTop > h2").textContent})
 
             const a = await page.evaluate(() => { let xd; const enlacesDeVideo = Array.from(document.querySelectorAll( 'script' ));
             for (let enlace of enlacesDeVideo) {
@@ -83,7 +84,7 @@ const {
             const ga = JSON.parse(match[0]+'"}]}'); 
 
             const embed = new MessageEmbed()
-            .setTitle("Enlaces de descarga")
+            .setTitle("Enlaces de descarga | " + numberoCap)
             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
             .setColor("RANDOM")
             .setFooter({text: "Extraido de: AnimeFLV.com"})
@@ -107,16 +108,63 @@ const {
                 if(!servidor.code.includes("hqq.tv/player/")) embed.addFields({ name:  "Servidor: " + servidor.title, value: " >>> Link: [Click para descargar](" + servidor.code.replace('/streamtape.com/e/','/streamtape.com/v/').replace('/embedsito.com/v/','/embedsito.com/f/').replace('/embedsb.com/e/','/embedsb.com/d/').replace('/mega.nz/embed','/mega.nz/').replace('yourupload.com/embed/','yourupload.com/watch/') + ")" })
             }
 
-            const detallesraros = new MessageActionRow().addComponents(
-                new MessageButton()
-                .setURL(enlaceoriginal)
-                .setLabel("Ir al episodio")
-                .setStyle('LINK')
-            );
+            const detallesraros = new MessageActionRow();
 
+            if (await page.evaluate(() => Array.from(document.getElementsByClassName("CapNvPv fa-chevron-left"))[0]) !== undefined) {
+                const anterior = await page.evaluate(() => document.getElementsByClassName("CapNvPv fa-chevron-left")[0].href)
+                detallesraros.addComponents([
+                    new MessageButton()
+                    .setCustomId(`${anterior}`)
+                    .setLabel('Cap. anterior')
+                    .setStyle('DANGER')
+                    .setEmoji(textoyemojis.emojis.izquierda)
+                ])
+            }
+
+            //Añade los detalles
+            const Detallitos = new MessageButton()
+            .setURL(enlaceoriginal)
+            .setLabel("Ir al episodio")
+            .setStyle('LINK')
+            .setEmoji(textoyemojis.emojis.animeflv_icon);
+
+            detallesraros.addComponents([Detallitos])
+
+            if (await page.evaluate(() => Array.from(document.getElementsByClassName("CapNvNx fa-chevron-right"))[0]) !== undefined) {
+                const siguiente = await page.evaluate(() => document.getElementsByClassName("CapNvNx fa-chevron-right")[0].href)
+                detallesraros.addComponents([
+                    new MessageButton()
+                    .setCustomId(`${siguiente}`)
+                    .setLabel('Cap. anterior')
+                    .setStyle('SUCCESS')
+                    .setEmoji(textoyemojis.emojis.derecha)
+                ])
+            }
+            
             interaction.editReply({ embeds: [embed], components:[detallesraros]});
+            
+            const message = await interaction.fetchReply();
 
-            await browser.close()
+            const filter = ft => ft.isButton() && ft.user.id === interaction.user.id;
+            const collector = message.createMessageComponentCollector({
+                filter,
+                max: 1,
+                time: 20000
+            });
+            collector.on('collect', async collected => {
+                interaction.editReply({ 
+                    embeds: [embed.setFooter({text: "CARGANDO..."})]
+                })
+                Denuevo(collected, interaction, page, browser, collected.customId)
+                });
+    
+                collector.on("end", async(_, reason) => {
+                    if (reason === "time") {
+                        interaction.editReply({ components:[new MessageActionRow().addComponents([Detallitos])]})
+                        await browser.close()
+                    }
+                  });
+
             } catch(error) {
                 interaction.editReply({ embeds: [new MessageEmbed()
                     .setTitle("Opss")
@@ -125,4 +173,13 @@ const {
                 console.log(error)
             }
   };
+
+async function Denuevo(collected, interaction, page, browser, a) {
+    try{
+    enlacesDescarga(interaction, page, browser, a).then( await collected.deferUpdate())
+    } catch { 
+    interaction.editReply({ embeds: [embed.setFooter({text: "Ha ocurrido un error al cargar el episodio"})], components:[]})
+    await browser.close()
+    }
+}
 module.exports = enlacesDescarga;

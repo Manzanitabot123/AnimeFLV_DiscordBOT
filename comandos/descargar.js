@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const privado = require("../utilidades/privado");
 const enlacesDescarga = require("../utilidades/enlacesDescarga");
 const validUrl = require('valid-url');
-const ultimaSelección = new Set();
+const ultimaSelecciónDescargar = new Set();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -33,30 +33,24 @@ module.exports = {
         const cap = interaction.options.getNumber("capítulo");
         const anime = args.replace(/ /g,"+");
         //comprobar el canal adecuado
-            if(!args){
-            interaction.reply({
-                content: `${textoyemojis.emojis.cancelar} Te falta escribir el usuario que quieres buscar`, 
-                ephemeral: true
-            })
-            return;
-            } else if(args.length < 3){
+            if(args.length < 3){
                     interaction.reply({
                         content: `${textoyemojis.emojis.cancelar} Ese nombre es muy corto`, 
                         ephemeral: true
                     })
                     return;
-            } else if(args.includes(`\n`)){
-                    interaction.reply({
-                        content: `${textoyemojis.emojis.cancelar} Tu busqueda contiene más de un reglón`, 
-                        ephemeral: true
-                    })
-                    return;
+            } if(!args){
+                interaction.reply({
+                    content: `${textoyemojis.emojis.cancelar} Te falta escribir el usuario que quieres buscar`, 
+                    ephemeral: true
+                })
+                return;
             } else if(validUrl.isUri(args)){
                 if(args.startsWith("https://www3.animeflv.net/anime/")) {
                     (async () => {
                     privado(interaction, new MessageEmbed()
                     .setColor("YELLOW")
-                    .setDescription("Buscando con el enlace: **" +  args + "** ..."));
+                    .setDescription("Buscando anime con el enlace: **" +  args + "** ..."));
 
                     const browser = await puppeteer.launch({
                         headless: true,
@@ -95,7 +89,7 @@ module.exports = {
                 //mensaje de espera (cargando...)
                 privado(interaction, new MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription("Buscando **" +  args + "** ..."));
+                .setDescription("Buscando con el nombre: **" +  args + "** ..."));
                 try{
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             
@@ -110,9 +104,9 @@ module.exports = {
                             try{
                             
                             //Cantidad
-                            const total = await page.evaluate(() => { return document.getElementsByClassName("ListAnimes AX Rows A03 C02 D02")[0].childElementCount});
+                            const totalEnDescargas = await page.evaluate(() => { return document.getElementsByClassName("ListAnimes AX Rows A03 C02 D02")[0].childElementCount});
                             
-                            if(total === 0) {
+                            if(totalEnDescargas === 0) {
                                 interaction.editReply({
                                 embeds: [
                                     new MessageEmbed()
@@ -124,13 +118,13 @@ module.exports = {
                                 return await browser.close()
                             }
                             
-                            const BúsquedaMenu = new MessageSelectMenu()
+                            const BúsquedaDecargarMenu = new MessageSelectMenu()
                             .setCustomId('resultados')
-                            .setPlaceholder('Selecciona un anime');
+                            .setPlaceholder('Selecciona el anime que buscas');
 
-                            //Miniatura
+                            //Miniatura para Descargas
                             const imgs = await page.$$eval("body > div.Wrapper > div > div > main > ul > li > article > a > div > figure > img", imgsA => imgsA.map(img => img.getAttribute('src')));
-                            const miniatura = imgs[0]
+                            const miniaturaDescargar = imgs[0]
 
                             interaction.editReply({ embeds: [
                                 new MessageEmbed()
@@ -138,36 +132,38 @@ module.exports = {
                                     .setTitle("Por favor elige el anime que descargar")
                                     .setColor("DARK_GREEN")
                                     .setURL("https://www3.animeflv.net/browse?q=" + args .replace(/ /g,"+"))
-                                    .setThumbnail(miniatura)
-                                    .setDescription(total === 1? `**Se encontró solo 1 resultado**\nElíjelo para descargar el capítulo ${cap}:`:`**Se encontraron ${total} resultados**\nElije uno de los resultados para descargar el capítulo ${cap}:`)
+                                    .setThumbnail(miniaturaDescargar)
+                                    .setDescription(totalEnDescargas === 1? `**Se encontró solo 1 resultado**\nElíjelo para descargar el capítulo ${cap}:`:`**Se encontraron ${totalEnDescargas} resultados**\nElije uno de los resultados para descargar el capítulo ${cap}:`)
                                     .setFooter({text: `Se cancelará la eleccion automáticamente en 40 segundos`})
                                 ]});
 
-                            for (let i = 1; i <= ((total > 24) ? 24 : total); i++) {
-                                const result= `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > h3`;
-                                const pelianime = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > div > span`;
-                                const stars = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > div > p:nth-child(2) > span.Vts.fa-star`;
-                                const enlace = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a`;
-                                //Para todos __________________________________________________________________________________________________________________________________________________________________________________       
-                                await page.waitForSelector(result)
-                                let element = await page.$(result)
-                                let titulo = await page.evaluate(el => el.textContent, element)
-
-                                await page.waitForSelector(stars)
-                                const estrellas = await page.$(stars)
-                                let calificación = await page.evaluate(el => el.textContent, estrellas)
-
-                                const url = await page.$$eval(enlace, urlone => urlone.map(href => href.getAttribute('href')));
-
-                                await page.waitForSelector(pelianime);
-                                let tipo = await page.$(pelianime);
-                                let tipodeanime = await page.evaluate(el => el.textContent, tipo);
-                                if(tipodeanime == "Anime") {tipodeanime = "🌈 Anime"} else if(tipodeanime == "OVA") {tipodeanime = "📀 OVA"} else if(tipodeanime == "Especial") {tipodeanime = "💖 Especial"} else {tipodeanime = "🎬 Película"}
+                            for (let i = 1; i <= ((totalEnDescargas > 24) ? 24 : totalEnDescargas); i++) {
+                                const resultDescargar= `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > h3`;
+                                const pelianimeDescargar = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > div > span`;
+                                const starsDescargar = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > div > p:nth-child(2) > span.Vts.fa-star`;
+                                const enlaceDescargar = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a`;
                                 
-                                BúsquedaMenu.addOptions([
+                                //__________________________________________________________________________________________________________________________________________________________________________________       
+                                
+                                await page.waitForSelector(resultDescargar)
+                                let elementoDescargar = await page.$(resultDescargar)
+                                let tituloDescargar = await page.evaluate(el => el.textContent, elementoDescargar)
+
+                                await page.waitForSelector(starsDescargar)
+                                const estrellasDescargar = await page.$(starsDescargar)
+                                let calificaciónDescargar = await page.evaluate(el => el.textContent, estrellasDescargar)
+
+                                const url = await page.$$eval(enlaceDescargar, urlone => urlone.map(href => href.getAttribute('href')));
+
+                                await page.waitForSelector(pelianimeDescargar);
+                                let tipoDescargar = await page.$(pelianimeDescargar);
+                                let tipodeanimeDescargar = await page.evaluate(el => el.textContent, tipoDescargar);
+                                if(tipodeanimeDescargar == "Anime") {tipodeanimeDescargar = "🌈 Anime"} else if(tipodeanimeDescargar == "OVA") {tipodeanimeDescargar = "📀 OVA"} else if(tipodeanimeDescargar == "Especial") {tipodeanimeDescargar = "💖 Especial"} else {tipodeanimeDescargar = "🎬 Película"}
+                                
+                                BúsquedaDecargarMenu.addOptions([
                                     { 
-                                        label: `${titulo}`,
-                                        description: `${tipodeanime} N°${i} | Calificación: ${calificación} ⭐`,
+                                        label: `${tituloDescargar}`,
+                                        description: `${tipodeanimeDescargar} N°${i} | Calificación: ${calificaciónDescargar} ⭐`,
                                         emoji: textoyemojis.emojis.play,
                                         value: `${url}`,
                                     }
@@ -176,24 +172,22 @@ module.exports = {
 
                             const row = new MessageActionRow()
                             .addComponents(
-                                BúsquedaMenu
+                                BúsquedaDecargarMenu
                             );
 
 
-                            interaction.editReply({ components: (total > 25) ? [row, row25] : [row] }).then(searchemision => {
-                                const filter = (interacción) => interacción.user.id === interaction.member.id;
-                                const collector = searchemision.createMessageComponentCollector({
+                            interaction.editReply({ components: (totalEnDescargas > 25) ? [row, row25] : [row] }).then(searchLinksDownload => {
+                                const filterDescargar = (interacciónDescargar) => interacciónDescargar.user.id === interaction.member.id;
+                                const collectorDescargar = searchLinksDownload.createMessageComponentCollector({
                                     componentType: "SELECT_MENU",
-                                    filter,
-                                    time: 40000,
-                                    errors: ['time']
+                                    filterDescargar,
+                                    time: 39898
                                 });
-                                    //Collector On
-                                    collector.on('collect', async(collected) => {
-                                        if (ultimaSelección.has(interaction.user.id)) return collected.deferUpdate();
-                                        ultimaSelección.add(interaction.user.id)
+                                    collectorDescargar.on('collect', async(collected) => {
+                                        if (ultimaSelecciónDescargar.has(interaction.user.id)) return collected.deferUpdate();
+                                        ultimaSelecciónDescargar.add(interaction.user.id)
                                         setTimeout(() => {
-                                            ultimaSelección.delete(interaction.user.id)
+                                            ultimaSelecciónDescargar.delete(interaction.user.id)
                                         }, 8000);
 
                                         await collected.deferUpdate();
@@ -208,11 +202,10 @@ module.exports = {
                                             .setFooter({text: `Espera unos segundos`})
                                         ]});
                                         enlacesDescarga(interaction, page, browser, redirecturl, cap);
-                                        collector.resetTimer();
+                                        collectorDescargar.resetTimer();
                                     });
-                                    //Collector Off
                     
-                                    collector.on('end', async(_, reason) => {
+                                    collectorDescargar.on('end', async(_, reason) => {
                                         if (reason === "time") {
                                         if (page.url() === busquedaurl){
                                             interaction.editReply({ embeds: [
@@ -222,9 +215,8 @@ module.exports = {
                                                     .setDescription(`La selección del anime ha terminado`)
                                                     .setThumbnail("https://c.tenor.com/KxEm4q8BoKcAAAAC/spider-man-alfred-molina.gif")
                                                 ], components:[]});
-                                        } else {interaction.editReply({ components:[]})}
+                                        }
                                         };
-                                        await browser.close();
                                     })
                                 })
 
@@ -243,7 +235,7 @@ module.exports = {
                             
                             catch(error)
                             {
-                                console.log("ERROR EN DESCARGAR")
+                                console.log("DESCARGAR")
                                 console.log(error)
                             }
             }

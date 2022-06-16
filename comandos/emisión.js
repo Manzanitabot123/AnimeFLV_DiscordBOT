@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
 const buscarAnime = require("../utilidades/buscarAnime");
 const privado = require("../utilidades/privado");
-const ultimaSelección = new Set();
+const ultimaSelecciónEmisión = new Set();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -45,9 +45,9 @@ module.exports = {
                             try{
 
                             //Cantidad
-                            const total = await page.evaluate(() => { return document.getElementsByClassName("ListSdbr")[0].childElementCount});
+                            const totalEnEmisión = await page.evaluate(() => { return document.getElementsByClassName("ListSdbr")[0].childElementCount});
                             
-                            if(total === 0) {
+                            if(totalEnEmisión === 0) {
                                 interaction.editReply({
                                 embeds: [
                                     new MessageEmbed()
@@ -70,12 +70,12 @@ module.exports = {
                                 new MessageEmbed()
                                     .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                     .setColor("RANDOM")
-                                    .setDescription(`**En total hay ${total} animes**\nElije uno de los animes en emisión para verlo detalladamente:`)
+                                    .setDescription(`**En totalEnEmisión hay ${totalEnEmisión} animes**\nElije uno de los animes en emisión para verlo detalladamente:`)
                                     .setThumbnail("https://cdn.dribbble.com/users/1208688/screenshots/4575084/anime_search_event.gif")
                                     .setFooter({text: `Se cancelará la eleccion automáticamente en 40 segundos`})
                                 ]});
 
-                            for (let i = 1; i <= ((total > 25) ? 25 : total); i++) {
+                            for (let i = 1; i <= ((totalEnEmisión > 25) ? 25 : totalEnEmisión); i++) {
                                 const result = `//*[@id="mCSB_1_container"]/ul/li[${i}]/a/text()`;
                                 const pelianime = `#mCSB_1_container > ul > li:nth-child(${i}) > a > span`;
                                 const enlace = `#mCSB_1_container > ul > li:nth-child(${i}) > a`;
@@ -106,8 +106,8 @@ module.exports = {
                             );
 
                             let row25;
-                            if(total > 25 ) {
-                            for (let i = 26; i <= ((total > 50) ? 50 : total); i++) {
+                            if(totalEnEmisión > 25 ) {
+                            for (let i = 26; i <= ((totalEnEmisión > 50) ? 50 : totalEnEmisión); i++) {
                                 const result25 = `//*[@id="mCSB_1_container"]/ul/li[${i}]/a/text()`;
                                 const pelianime25 = `#mCSB_1_container > ul > li:nth-child(${i}) > a > span`;
                                 const enlace25 = `#mCSB_1_container > ul > li:nth-child(${i}) > a`;
@@ -138,20 +138,19 @@ module.exports = {
                             }
 
 
-                            interaction.editReply({ components: (total > 25) ? [row, row25] : [row] }).then(searchemision => {
-                                const filter = (interacción) => interacción.user.id === interaction.member.id;
-                                const collector = searchemision.createMessageComponentCollector({
+                            interaction.editReply({ components: (totalEnEmisión > 25) ? [row, row25] : [row] }).then(searchemision => {
+                                const filterEmisión = (interacciónEmisión) => interacciónEmisión.user.id === interaction.member.id;
+                                const collectorEmisión = searchemision.createMessageComponentCollector({
                                     componentType: "SELECT_MENU",
-                                    filter,
-                                    time: 40000,
-                                    errors: ['time']
+                                    filterEmisión,
+                                    time: 39999
                                 });
                                     //Collector On
-                                    collector.on('collect', async(collected) => {
-                                        if (ultimaSelección.has(interaction.user.id)) return collected.deferUpdate();
-                                        ultimaSelección.add(interaction.user.id)
+                                    collectorEmisión.on('collect', async(collected) => {
+                                        if (ultimaSelecciónEmisión.has(interaction.user.id)) return collected.deferUpdate();
+                                        ultimaSelecciónEmisión.add(interaction.user.id)
                                         setTimeout(() => {
-                                            ultimaSelección.delete(interaction.user.id)
+                                            ultimaSelecciónEmisión.delete(interaction.user.id)
                                         }, 5000);
                                         await collected.deferUpdate();
                                         const value = collected.values[0];
@@ -164,12 +163,12 @@ module.exports = {
                                             .setThumbnail("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif")
                                             .setFooter({text: `Puedes elejir otro durante 40 segundos`})
                                         ]});
-                                        buscarAnime(interaction, page, browser, redirecturl, (total > 25) ? [row, row25] : [row]);
-                                        collector.resetTimer();
+                                        buscarAnime(interaction, page, browser, redirecturl, (totalEnEmisión > 25) ? [row, row25] : [row]);
+                                        collectorEmisión.resetTimer();
                                     });
                                     //Collector Off
                     
-                                    collector.on('end', async(_, reason) => {
+                                    collectorEmisión.on('end', async(_, reason) => {
                                         if (reason === "time") {
                                         if (page.url() === emisiónurl){
                                             interaction.editReply({ embeds: [
@@ -188,19 +187,16 @@ module.exports = {
                             }
                             catch(error){
                             await browser.close();
-                            interaction.editReply({
-                                embeds: [
-                                    new MessageEmbed()
-                                        .setColor("DARK_RED")
-                                        .setDescription("Hubo un error al cargar los animes en emisión")
-                                ]});
+                            const errorEmbed = new MessageEmbed()
+                            .setColor("DARK_RED")
+                            .setDescription("Hubo un error al cargar los animes en emisión");
+                            interaction.editReply({embeds: [errorEmbed]});
                             console.log(error)
                             }
                             }
-                            
                             catch(error)
                             {
-                                console.log("ERROR EN EMISIÓN")
+                                console.log("EMISIÓN")
                                 console.log(error)
                             }
             }
