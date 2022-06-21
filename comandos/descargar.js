@@ -90,7 +90,7 @@ module.exports = {
                 privado(interaction, new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription("Buscando con el nombre: **" +  args + "** ..."));
-                try{
+                try{        
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             
                             //info
@@ -125,7 +125,6 @@ module.exports = {
                             //Miniatura para Descargas
                             const imgs = await page.$$eval("body > div.Wrapper > div > div > main > ul > li > article > a > div > figure > img", imgsA => imgsA.map(img => img.getAttribute('src')));
                             const miniaturaDescargar = imgs[0]
-
                             interaction.editReply({ embeds: [
                                 new MessageEmbed()
                                     .setAuthor({name: "Tu busqueda fue: 🔎 " + args , iconURL: interaction.user.displayAvatarURL({ dynamic: false })})

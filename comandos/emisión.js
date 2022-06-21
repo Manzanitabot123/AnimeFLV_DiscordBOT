@@ -70,7 +70,7 @@ module.exports = {
                                 new MessageEmbed()
                                     .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                     .setColor("RANDOM")
-                                    .setDescription(`**En totalEnEmisión hay ${totalEnEmisión} animes**\nElije uno de los animes en emisión para verlo detalladamente:`)
+                                    .setDescription(`**En emisión hay ${totalEnEmisión} animes**\nElije uno de los animes en emisión para verlo detalladamente:`)
                                     .setThumbnail("https://cdn.dribbble.com/users/1208688/screenshots/4575084/anime_search_event.gif")
                                     .setFooter({text: `Se cancelará la eleccion automáticamente en 40 segundos`})
                                 ]});
@@ -95,7 +95,7 @@ module.exports = {
                                         label: `${titulo}`,
                                         description: `${tipodeanime} N°${i}`,
                                         emoji: textoyemojis.emojis.play,
-                                        value: `${url}`,
+                                        value: `${url}`
                                     }
                                 ])
                             } 
@@ -127,7 +127,7 @@ module.exports = {
                                         label: `${titulo25}`,
                                         description: `${tipodeanime25} N°${i}`,
                                         emoji: textoyemojis.emojis.play,
-                                        value: `${url25}`,
+                                        value: `${url25}`
                                     }
                                 ])
                             }
@@ -153,6 +153,7 @@ module.exports = {
                                             ultimaSelecciónEmisión.delete(interaction.user.id)
                                         }, 5000);
                                         await collected.deferUpdate();
+                                        console.log(collected)
                                         const value = collected.values[0];
                                         const redirecturl = "https://www3.animeflv.net"+value;
                                         interaction.editReply({ embeds: [

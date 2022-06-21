@@ -83,10 +83,14 @@ const {
             const match = a.match(convertirACadena);
             const ga = JSON.parse(match[0]+'"}]}'); 
 
+            //Añadir miniatura
+            const imageMiniatura = await page.evaluate(() =>{ return document.querySelectorAll('[property="og:image"]')[0].content})
+
             const embed = new MessageEmbed()
             .setTitle("Enlaces de descarga | " + numberoCap)
             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
             .setColor("RANDOM")
+            .setThumbnail(imageMiniatura)
             .setFooter({text: "Extraido de: AnimeFLV.com"})
 
             const total = await page.evaluate(() => { return document.querySelector("#DwsldCn > div > table > tbody").childElementCount});
@@ -149,11 +153,11 @@ const {
             const collector = message.createMessageComponentCollector({
                 filter,
                 max: 1,
-                time: 20000
+                time: 35000
             });
             collector.on('collect', async collected => {
                 interaction.editReply({ 
-                    embeds: [embed.setFooter({text: "CARGANDO..."})]
+                    embeds: [embed.setFooter({text: "CARGANDO LINKS DEL EPISODIO..."})]
                 })
                 Denuevo(collected, interaction, page, browser, collected.customId)
                 });

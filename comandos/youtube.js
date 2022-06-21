@@ -35,7 +35,6 @@ module.exports = {
                 .setDescription(`${textoyemojis.emojis.youtube_icon} ¡Fiesta creada! Usa este enlace a continuación para unirse a la actividad\nhttps://discord.gg/${body.code}`)
                 .setFooter({ text: 'Desarrollado por YouTube' })
                 .setThumbnail("https://cliply.co/wp-content/uploads/2021/09/CLIPLY_142110380_ORGANIC_YT_ICON_400.gif")
-                .setImage("https://cdn.oneesports.gg/cdn-data/2022/04/SpyxFamily_LoidForgerAnyaYorWallpaper-450x253.webp")
                 .setColor('#ff0000');
 
                 const button = new MessageActionRow()
