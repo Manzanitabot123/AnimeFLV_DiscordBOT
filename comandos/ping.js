@@ -20,7 +20,6 @@ module.exports = {
 	example: ['**/ping**'],
 	guildOnly: false,
 	execute (interaction) {
-		try{
 		const embed = new MessageEmbed()
 				.setDescription(`${textoyemojis.emojis.escribiendo_icon} *Calculando latencia...* ${textoyemojis.emojis.nesuko}`)
 				.setColor(textoyemojis.embedColor);
@@ -36,13 +35,6 @@ module.exports = {
 					.setColor(textoyemojis.embedColor)
 					.setThumbnail("https://cdn.dribbble.com/users/252645/screenshots/4275915/tt_bat.gif");
 					privado(interaction, newEmbed, false, true);
-			});
-		}
-		catch { 
-			const ErrEmbed = new MessageEmbed()
-					.setTitle(`Hubo un error al calcular el ping`)
-					.setColor('RED')
-			privado(interaction, ErrEmbed, false, true);
-		}
+		});
 	}
 };

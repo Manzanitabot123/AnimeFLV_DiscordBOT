@@ -25,6 +25,10 @@ module.exports = {
         {
             name: 'OVA', 
             value: 'OVA'
+        },
+        {
+            name: 'Especial', 
+            value: 'Especial'
         }
         ))
         .addStringOption(option => option.setName('privado').setDescription('Solo tu podras ver mis mensajes (Por defecto: Si)').addChoices(
@@ -49,7 +53,7 @@ module.exports = {
                 privado(interaction, new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(textoyemojis.emojis.dado + " Elijiendo un anime al azar..."));
-                try{
+
                             let browserurl;
                             const tipoelejido = interaction.options.getString('tipo');
                             if(tipoelejido == "Todos"){ browserurl = `https://www3.animeflv.net/browse?`} else if(tipoelejido == "TV"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=tv&order=default&`} else if(tipoelejido == "Película"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=movie&order=default&`} else if(tipoelejido == "OVA"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=ova&order=default&`} else if(tipoelejido == "Especial"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=special&order=default&`} else {browserurl = `https://www3.animeflv.net/browse?`}
@@ -64,8 +68,29 @@ module.exports = {
                             try{
 
                             //Cantidad de Paginas
-                            const totaldepaginas = await page.evaluate(() => { return document.querySelector("body > div.Wrapper > div > div > main > div > ul > li:nth-child(13)").textContent})*1;
+                            var arr = [];
+                            const paginas = await page.evaluate(() => { return document.getElementsByClassName("pagination")[0].childElementCount})
+                            for (let i = 1; i <= paginas; i++) {
+                                const jsPaginas = `body > div.Wrapper > div > div > main > div > ul > li:nth-child(${i})`;
+                                
+                                //__________________________________________________________________________________________________________________________________________________________________________________       
+                                
+                                await page.waitForSelector(jsPaginas)
+                                let elementoDescargar = await page.$(jsPaginas)
+                                let ra = await page.evaluate(el => el.textContent, elementoDescargar)
+                                let pag;
+                                if(!ra.includes('…') && !ra.includes('«') && !ra.includes('»')) {pag = ra}; 
+                                arr.push(pag*1);
+                            };
+                            let totaldepaginas = 0;
+                            arr.forEach((element) => {
+                            if (totaldepaginas < element) {
+                                totaldepaginas = element;
+                            }
+                            });
+
                             const pagina = random.int(1, totaldepaginas);
+                            console.log(pagina)
                             await page.goto(`${browserurl}page=${pagina}`, {waitUntil: 'load', timeout: 0})
                             //Cantidad de Animes
                             const totalderesultados = await page.evaluate(() => { return document.getElementsByClassName("ListAnimes AX Rows A03 C02 D02")[0].childElementCount})*1;
@@ -80,7 +105,7 @@ module.exports = {
                             await page.waitForSelector(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > div > p:nth-child(2) > span`)
                             const tipodelanime = await page.$(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > div > p:nth-child(2) > span`)
                             let grantipo = await page.evaluate(el => el.textContent, tipodelanime)
-                            if(grantipo == "Anime") {grantipo = "el **anime**"} else if(grantipo == "OVA") {grantipo = "el **OVA**"} else {grantipo = "la **película**"};
+                            if(grantipo == "Anime") {grantipo = "el **anime**"} else if(grantipo == "OVA") {grantipo = "el **OVA**"}  else if(grantipo == "Especial") {grantipo = "el **especial**"} else {grantipo = "la **película**"};
 
                             //imagen
                             const imagenpequeña = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > a > div > figure > img`, imgs => imgs.map(img => img.getAttribute('src')));
@@ -125,13 +150,6 @@ module.exports = {
                                         .setDescription("Hubo un error al cargar el anime random")
                                 ]});
                             console.log(error)
-                            }
-                            }
-                            
-                            catch(error)
-                            {
-                                console.log("ERROR EN RANDOM")
-                                console.log(error)
                             }
             }
 		}

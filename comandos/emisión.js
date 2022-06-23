@@ -31,7 +31,7 @@ module.exports = {
                 privado(interaction, new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription("Recopilando los animes en emisión ..."));
-                try{
+
                             const emisiónurl = `https://www3.animeflv.net/`;
             
                             //info
@@ -153,7 +153,6 @@ module.exports = {
                                             ultimaSelecciónEmisión.delete(interaction.user.id)
                                         }, 5000);
                                         await collected.deferUpdate();
-                                        console.log(collected)
                                         const value = collected.values[0];
                                         const redirecturl = "https://www3.animeflv.net"+value;
                                         interaction.editReply({ embeds: [
@@ -193,12 +192,6 @@ module.exports = {
                             .setDescription("Hubo un error al cargar los animes en emisión");
                             interaction.editReply({embeds: [errorEmbed]});
                             console.log(error)
-                            }
-                            }
-                            catch(error)
-                            {
-                                console.log("EMISIÓN")
-                                console.log(error)
                             }
             }
 		}

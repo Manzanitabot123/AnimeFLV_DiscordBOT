@@ -11,7 +11,6 @@ module.exports = {
 	example: ['**/sugenrencia** mensaje:`¿Ves Gintama?`'],
 	guildOnly: false,
 	execute (interaction) {
-		try{
 		const sugerencia = interaction.options.getString('mensaje');
         if(sugerencia.length < 15){
             interaction.reply({
@@ -32,13 +31,6 @@ module.exports = {
         .setColor(textoyemojis.embedColor);
 
 		return interaction.reply({ embeds: [embedGracias], ephemeral: true }) && interaction.client.channels.cache.get('988643781718978580').send({ embeds: [embed]}).catch(console.error)
-        
-		}
-		catch { 
-			const ErrEmbed = new MessageEmbed()
-					.setTitle(`Hubo un error al enviar la sugerencia`)
-					.setColor('RED')
-			privado(interaction, ErrEmbed);
-		}
+
 	}
 };

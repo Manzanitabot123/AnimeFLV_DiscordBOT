@@ -94,7 +94,7 @@ module.exports = {
                 privado(interaction, new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription("Buscando **" +  args + "** ..."));
-                try{
+                
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             
                             //info
@@ -236,13 +236,6 @@ module.exports = {
                                 ]});
                             await browser.close();
                             console.log(error)
-                            }
-                            }
-                            
-                            catch(error)
-                            {
-                                console.log("BUSCAR")
-                                console.log(error)
                             }
             }
 		}

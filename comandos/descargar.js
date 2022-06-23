@@ -90,7 +90,7 @@ module.exports = {
                 privado(interaction, new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription("Buscando con el nombre: **" +  args + "** ..."));
-                try{        
+
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             
                             //info
@@ -229,13 +229,6 @@ module.exports = {
                                         .setDescription("Hubo un error al cargar los enlaces de descargas")
                                 ]});
                             console.log(error)
-                            }
-                            }
-                            
-                            catch(error)
-                            {
-                                console.log("DESCARGAR")
-                                console.log(error)
                             }
             }
 		}

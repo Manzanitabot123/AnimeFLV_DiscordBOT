@@ -34,10 +34,12 @@ module.exports = async(interaction) => {
 	setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
 	try {
+		const servidor = interaction.guild;
+		console.log("[COMANDO]" + "("+(servidor === null ? `Mensaje Directo` : servidor.name)+") => "+interaction.commandName);
 		await command.execute(interaction);
 	}
 	catch (err) {
-			await interaction.reply({ content: `${textoyemojis.emojis.cancelar} ¡Hubo un error al ejecutar este comando!`, ephemeral:true } );
+			await interaction.reply({ content: `${textoyemojis.emojis.cancelar} **${interaction.user.username}**, ¡ocurrió un error al ejecutar el comando \`${interaction.commandName}\`\n> Vuelve a intentalo de nuevo más tarde.`, ephemeral:true } );
 			if (interaction.user.bot) return
 			const embed = new Discord.MessageEmbed()
 				.setDescription("**"+err.message + "**\n Comando: "+interaction.commandName)

@@ -10,7 +10,6 @@ module.exports = {
 	example: ['**/sudo**'],
 	guildOnly: true,
 	execute (interaction) {
-		try{
         const usuariolejido = interaction.options.getUser('usuario');
         const mensaje = interaction.options.getString('mensaje');
         if(mensaje.length > 200) return interaction.reply({ embeds: [new MessageEmbed()
@@ -34,12 +33,5 @@ module.exports = {
 					.setColor(textoyemojis.embedColor);
             interaction.reply({ embeds: [Embed],ephemeral: true})
         }
-		}
-		catch { 
-			const ErrEmbed = new MessageEmbed()
-					.setTitle(`Hubo un error al ejecutar el comando sudo`)
-					.setColor('RED')
-                    interaction.reply({ embeds: [ErrEmbed],ephemeral: true})
-		}
 	}
 };
