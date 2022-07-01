@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('sudo')
@@ -8,6 +9,7 @@ module.exports = {
         .addStringOption(option => option.setName('mensaje').setDescription('Escribe el mensaje que se mostrará').setRequired(true)),
     cooldown: '3',
 	example: ['**/sudo**'],
+    category: 'Secundario',
 	guildOnly: true,
 	execute (interaction) {
         const usuariolejido = interaction.options.getUser('usuario');

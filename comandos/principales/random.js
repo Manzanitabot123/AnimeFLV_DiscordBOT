@@ -1,8 +1,8 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
-const buscarAnime = require("../utilidades/buscarAnime");
-const privado = require("../utilidades/privado");
+const buscarAnime = require("../../utilidades/buscarAnime");
+const privado = require("../../utilidades/privado");
 const random = require('random');
 
 module.exports = {
@@ -31,18 +31,10 @@ module.exports = {
             value: 'Especial'
         }
         ))
-        .addStringOption(option => option.setName('privado').setDescription('Solo tu podras ver mis mensajes (Por defecto: Si)').addChoices(
-        {
-            name: 'Si, solo quiero verlo yo', 
-            value: 'true'
-        },
-        {
-            name: 'No, muestralo para todos', 
-            value: 'false'
-        }
-        )),
+        .addStringOption(privado[1]),
 	cooldown: '5',
 	example: ['**/random**'],
+    category: 'Principal',
 	guildOnly: true,
 	execute (interaction) {
 		randomslash();
@@ -50,9 +42,9 @@ module.exports = {
             //función de busqueda
             async function randomslash(){
                 //mensaje de espera (cargando...)
-                privado(interaction, new MessageEmbed()
+                privado[0](interaction, [new MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription(textoyemojis.emojis.dado + " Elijiendo un anime al azar..."));
+                .setDescription(textoyemojis.emojis.dado + " Elijiendo un anime al azar...")]);
 
                             let browserurl;
                             const tipoelejido = interaction.options.getString('tipo');

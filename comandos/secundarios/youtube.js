@@ -10,6 +10,7 @@ module.exports = {
         .setDescription('Inicia un YouTube Together en el canal de voz'),
     cooldown: '10',
     example: ['**/youtube**'],
+    category: 'Secundario',
     guildOnly: true,
     execute (interaction) {
         if (!interaction.guild.me.permissions.has('CREATE_INSTANT_INVITE')) return interaction.reply({ content: `${textoyemojis.emojis.cancelar} No tengo permiso. Habilita el permiso **CREAR INVITACIÓN INSTANTÁNEA** en \`Configuración del servidor > Roles\` para usar este comando.`, ephemeral: true });

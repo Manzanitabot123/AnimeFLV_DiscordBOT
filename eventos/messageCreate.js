@@ -7,7 +7,7 @@ module.exports = message => {
     lastuse.add(message.author.username)
     setTimeout(() => {
         lastuse.delete(message.author.username)
-    }, 60000);
+    }, 200000);
     if (message.content == "<@"+client.user.id+">" && !message.author.bot && !message.content.includes("everyone")&& !message.content.includes("here")){
 		const exampleEmbed = new Discord.MessageEmbed()
             .setColor('YELLOW')
@@ -26,7 +26,9 @@ module.exports = message => {
         message.reply({embeds: [exampleEmbed]
         })
 		//FLV
-    } else if (message.content.startsWith("flv") && message.content.includes("flv")) {
+    } 
+    /*
+    else if (message.content.startsWith("flv") && message.content.includes("flv")) {
         const exampleEmbed = new Discord.MessageEmbed()
             .setColor('RED')
             .setAuthor({name:`Hola ${message.author.username}`, iconURL: message.author.displayAvatarURL()})
@@ -35,4 +37,5 @@ module.exports = message => {
         message.reply({embeds: [exampleEmbed]
         })
     }
+    */
 }

@@ -1,8 +1,8 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
-const privado = require("../utilidades/privado");
-const enlacesDescarga = require("../utilidades/enlacesDescarga");
+const privado = require("../../utilidades/privado");
+const enlacesDescarga = require("../../utilidades/enlacesDescarga");
 const validUrl = require('valid-url');
 const ultimaSelecciónDescargar = new Set();
 
@@ -12,21 +12,13 @@ module.exports = {
 		.setDescription('Obtén enlaces de descarga de cualquier anime')
         .addStringOption(option => option.setName('anime').setDescription('Nombre o link del anime que deseas descargar').setRequired(true))
         .addNumberOption(option => option.setName('capítulo').setDescription('El número del episodio que deseas descargar').setRequired(true))
-        .addStringOption(option => option.setName('privado').setDescription('Solo tu podras ver mis mensajes (Por defecto: Si)').addChoices(
-        {
-            name: 'Si, solo quiero verlo yo', 
-            value: 'true'
-        },
-        {
-            name: 'No, muestralo para todos', 
-            value: 'false'
-        }
-        )),
+        .addStringOption(privado[1]),
 	cooldown: '5',
 	example: [
         '**/descargar** anime:`Fullmetal Alchemist: Brotherhood` capítulo:`3`',
         '**/descargar** anime:`https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood` capítulo:`3`'
       ],
+    category: 'Principal',
 	guildOnly: true,
 	execute (interaction) {
 		const args = interaction.options.getString('anime');
@@ -48,9 +40,9 @@ module.exports = {
             } else if(validUrl.isUri(args)){
                 if(args.startsWith("https://www3.animeflv.net/anime/")) {
                     (async () => {
-                    privado(interaction, new MessageEmbed()
+                    privado[0](interaction, [new MessageEmbed()
                     .setColor("YELLOW")
-                    .setDescription("Buscando anime con el enlace: **" +  args + "** ..."));
+                    .setDescription("Buscando anime con el enlace: **" +  args + "** ...")]);
 
                     const browser = await puppeteer.launch({
                         headless: true,
@@ -62,9 +54,9 @@ module.exports = {
                     })();
                 } else if (args.startsWith("https://www3.animeflv.net/ver/")) {
                     (async () => {
-                    privado(interaction, new MessageEmbed()
+                    privado[0](interaction, [new MessageEmbed()
                     .setColor("YELLOW")
-                    .setDescription("Buscando con el enlace: **" +  args + "** ..."));
+                    .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
     
                     const browser = await puppeteer.launch({
                         headless: true,
@@ -75,10 +67,10 @@ module.exports = {
                     enlacesDescarga(interaction, page, browser, args, cap);
                     })();
                 } else {
-                    privado(interaction, new MessageEmbed()
+                    privado[0](interaction, [new MessageEmbed()
                     .setColor("RED")
                     .setDescription(`${textoyemojis.emojis.cancelar} **${args}** no es un link válido.\n__Ejemplo:__\n ${textoyemojis.emojis.canal} **/buscar** anime:\`https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood\` ${textoyemojis.emojis.cursor}`)
-                    .setFooter({text: "Intentalo de nuevo"})); 
+                    .setFooter({text: "Intentalo de nuevo"})]); 
                 }
             } else { 
                 descargarslash();
@@ -87,9 +79,9 @@ module.exports = {
             //función de busqueda
             async function descargarslash(){
                 //mensaje de espera (cargando...)
-                privado(interaction, new MessageEmbed()
+                privado[0](interaction, [new MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription("Buscando con el nombre: **" +  args + "** ..."));
+                .setDescription("Buscando con el nombre: **" +  args + "** ...")]);
 
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             

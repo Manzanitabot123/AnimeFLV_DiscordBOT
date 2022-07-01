@@ -1,25 +1,17 @@
 const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const crypto = require('crypto').webcrypto;
-const privado = require("../utilidades/privado");
+const privado = require("../../utilidades/privado");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pregunta')
         .setDescription('Pídele a Magic 8-Ball algo de sabiduría psíquica')
         .addStringOption(option => option.setName('8ball').setDescription('Ingrese tu pregunta para responderte con un si o no').setRequired(true))
-        .addStringOption(option => option.setName('privado').setDescription('Solo tu podras ver mis mensajes (Por defecto: Si)').addChoices(
-        {
-            name: 'Si, solo quiero verlo yo', 
-            value: 'true'
-        },
-        {
-            name: 'No, muestralo para todos', 
-            value: 'false'
-        }
-        )),
+        .addStringOption(privado[1]),
     cooldown: '3',
     example: ['**/pregunta** 8ball:`¿Ves Gintama?`'],
+    category: 'Secundario',
     guildOnly: false,
     execute (interaction) {
         const questionField = interaction.options.getString('8ball');
@@ -34,7 +26,7 @@ module.exports = {
                     ephemeral: true
                 })
         } else {
-        const {answers} = require('../recursos/rpts.json');
+        const {answers} = require('../../recursos/rpts.json');
         const rpts = Math.floor((crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295) * answers.length);
         const embed = new MessageEmbed()
             .setTitle('8-Ball')
@@ -43,7 +35,7 @@ module.exports = {
                 { name: 'Respuesta', value: `${answers[rpts].text}` }
             )
             .setColor(textoyemojis.embedColor);
-        privado(interaction, embed);
+        privado[0](interaction, [embed]);
         }
     }
 };

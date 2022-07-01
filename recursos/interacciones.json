@@ -1,0 +1,330 @@
+{
+"interacciones":
+    {
+    "happy": {
+            "Usuario": 
+                [
+                "{tú} se siente feliz. >w<",
+                "{tú} se puso muy contenta :D_ _"
+                ],
+            "Mención":
+                [
+                "{tú} se siente feliz gracias a {mencionado}",
+                "{tú} se puso muy contenta :D_ _ por {mencionado}"
+                ],
+            "haciaTí": ":/ ¿Por qué te automencionas?"
+            },
+    "sleep": {
+            "Usuario": 
+                [
+                "{tú} se fue a mimir. (-, - )…zzzZZZ",
+                "{tú} se dormió."
+                ],
+            "Mención":
+                [
+                "{tú} se fue a mimir con {mencionado}. (-, - )…zzzZZZ",
+                "{tú} se durmió al igual que {mencionado} zZz"
+                ],
+            "haciaTí": "No te puedes dormir contigo mísm@, ¿o si?"
+            },
+    "laugh": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "tickle": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "kiss": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "wave": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "thumbsup": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "stare": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "smile": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "baka": {
+            "Usuario": 
+                [
+                "{tú} ¡¡BAKA!!.",
+                "{tú} bakaaaaaa!!!"
+                ],
+            "Mención":
+                [
+                "{tú} le ha dicho idiota a {mencionado}",
+                "{mencionado} es baka segun {tú}"
+                ],
+            "haciaTí": "No te menciones 2 veces..."
+            },
+    "blush": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "think": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "pout": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "wink": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "shoot": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "smug": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "cry": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "pat": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "punch": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "dance": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "shrug": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "bored": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "kick": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "hug": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            },
+    "slap": {
+            "Usuario": 
+                [
+                "{tú}",
+                "{tú}"
+                ],
+            "Mención":
+                [
+                "{tú} y {mencionado}",
+                "{tú} y {mencionado}"
+                ],
+            "haciaTí": "No te puedes mencionar a ti mismo"
+            }
+    }
+}

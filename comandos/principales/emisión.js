@@ -1,26 +1,18 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
-const buscarAnime = require("../utilidades/buscarAnime");
-const privado = require("../utilidades/privado");
+const buscarAnime = require("../../utilidades/buscarAnime");
+const privado = require("../../utilidades/privado");
 const ultimaSelecciónEmisión = new Set();
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('emisión')
 		.setDescription('Muestra los anime que estan en emisión')
-        .addStringOption(option => option.setName('privado').setDescription('Solo tu podras ver mis mensajes (Por defecto: Si)').addChoices(
-        {
-            name: 'Si, solo quiero verlo yo', 
-            value: 'true'
-        },
-        {
-            name: 'No, muestralo para todos', 
-            value: 'false'
-        }
-        )),
+        .addStringOption(privado[1]),
 	cooldown: '8',
 	example: ['**/emisión**'],
+    category: 'Principal',
 	guildOnly: true,
 	execute (interaction) {
 		emisionesslash();
@@ -28,9 +20,9 @@ module.exports = {
             //función de busqueda
             async function emisionesslash(){
                 //mensaje de espera (cargando...)
-                privado(interaction, new MessageEmbed()
+                privado[0](interaction, [new MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription("Recopilando los animes en emisión ..."));
+                .setDescription("Recopilando los animes en emisión ...")]);
 
                             const emisiónurl = `https://www3.animeflv.net/`;
             

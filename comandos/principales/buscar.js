@@ -1,8 +1,8 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
-const buscarAnime = require("../utilidades/buscarAnime");
-const privado = require("../utilidades/privado");
+const buscarAnime = require("../../utilidades/buscarAnime");
+const privado = require("../../utilidades/privado");
 const validUrl = require('valid-url');
 const ultimaSelecciónBuscar = new Set();
 
@@ -11,21 +11,13 @@ module.exports = {
 		.setName('buscar')
 		.setDescription('Busca y obtén información de un anime')
         .addStringOption(option => option.setName('anime').setDescription('El nombre o el link del anime que quieres buscar').setRequired(true))
-        .addStringOption(option => option.setName('privado').setDescription('Solo tu podras ver mis mensajes (Por defecto: Si)').addChoices(
-        {
-            name: 'Si, solo quiero verlo yo', 
-            value: 'true'
-        },
-        {
-            name: 'No, muestralo para todos', 
-            value: 'false'
-        }
-        )),
+        .addStringOption(privado[1]),
 	cooldown: '3',
     example: [
         '**/buscar** anime:`Fullmetal Alchemist: Brotherhood`',
         '**/buscar** anime:`https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood`'
       ],
+    category: 'Principal',
 	guildOnly: true,
 	execute (interaction) {
 		const args = interaction.options.getString('anime');
@@ -52,9 +44,9 @@ module.exports = {
             } else if(validUrl.isUri(args)){
                 if(args.startsWith("https://www3.animeflv.net/anime/")) {
                 (async () => {
-                privado(interaction, new MessageEmbed()
+                privado[0](interaction, [new MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription("Buscando con el enlace: **" +  args + "** ..."));
+                .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
 
                 const browser = await puppeteer.launch({
                     headless: true,
@@ -66,9 +58,9 @@ module.exports = {
                 })();
                 } else if (args.startsWith("https://www3.animeflv.net/ver/")) {
                     (async () => {
-                    privado(interaction, new MessageEmbed()
+                    privado[0](interaction, [new MessageEmbed()
                     .setColor("YELLOW")
-                    .setDescription("Buscando con el enlace: **" +  args + "** ..."));
+                    .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
     
                     const browser = await puppeteer.launch({
                         headless: true,
@@ -79,10 +71,10 @@ module.exports = {
                     buscarAnime(interaction, page, browser, args);
                     })();
                 } else {
-                    privado(interaction, new MessageEmbed()
+                    privado[0](interaction, [new MessageEmbed()
                     .setColor("RED")
                     .setDescription(`${textoyemojis.emojis.cancelar} **${args}** no es un link válido.\n__Ejemplo:__\n ${textoyemojis.emojis.canal} **/buscar** anime:\`https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood\` ${textoyemojis.emojis.cursor}`)
-                    .setFooter({text: "Intentalo de nuevo"})); 
+                    .setFooter({text: "Intentalo de nuevo"})]); 
                 }
             } else { 
                 buscarslash();
@@ -91,9 +83,9 @@ module.exports = {
             //función de busqueda
             async function buscarslash(){
                 //mensaje de espera (cargando...)
-                privado(interaction, new MessageEmbed()
+                privado[0](interaction, [new MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription("Buscando **" +  args + "** ..."));
+                .setDescription("Buscando **" +  args + "** ...")]);
                 
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             

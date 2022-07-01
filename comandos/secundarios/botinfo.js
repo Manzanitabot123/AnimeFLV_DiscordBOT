@@ -1,25 +1,18 @@
 const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { version, author, dependencies } = require('../package.json');
+const { version, author, dependencies } = require('../../package.json');
 const { release, cpus } = require('os');
-const privado = require("../utilidades/privado");
+const privado = require("../../utilidades/privado");
+
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('botinfo')
         .setDescription('Muestra información sobre el bot y su estado')
-        .addStringOption(option => option.setName('privado').setDescription('Solo tu podras ver mis mensajes (Por defecto: Si)').addChoices(
-        {
-            name: 'Si, solo quiero verlo yo', 
-            value: 'true'
-        },
-        {
-            name: 'No, muestralo para todos', 
-            value: 'false'
-        }
-        )),
+        .addStringOption(privado[1]),
     cooldown: '3',
     example: ['**/botinfo**'],
+    category: 'Secundario',
     guildOnly: false,
 	execute (interaction) {
         const servidor = interaction.guild;
@@ -38,7 +31,9 @@ module.exports = {
             .setTitle(`${interaction.client.user.username} v${version}`)
             .setAuthor((servidor === null ? {name: `AnimeFLV Bot`, iconURL: interaction.user.displayAvatarURL({ dynamic: false })} : {name: `${servidor.name}`, iconURL: servidor.iconURL()}))
             .addFields(
+                /*
                 { name: '📅 __Fecha de creación__', value: `\`${interaction.client.user.createdAt}\`` },
+                */
                 { name: '👥 __Usuarios__', value: `Total: \`${interaction.client.guilds.cache.reduce((acc, cur) => acc + cur.memberCount, 0)}\` \nEn cache: \`${interaction.client.users.cache.size}\``+totalAqui, inline: true },
                 { name: '🧠 __Memoria__', value: `Total:\u2000\u2000[\` ${(heapTotal / 1024 / 1024).toFixed(0)} MB \`] \nUsado:\u2000\u2000[\` ${(heapUsed / 1024 / 1024).toFixed(0)} MB \`]`, inline: true },
                 { name: '✉ __Chats__', value: `Servidores: \`${interaction.client.guilds.cache.size}\` \n Canales: \`${interaction.client.channels.cache.size}\``, inline: true },
@@ -48,6 +43,6 @@ module.exports = {
             )
             .setFooter({text: `Info y estado del bot - Bot creado por ${author}`})
             .setColor('#e09c2c');
-            privado(interaction, embed);
+            privado[0](interaction, [embed]);
 	}
 };

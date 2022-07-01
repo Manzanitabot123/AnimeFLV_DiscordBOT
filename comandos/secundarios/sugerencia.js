@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const privado = require("../utilidades/privado");
+const privado = require("../../utilidades/privado");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,6 +9,7 @@ module.exports = {
         .addStringOption(option => option.setName('mensaje').setDescription('El mensaje con el contenido que deseas sugerir').setRequired(true)),
 	cooldown: '120',
 	example: ['**/sugenrencia** mensaje:`¿Ves Gintama?`'],
+    category: 'Secundario',
 	guildOnly: false,
 	execute (interaction) {
 		const sugerencia = interaction.options.getString('mensaje');

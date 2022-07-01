@@ -5,11 +5,14 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 
 const commands = [];
-const commandFiles = fs.readdirSync('./comandos').filter(file => file.endsWith('.js'));
+const commandFile = fs.readdirSync('comandos/');
+for (const catefile of commandFile) {
+const commandFiles = fs.readdirSync('comandos/' + catefile).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const command = require(`../comandos/${file}`);
+	const command = require(`../comandos/${catefile}/${file}`);
 	commands.push(command.data.toJSON());
+}
 }
 
 const rest = new REST({ version: '9' }).setToken(process.env.CLIENT_TOKEN);

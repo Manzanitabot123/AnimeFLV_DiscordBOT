@@ -7,15 +7,20 @@ dotenv.config();
 
 //EMOJIS Y TEXTO
 global.textoyemojis = require('./recursos/textoyemojis');
+//MAYUSCULA PRIMERA LETRA
+global.capitalize = function(s){return s && s[0].toUpperCase() + s.slice(1);};
 
 const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_BANS', 'GUILD_MESSAGES' ,'GUILD_INTEGRATIONS', 'GUILD_WEBHOOKS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGE_REACTIONS', 'DIRECT_MESSAGE_TYPING'], partials: ['MESSAGE', 'CHANNEL'] });
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./comandos').filter(file => file.endsWith('.js'));
+const comandos = fs.readdirSync('comandos/');
+for (const subComandos of comandos) {
+const jsComandos = fs.readdirSync('comandos/' + subComandos).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	const command = require(`./comandos/${file}`);
+for (const file of jsComandos) {
+	const command = require(`./comandos/${subComandos}/${file}`);
 	client.commands.set(command.data.name, command);
+}
 }
 
 //INICIANDO
@@ -26,11 +31,12 @@ client.once('ready', () => {
 	client.user.setActivity({ name: "en AnimeFLV 〢 flvhelp",  type: 'WATCHING' })
   	setInterval(() => {
     const randomstatus = [
-	"en AnimeFLV 〢 flvhelp", 
-	"en AnimeFLV 〢 /help", 
-	`en AnimeFLV 〢 ${client.users.cache.size} usuarios`, 
-	`en AnimeFLV 〢 ${client.guilds.cache.size} servidores`, 
-	"en AnimeFLV 〢 flvhelp", "en AnimeFLV 〢 animeflv.net"]
+	"〢 /help", 
+	`〢 ${client.users.cache.size} usuarios`, 
+	`〢 ${client.guilds.cache.size} servidores`, 
+	"🇺🇦 〢 Apoya a Ucrania con /ucrania", 
+	"〢 /help", 
+	"〢 animeflv.net"]
     const randomname = randomstatus[Math.floor((crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295) * randomstatus.length)];
 	client.user.setActivity({ name: randomname,  type: 'WATCHING' })
     }, 900000);
