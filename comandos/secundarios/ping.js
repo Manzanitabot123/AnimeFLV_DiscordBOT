@@ -15,8 +15,8 @@ module.exports = {
 		const embed = new MessageEmbed()
 				.setDescription(`${textoyemojis.emojis.escribiendo_icon} Pong! | *Calculando latencia...* ${textoyemojis.emojis.nesuko}`)
 				.setColor(textoyemojis.embedColor);
-		const private = interaction.options.getString('visibilidad') // 'true';
-			interaction.reply({ embeds: [embed], fetchReply: true, ephemeral: (!private||(private==='true')?true:false)}).then(itr => {
+		const elejirPrivado = interaction.options.getString('visibilidad') // 'true';
+			interaction.reply({ embeds: [embed], fetchReply: true, ephemeral: (!elejirPrivado||(elejirPrivado==='true')?true:false)}).then(itr => {
 				const timestamp = itr.createdTimestamp - interaction.createdTimestamp;
 				const newEmbed = new MessageEmbed()
 					.setTitle(`Ping de ${interaction.client.user.username}`)

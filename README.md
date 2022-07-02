@@ -16,7 +16,6 @@
 - No es un API.
 - Contiene 12 comandos disponibles para todos.
 - De momento no esta disponible en ingles (Currently not available in English )
-- Actualmente se encuentra en fase Alpha por lo que puede contener errores.
 
 ### **Invita al bot 💕**
 [![Invitame](https://discordbotlist.com/api/v1/bots/938856255416569946/widget)](https://discordbotlist.com/bots/938856255416569946)

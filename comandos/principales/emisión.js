@@ -1,6 +1,7 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
+const lanzarChromium = require('../../utilidades/navegador');
 const buscarAnime = require("../../utilidades/buscarAnime");
 const privado = require("../../utilidades/privado");
 const ultimaSelecciónEmisión = new Set();
@@ -27,12 +28,7 @@ module.exports = {
                             const emisiónurl = `https://www3.animeflv.net/`;
             
                             //info
-                            const browser = await puppeteer.launch({
-                                headless: true,
-                                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                                });
-                            const page = await browser.newPage();
-                            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                            const [browser, page] = await lanzarChromium(puppeteer)
                             await page.goto(emisiónurl, {waitUntil: 'load', timeout: 0})
                             try{
 
@@ -171,7 +167,7 @@ module.exports = {
                                                     .setThumbnail("https://c.tenor.com/KxEm4q8BoKcAAAAC/spider-man-alfred-molina.gif")
                                                 ], components:[]});
                                         } else {interaction.editReply({ components:[]})}
-                                        };
+                                        }
                                         await browser.close();
                                     })
                                 })

@@ -1,6 +1,7 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
+const lanzarChromium = require('../../utilidades/navegador');
 const buscarAnime = require("../../utilidades/buscarAnime");
 const privado = require("../../utilidades/privado");
 const validUrl = require('valid-url');
@@ -41,19 +42,14 @@ module.exports = {
                         ephemeral: true
                     })
                     return;
-            } else if(validUrl.isUri(args)){
+            } else if (validUrl.isUri(args)){
                 if(args.startsWith("https://www3.animeflv.net/anime/")) {
                 (async () => {
                 privado[0](interaction, [new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
 
-                const browser = await puppeteer.launch({
-                    headless: true,
-                    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                    });
-                const page = await browser.newPage();
-                await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                const [browser, page] = await lanzarChromium(puppeteer)
                 buscarAnime(interaction, page, browser, args);
                 })();
                 } else if (args.startsWith("https://www3.animeflv.net/ver/")) {
@@ -61,13 +57,7 @@ module.exports = {
                     privado[0](interaction, [new MessageEmbed()
                     .setColor("YELLOW")
                     .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
-    
-                    const browser = await puppeteer.launch({
-                        headless: true,
-                        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                        });
-                    const page = await browser.newPage();
-                    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                    const [browser, page] = await lanzarChromium(puppeteer)
                     buscarAnime(interaction, page, browser, args);
                     })();
                 } else {
@@ -90,12 +80,7 @@ module.exports = {
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             
                             //info
-                            const browser = await puppeteer.launch({
-                                headless: true,
-                                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                                });
-                            const page = await browser.newPage();
-                            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                            const [browser, page] = await lanzarChromium(puppeteer)
                             await page.goto(busquedaurl, {waitUntil: 'load', timeout: 0})
                             try{
                             

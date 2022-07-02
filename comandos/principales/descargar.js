@@ -1,6 +1,7 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
+const lanzarChromium = require('../../utilidades/navegador');
 const privado = require("../../utilidades/privado");
 const enlacesDescarga = require("../../utilidades/enlacesDescarga");
 const validUrl = require('valid-url');
@@ -31,7 +32,7 @@ module.exports = {
                         ephemeral: true
                     })
                     return;
-            } if(!args){
+            } else if(!args){
                 interaction.reply({
                     content: `${textoyemojis.emojis.cancelar} Te falta escribir el usuario que quieres buscar`, 
                     ephemeral: true
@@ -44,12 +45,7 @@ module.exports = {
                     .setColor("YELLOW")
                     .setDescription("Buscando anime con el enlace: **" +  args + "** ...")]);
 
-                    const browser = await puppeteer.launch({
-                        headless: true,
-                        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                        });
-                    const page = await browser.newPage();
-                    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                    const [browser, page] = await lanzarChromium(puppeteer)
                     enlacesDescarga(interaction, page, browser, args, cap);
                     })();
                 } else if (args.startsWith("https://www3.animeflv.net/ver/")) {
@@ -58,12 +54,7 @@ module.exports = {
                     .setColor("YELLOW")
                     .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
     
-                    const browser = await puppeteer.launch({
-                        headless: true,
-                        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                        });
-                    const page = await browser.newPage();
-                    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                    const [browser, page] = await lanzarChromium(puppeteer)
                     enlacesDescarga(interaction, page, browser, args, cap);
                     })();
                 } else {
@@ -86,12 +77,7 @@ module.exports = {
                             const busquedaurl = `https://www3.animeflv.net/browse?q=${anime}`;
             
                             //info
-                            const browser = await puppeteer.launch({
-                                headless: true,
-                                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                                });
-                            const page = await browser.newPage();
-                            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                            const [browser, page] = await lanzarChromium(puppeteer)
                             await page.goto(busquedaurl, {waitUntil: 'load', timeout: 0})
                             try{
                             
@@ -207,7 +193,7 @@ module.exports = {
                                                     .setThumbnail("https://c.tenor.com/KxEm4q8BoKcAAAAC/spider-man-alfred-molina.gif")
                                                 ], components:[]});
                                         }
-                                        };
+                                        }
                                     })
                                 })
 

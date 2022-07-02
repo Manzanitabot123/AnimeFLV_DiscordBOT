@@ -7,71 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('Ve la lista de comandos o información detallada sobre cualquier comando')
-		.addStringOption(option => option.setName('comando').setDescription('Elije o escribe un comando existente').addChoices(
-		{
-			name: 'Buscar', 
-            value: 'buscar'
-		},
-		{
-			name: 'Descargar', 
-            value: 'descargar'
-		},
-		{
-			name: 'Emisión', 
-            value: 'emisión'
-		},
-		{
-			name: 'Help', 
-            value: 'help'
-		},
-		{
-			name: 'Random', 
-            value: 'random'
-		},
-		{
-			name: 'Usuario', 
-            value: 'usuario'
-		},
-		{
-			name: 'Bot info', 
-            value: 'botinfo'
-		},
-		{
-			name: 'Imagen', 
-            value: 'imagen'
-		},
-		{
-			name: 'Interacción', 
-            value: 'interacción'
-		},
-		{
-			name: 'Ping', 
-            value: 'ping'
-		},
-		{
-			name: 'Pregunta', 
-            value: 'pregunta'
-		},
-		{
-			name: 'Sudo', 
-            value: 'sudo'
-		},
-		{
-			name: 'Sugerencia', 
-            value: 'sugerencia'
-		},
-		{
-			name: 'Ucrania', 
-            value: 'ucrania'
-		},
-		{
-			name: 'Yankenpo', 
-            value: 'yankenpo'
-		},
-		{
-			name: 'Youtube', 
-            value: 'youtube'
-		}))
+		.addStringOption(option => option.setName('comando').setDescription('Elije o escribe un comando existente').addChoices( { name: 'Buscar', value: 'buscar' }, { name: 'Descargar', value: 'descargar' }, { name: 'Emisión', value: 'emisión' }, { name: 'Help', value: 'help' }, { name: 'Random', value: 'random' }, { name: 'Usuario', value: 'usuario' }, { name: 'Bot info', value: 'botinfo' }, { name: 'Imagen', value: 'imagen' }, { name: 'Interacción', value: 'interacción' }, { name: 'Ping', value: 'ping' }, { name: 'Pregunta', value: 'pregunta' }, { name: 'Sudo', value: 'sudo' }, { name: 'Sugerencia', value: 'sugerencia' }, { name: 'Ucrania', value: 'ucrania' }, { name: 'Yankenpo', value: 'yankenpo' }, { name: 'Youtube', value: 'youtube' }))
 		.addStringOption(privado[1]),
 	cooldown: '0',
 	example: [
@@ -139,13 +75,13 @@ module.exports = {
 			elejir.on("collect", async(collected) => {
 				const value = collected.customId
 				if (value === "first") {
-					noCommandEmbed.fields[0] = { name: `${textoyemojis.emojis.cutelove} Commandos principales [${principales.map(commandA => commandA.data.name).length}]:`, value: `${principales.map(commandB => `**☆** \`${commandB.data.name}\`\n> ${commandB.data.description}`).join('\n')}` }
+					noCommandEmbed.fields[0] = { name: `${textoyemojis.emojis.cutelove} Commandos principales [${principales.map(commandA => commandA.data.name).length}]:`, value: principales.map(commandB => "**☆** \`"+commandB.data.name+"\`\n> "+commandB.data.description).join('\n') }
 					box.components[0].setDisabled(true)
 					box.components[1].setDisabled(false)
 					await collected.deferUpdate();
 					interaction.editReply({embeds:[noCommandEmbed], components: [box, buttons]})
 				} else if (value === "second") {
-					noCommandEmbed.fields[0] = { name: `${textoyemojis.emojis.nesuko} Commandos secundarios [${secundarios.map(commandA => commandA.data.name).length}]:`, value: `${secundarios.map(commandB => `**☆** \`${commandB.data.name}\`\n> ${commandB.data.description}`).join('\n')}` }
+					noCommandEmbed.fields[0] = { name: `${textoyemojis.emojis.nesuko} Commandos secundarios [${secundarios.map(commandC => commandC.data.name).length}]:`, value: secundarios.map(commandD => "**☆** \`"+commandD.data.name+"\`\n> "+commandD.data.description).join('\n') }
 					box.components[1].setDisabled(true)
 					box.components[0].setDisabled(false)
 					await collected.deferUpdate();

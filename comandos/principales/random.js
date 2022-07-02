@@ -1,6 +1,7 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu  } = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const puppeteer = require('puppeteer');
+const lanzarChromium = require('../../utilidades/navegador');
 const buscarAnime = require("../../utilidades/buscarAnime");
 const privado = require("../../utilidades/privado");
 const random = require('random');
@@ -50,17 +51,12 @@ module.exports = {
                             const tipoelejido = interaction.options.getString('tipo');
                             if(tipoelejido == "Todos"){ browserurl = `https://www3.animeflv.net/browse?`} else if(tipoelejido == "TV"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=tv&order=default&`} else if(tipoelejido == "Película"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=movie&order=default&`} else if(tipoelejido == "OVA"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=ova&order=default&`} else if(tipoelejido == "Especial"){ browserurl = `https://www3.animeflv.net/browse?type%5B%5D=special&order=default&`} else {browserurl = `https://www3.animeflv.net/browse?`}
                             //info
-                            const browser = await puppeteer.launch({
-                                headless: true,
-                                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--use-gl=egl', '--disable-extensions'],
-                                });
-                            const page = await browser.newPage();
-                            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+                            const [browser, page] = await lanzarChromium(puppeteer)
                             await page.goto(browserurl, {waitUntil: 'load', timeout: 0})
                             try{
 
                             //Cantidad de Paginas
-                            var arr = [];
+                            let arr = [];
                             const paginas = await page.evaluate(() => { return document.getElementsByClassName("pagination")[0].childElementCount})
                             for (let i = 1; i <= paginas; i++) {
                                 const jsPaginas = `body > div.Wrapper > div > div > main > div > ul > li:nth-child(${i})`;
@@ -71,9 +67,9 @@ module.exports = {
                                 let elementoDescargar = await page.$(jsPaginas)
                                 let ra = await page.evaluate(el => el.textContent, elementoDescargar)
                                 let pag;
-                                if(!ra.includes('…') && !ra.includes('«') && !ra.includes('»')) {pag = ra}; 
+                                if(!ra.includes('…') && !ra.includes('«') && !ra.includes('»')) {pag = ra}
                                 arr.push(pag*1);
-                            };
+                            }
                             let totaldepaginas = 0;
                             arr.forEach((element) => {
                             if (totaldepaginas < element) {
@@ -97,7 +93,7 @@ module.exports = {
                             await page.waitForSelector(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > div > p:nth-child(2) > span`)
                             const tipodelanime = await page.$(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > div > p:nth-child(2) > span`)
                             let grantipo = await page.evaluate(el => el.textContent, tipodelanime)
-                            if(grantipo == "Anime") {grantipo = "el **anime**"} else if(grantipo == "OVA") {grantipo = "el **OVA**"}  else if(grantipo == "Especial") {grantipo = "el **especial**"} else {grantipo = "la **película**"};
+                            if(grantipo == "Anime") {grantipo = "el **anime**"} else if(grantipo == "OVA") {grantipo = "el **OVA**"}  else if(grantipo == "Especial") {grantipo = "el **especial**"} else {grantipo = "la **película**"}
 
                             //imagen
                             const imagenpequeña = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${elejido}) > article > a > div > figure > img`, imgs => imgs.map(img => img.getAttribute('src')));
