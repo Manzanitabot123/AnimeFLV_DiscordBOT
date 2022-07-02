@@ -139,7 +139,7 @@ const {
                 detallesraros.addComponents([
                     new MessageButton()
                     .setCustomId(`${siguiente}`)
-                    .setLabel('Cap. anterior')
+                    .setLabel('Cap. siguiente')
                     .setStyle('SUCCESS')
                     .setEmoji(textoyemojis.emojis.derecha)
                 ])

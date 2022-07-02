@@ -4,6 +4,7 @@ const {
     MessageButton,
     MessageSelectMenu
   } = require("discord.js");
+const getColors = require('get-image-colors')
   
   const buscarAnime = async(
     interaction,
@@ -71,12 +72,7 @@ const {
       let elementTitle = await page.$(titulo);
       const title5_1 = await page.evaluate(el => el.textContent, elementTitle);
                 //detalles
-                const detalles5_1 = new MessageActionRow().addComponents(
-                    new MessageButton()
-                    .setURL(urlSelected)
-                    .setLabel("Ver original")
-                    .setStyle('LINK')
-                );
+                const detalles = new MessageActionRow().addComponents(new MessageButton().setURL(urlSelected).setLabel("Ver original").setStyle('LINK'));
                 //capitulos
                 let episodios5_1;
                 await page.waitForSelector("#episodeList");
@@ -260,12 +256,11 @@ const {
 
                 if(!button) {
                     interaction.editReply({
-                        embeds: [resultado5_1.addField("Reacciones:", gaxd, true).addField("Comentarios:", gaxdx, true)], components: [detalles5_1]});
+                        embeds: [resultado5_1.addField("Reacciones:", gaxd, true).addField("Comentarios:", gaxdx, true)], components: [detalles]});
                     await browser.close()
                 } else {
-                    const modific = button.concat([detalles5_1])
                     interaction.editReply({
-                    embeds: [resultado5_1.addField("Reacciones:", gaxd, true).addField("Comentarios:", gaxdx, true)], components: modific})}
+                    embeds: [resultado5_1.addField("Reacciones:", gaxd, true).addField("Comentarios:", gaxdx, true)], components: button})}
               } catch {}
   };
 module.exports = buscarAnime;

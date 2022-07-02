@@ -122,7 +122,6 @@ module.exports = {
                                 const result= `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > h3`;
                                 const pelianime = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > div > span`;
                                 const stars = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > div > p:nth-child(2) > span.Vts.fa-star`;
-                                const enlace = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a`;
                                 //Para todos __________________________________________________________________________________________________________________________________________________________________________________       
                                 await page.waitForSelector(result)
                                 let element = await page.$(result)
@@ -131,8 +130,6 @@ module.exports = {
                                 await page.waitForSelector(stars)
                                 const estrellas = await page.$(stars)
                                 let calificación = await page.evaluate(el => el.textContent, estrellas)
-
-                                const url = await page.$$eval(enlace, urlone => urlone.map(href => href.getAttribute('href')));
 
                                 await page.waitForSelector(pelianime);
                                 let tipo = await page.$(pelianime);
@@ -144,7 +141,7 @@ module.exports = {
                                         label: `${titulo}`,
                                         description: `${tipodeanime} N°${i} | Calificación: ${calificación} ⭐`,
                                         emoji: textoyemojis.emojis.play,
-                                        value: `${url}`,
+                                        value: `${i}`
                                     }
                                 ])
                             }
@@ -154,8 +151,9 @@ module.exports = {
                                 BúsquedaMenu
                             );
 
-
-                            interaction.editReply({ components: (totalenBuscar > 25) ? [row, row25] : [row] }).then(searching => {
+                            var detalles5_1;
+                            var elejido;
+                            interaction.editReply({ components: [row] }).then(searching => {
                                 const filterBuscar = (interacciónBuscar) => interacciónBuscar.user.id === interaction.member.id;
                                 const collectorBuscar = searching.createMessageComponentCollector({
                                     componentType: "SELECT_MENU",
@@ -164,38 +162,53 @@ module.exports = {
                                 });
                                     //Collector On
                                     collectorBuscar.on('collect', async(collected) => {
+                                        elejido = true;
+                                        row.components[0].setDisabled(true);
                                         const value = collected.values[0];
                                         if (ultimaSelecciónBuscar.has(interaction.user.id)) return collected.deferUpdate();
                                         ultimaSelecciónBuscar.add(interaction.user.id)
                                         setTimeout(() => {
                                             ultimaSelecciónBuscar.delete(interaction.user.id)
-                                        }, 6000);
+                                        }, 5000);
                                         await collected.deferUpdate();
-                                        const redirecturl = "https://www3.animeflv.net"+value;
+                                        const url = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a`, urlone => urlone.map(href => href.getAttribute('href')));
+                                        let elemento = await page.$(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a > h3`)
+                                        let nombre = await page.evaluate(el => el.textContent, elemento)
+                                        let icon = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a > div > figure > img`, imgsA => imgsA.map(img => img.getAttribute('src')));
+                                        const redirecturl = "https://www3.animeflv.net"+url[0];
+                                        //detalles
+                                        detalles5_1 = new MessageActionRow().addComponents(
+                                            new MessageButton()
+                                            .setURL(redirecturl)
+                                            .setLabel("Ver original")
+                                            .setStyle('LINK')
+                                        );
                                         interaction.editReply({ embeds: [
                                         new MessageEmbed()
                                             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                             .setColor("RANDOM")
-                                            .setDescription(`**Haz elejido un anime** \n Cargando Información...`)
-                                            .setThumbnail("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif")
-                                            .setFooter({text: `Puedes elejir otro durante 40 segundos`})
-                                        ]});
-                                        buscarAnime(interaction, page, browser, redirecturl, [row]);
+                                            .setDescription(`*Haz seleccionado:* \n**${nombre}** \n Cargando Información...`)
+                                            .setThumbnail(icon[0])
+                                            .setFooter({text: `Puedes elejir otro durante 40 segundos`, iconURL: "https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif"})
+                                        ], components: [row, detalles5_1]});
+                                        row.components[0].setDisabled(false) && await buscarAnime(interaction, page, browser, redirecturl, [row, detalles5_1]);
+                                        await page.goto(busquedaurl, {waitUntil: 'load', timeout: 0})
                                         collectorBuscar.resetTimer();
                                     });
                                     //Collector Off
                     
                                     collectorBuscar.on('end', async(_, reason) => {
+                                        row.components[0].setDisabled(true);
                                         if (reason === "time") {
-                                        if (page.url() === busquedaurl){
+                                        if (!elejido){
                                             interaction.editReply({ embeds: [
                                                 new MessageEmbed()
                                                     .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                                     .setColor("RANDOM")
                                                     .setDescription(`La selección del anime ha terminado`)
-                                                    .setThumbnail("https://c.tenor.com/KxEm4q8BoKcAAAAC/spider-man-alfred-molina.gif")
-                                                ], components:[]});
-                                        } else {interaction.editReply({ components:[]})}
+                                                    .setThumbnail(miniatura)
+                                                ], components: [row]});
+                                        } else {interaction.editReply({ components: [row, detalles5_1]})}
                                         }
                                         await browser.close();
                                     });

@@ -78,7 +78,6 @@ module.exports = {
                             });
 
                             const pagina = random.int(1, totaldepaginas);
-                            console.log(pagina)
                             await page.goto(`${browserurl}page=${pagina}`, {waitUntil: 'load', timeout: 0})
                             //Cantidad de Animes
                             const totalderesultados = await page.evaluate(() => { return document.getElementsByClassName("ListAnimes AX Rows A03 C02 D02")[0].childElementCount})*1;

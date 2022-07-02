@@ -125,7 +125,8 @@ module.exports = {
                             );
                             }
 
-
+                            var detalles5_1;
+                            var elejido;
                             interaction.editReply({ components: (totalEnEmisión > 25) ? [row, row25] : [row] }).then(searchemision => {
                                 const filterEmisión = (interacciónEmisión) => interacciónEmisión.user.id === interaction.member.id;
                                 const collectorEmisión = searchemision.createMessageComponentCollector({
@@ -135,6 +136,8 @@ module.exports = {
                                 });
                                     //Collector On
                                     collectorEmisión.on('collect', async(collected) => {
+                                        elejido = true;
+                                        row.components[0].setDisabled(true);
                                         if (ultimaSelecciónEmisión.has(interaction.user.id)) return collected.deferUpdate();
                                         ultimaSelecciónEmisión.add(interaction.user.id)
                                         setTimeout(() => {
@@ -143,6 +146,13 @@ module.exports = {
                                         await collected.deferUpdate();
                                         const value = collected.values[0];
                                         const redirecturl = "https://www3.animeflv.net"+value;
+                                        detallesEmisión = new MessageActionRow().addComponents(
+                                            new MessageButton()
+                                            .setURL(redirecturl)
+                                            .setLabel("Ver original")
+                                            .setStyle('LINK')
+                                        );
+                                        const componentes = (totalEnEmisión > 25) ? [row, row25, detallesEmisión] : [row, detallesEmisión]
                                         interaction.editReply({ embeds: [
                                         new MessageEmbed()
                                             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
@@ -150,8 +160,8 @@ module.exports = {
                                             .setDescription(`**Haz elejido un anime** \n Cargando Información...`)
                                             .setThumbnail("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif")
                                             .setFooter({text: `Puedes elejir otro durante 40 segundos`})
-                                        ]});
-                                        buscarAnime(interaction, page, browser, redirecturl, (totalEnEmisión > 25) ? [row, row25] : [row]);
+                                        ], components: componentes});
+                                        row.components[0].setDisabled(false) && buscarAnime(interaction, page, browser, redirecturl, componentes);
                                         collectorEmisión.resetTimer();
                                     });
                                     //Collector Off

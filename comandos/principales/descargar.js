@@ -118,7 +118,6 @@ module.exports = {
                                 const resultDescargar= `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > h3`;
                                 const pelianimeDescargar = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a > div > span`;
                                 const starsDescargar = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > div > p:nth-child(2) > span.Vts.fa-star`;
-                                const enlaceDescargar = `body > div.Wrapper > div > div > main > ul > li:nth-child(${i}) > article > a`;
                                 
                                 //__________________________________________________________________________________________________________________________________________________________________________________       
                                 
@@ -130,8 +129,6 @@ module.exports = {
                                 const estrellasDescargar = await page.$(starsDescargar)
                                 let calificaciónDescargar = await page.evaluate(el => el.textContent, estrellasDescargar)
 
-                                const url = await page.$$eval(enlaceDescargar, urlone => urlone.map(href => href.getAttribute('href')));
-
                                 await page.waitForSelector(pelianimeDescargar);
                                 let tipoDescargar = await page.$(pelianimeDescargar);
                                 let tipodeanimeDescargar = await page.evaluate(el => el.textContent, tipoDescargar);
@@ -142,7 +139,7 @@ module.exports = {
                                         label: `${tituloDescargar}`,
                                         description: `${tipodeanimeDescargar} N°${i} | Calificación: ${calificaciónDescargar} ⭐`,
                                         emoji: textoyemojis.emojis.play,
-                                        value: `${url}`,
+                                        value: `${i}`,
                                     }
                                 ])
                             }
@@ -153,7 +150,7 @@ module.exports = {
                             );
 
 
-                            interaction.editReply({ components: (totalEnDescargas > 25) ? [row, row25] : [row] }).then(searchLinksDownload => {
+                            interaction.editReply({ components: [row] }).then(searchLinksDownload => {
                                 const filterDescargar = (interacciónDescargar) => interacciónDescargar.user.id === interaction.member.id;
                                 const collectorDescargar = searchLinksDownload.createMessageComponentCollector({
                                     componentType: "SELECT_MENU",
@@ -161,37 +158,42 @@ module.exports = {
                                     time: 39898
                                 });
                                     collectorDescargar.on('collect', async(collected) => {
+                                        elejido = true;
+                                        row.components[0].setDisabled(true);
                                         if (ultimaSelecciónDescargar.has(interaction.user.id)) return collected.deferUpdate();
                                         ultimaSelecciónDescargar.add(interaction.user.id)
                                         setTimeout(() => {
                                             ultimaSelecciónDescargar.delete(interaction.user.id)
-                                        }, 8000);
+                                        }, 6000);
 
                                         await collected.deferUpdate();
                                         const value = collected.values[0];
-                                        const redirecturl = value;
+                                        const SemiUrl = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a`, urlone => urlone.map(href => href.getAttribute('href')));
+                                        let elementoDownload = await page.$(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a > h3`)
+                                        let nombreDownload = await page.evaluate(el => el.textContent, elementoDownload)
+                                        let icono = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a > div > figure > img`, imgsD => imgsD.map(img => img.getAttribute('src')));
                                         interaction.editReply({ embeds: [
                                         new MessageEmbed()
                                             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                             .setColor("RANDOM")
-                                            .setDescription(`**Haz elejido un anime** \n Cargando enlaces de descarga...`)
-                                            .setThumbnail("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif")
-                                            .setFooter({text: `Espera unos segundos`})
-                                        ]});
-                                        enlacesDescarga(interaction, page, browser, redirecturl, cap);
-                                        collectorDescargar.resetTimer();
+                                            .setDescription(`*Haz seleccionado:* \n**${nombreDownload}** \n Cargando enlaces de descarga...`)
+                                            .setThumbnail(icono[0])
+                                            .setFooter({text: `Links extraidos de AnimeFLV`, iconURL: "https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif"})
+                                        ], components: [row]});
+                                        enlacesDescarga(interaction, page, browser, SemiUrl[0], cap);
                                     });
                     
                                     collectorDescargar.on('end', async(_, reason) => {
+                                        row.components[0].setDisabled(true);
                                         if (reason === "time") {
                                         if (page.url() === busquedaurl){
                                             interaction.editReply({ embeds: [
                                                 new MessageEmbed()
                                                     .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                                     .setColor("RANDOM")
-                                                    .setDescription(`La selección del anime ha terminado`)
-                                                    .setThumbnail("https://c.tenor.com/KxEm4q8BoKcAAAAC/spider-man-alfred-molina.gif")
-                                                ], components:[]});
+                                                    .setDescription(`La selección del anime a descargar ha terminado`)
+                                                    .setThumbnail(miniaturaDescargar)
+                                                ], components:[row]});
                                         }
                                         }
                                     })
