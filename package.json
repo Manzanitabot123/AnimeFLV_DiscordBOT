@@ -24,7 +24,7 @@
     "fs": "^0.0.1-security",
     "get-image-colors": "^4.0.1",
     "nodemon": "^2.0.18",
-    "puppeteer": "1.19.0",
+    "puppeteer": "5.5.0",
     "random": "^3.0.6",
     "valid-url": "^1.0.9"
   }

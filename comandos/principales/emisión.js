@@ -157,9 +157,8 @@ module.exports = {
                                         new MessageEmbed()
                                             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                             .setColor("RANDOM")
-                                            .setDescription(`**Haz elejido un anime** \n Cargando Información...`)
-                                            .setThumbnail("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif")
-                                            .setFooter({text: `Puedes elejir otro durante 40 segundos`})
+                                            .setDescription(`**Cargando Información...""`)
+                                            .setFooter({text: `Puedes elejir otro durante 40 segundos`, iconURL: "https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif"})
                                         ], components: componentes});
                                         row.components[0].setDisabled(false) && buscarAnime(interaction, page, browser, redirecturl, componentes);
                                         collectorEmisión.resetTimer();

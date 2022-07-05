@@ -34,10 +34,10 @@ module.exports = message => {
         if (message.attachments.size > 0) {
             message.attachments.forEach(attachment => {
             const ImageLink = attachment.proxyURL;
-            return client.channels.cache.get('992566119414104095').send({content: `\`${ImageLink}\``})
+            return client.channels.cache.get('992566119414104095').send({content: `\`${ImageLink.replace("media.discordapp.net/", "cdn.discordapp.com/")}\``})
             })
         } else if (validUrl.isUri(message.content) ){
-            return client.channels.cache.get('992566119414104095').send({content: `\`${message.content}\``})
+            return client.channels.cache.get('992566119414104095').send({content: `\`${message.content.replace("media.discordapp.net/", "cdn.discordapp.com/")}\``})
         } else if (!message.author.bot){
             message.delete();
         }

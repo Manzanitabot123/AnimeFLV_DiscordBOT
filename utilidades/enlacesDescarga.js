@@ -104,12 +104,12 @@ const {
                 //Enlace
                 const linksp = await page.$(`#DwsldCn > div > table > tbody > tr:nth-child(${i}) > td:nth-child(4) > a`);
                 const linkenlace = await page.evaluate(el => el.href, linksp);
-                embed.addFields({ name:  "Servidor (Destacado): " + nombreenlace + " | Formato: " + Formatoenlace, value: " >>> Link: [Click para descargar](" + linkenlace + ")" })
+                embed.addFields({ name:  "Servidor: " + nombreenlace + " 🌟 | Formato: " + Formatoenlace, value: " >>> Link: [Click para descargar](" + linkenlace + ")" })
             }
 
             const servidores = ga.SUB;
             for (let servidor of servidores) {
-                if(!servidor.code.includes("hqq.tv/player/")) embed.addFields({ name:  "Servidor: " + servidor.title, value: " >>> Link: [Click para descargar](" + servidor.code.replace('/streamtape.com/e/','/streamtape.com/v/').replace('/embedsito.com/v/','/embedsito.com/f/').replace('/embedsb.com/e/','/embedsb.com/d/').replace('/mega.nz/embed','/mega.nz/').replace('yourupload.com/embed/','yourupload.com/watch/') + ")" })
+                if(!servidor.code.includes("hqq.tv/player/") && !servidor.code.includes("mega.nz/")) embed.addFields({ name:  "Servidor: " + servidor.title, value: " >>> Link: [Click para descargar](" + servidor.code.replace('/streamtape.com/e/','/streamtape.com/v/').replace('/embedsito.com/v/','/embedsito.com/f/').replace('/embedsb.com/e/','/embedsb.com/d/').replace('/mega.nz/embed','/mega.nz/').replace('yourupload.com/embed/','yourupload.com/watch/') + ")" })
             }
 
             const detallesraros = new MessageActionRow();
@@ -171,7 +171,7 @@ const {
 
             } catch(error) {
                 interaction.editReply({ embeds: [new MessageEmbed()
-                    .setTitle("Opss")
+                    .setTitle("Ha ocurrido un error al obtener los enlaces D:")
                     .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                     .setColor("RANDOM")], components:[]});
                 console.log(error)
