@@ -10,6 +10,7 @@ const getColors = require('get-image-colors')
     interaction,
     page,
     browser,
+    petition,
     urlSelected,
     button
   ) => {
@@ -28,33 +29,13 @@ const getColors = require('get-image-colors')
     const votos = "#votes_nmbr";
     const imagen_referencial = "body > div.Wrapper > div > div > div.Ficha.fchlt > div.Bg";
 
-    if (timeout.status() === 522) {
-    interaction.editReply({
-    embeds: [
-        new MessageEmbed()
-            .setColor("DARK_RED")
-            .setDescription(textoyemojis.errors.error522)
-            .setFooter({text: textoyemojis.errors.espera})
-    ], components:[]});
-    return browser.close();
-
-    } else if (timeout.status() === 404) {
+    if (timeout.status() === 522||timeout.status() === 404||timeout.status() === 502) {
         interaction.editReply({
         embeds: [
             new MessageEmbed()
                 .setColor("DARK_RED")
-                .setDescription(textoyemojis.errors.errorlink)
-                .setFooter({text: textoyemojis.errors.trylink})
-        ], components:[]});
-        return browser.close();
-        
-    } else if (timeout.status() === 502) {
-        interaction.editReply({
-        embeds: [
-            new MessageEmbed()
-                .setColor("DARK_RED")
-                .setDescription(textoyemojis.errors.error502)
-                .setFooter({text: textoyemojis.errors.espera})
+                .setDescription(textoyemojis.emojis.cancelar + " | " + textoyemojis.errors[interaction.commandName][petition]+" \n**"+urlSelected+"**")
+                .setFooter({text: textoyemojis.errors.trylink + " | Error "+timeout.status()})
         ], components:[]});
         return browser.close();
         
@@ -62,7 +43,6 @@ const getColors = require('get-image-colors')
     
     if (urlSelected.startsWith("https://www3.animeflv.net/ver/")) {
         const urlSelectedAdded = await page.evaluate(() => { return document.getElementsByClassName("CapNvLs fa-th-list")[0].href});
-        console.log(urlSelectedAdded)
         await page.goto(urlSelectedAdded, {waitUntil: 'load', timeout: 0})
     }
     

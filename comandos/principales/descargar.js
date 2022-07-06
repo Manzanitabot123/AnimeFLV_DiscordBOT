@@ -5,7 +5,6 @@ const lanzarChromium = require('../../utilidades/navegador');
 const privado = require("../../utilidades/privado");
 const enlacesDescarga = require("../../utilidades/enlacesDescarga");
 const validUrl = require('valid-url');
-const ultimaSelecciónDescargar = new Set();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -149,7 +148,7 @@ module.exports = {
                                 BúsquedaDecargarMenu
                             );
 
-
+                            var SeleccionadoDescargar;
                             interaction.editReply({ components: [row] }).then(searchLinksDownload => {
                                 const filterDescargar = (interacciónDescargar) => interacciónDescargar.user.id === interaction.member.id;
                                 const collectorDescargar = searchLinksDownload.createMessageComponentCollector({
@@ -160,12 +159,9 @@ module.exports = {
                                     collectorDescargar.on('collect', async(collected) => {
                                         elejido = true;
                                         row.components[0].setDisabled(true);
-                                        if (ultimaSelecciónDescargar.has(interaction.user.id)) return collected.deferUpdate();
-                                        ultimaSelecciónDescargar.add(interaction.user.id)
-                                        setTimeout(() => {
-                                            ultimaSelecciónDescargar.delete(interaction.user.id)
-                                        }, 6000);
-
+                                        if(SeleccionadoDescargar === collected.values[0]) { return await collected.deferUpdate();}
+                                        SeleccionadoDescargar = null;
+                                        SeleccionadoDescargar = collected.values[0];
                                         await collected.deferUpdate();
                                         const value = collected.values[0];
                                         const SemiUrl = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a`, urlone => urlone.map(href => href.getAttribute('href')));

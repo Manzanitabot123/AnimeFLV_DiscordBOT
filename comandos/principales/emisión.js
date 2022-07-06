@@ -4,7 +4,6 @@ const puppeteer = require('puppeteer');
 const lanzarChromium = require('../../utilidades/navegador');
 const buscarAnime = require("../../utilidades/buscarAnime");
 const privado = require("../../utilidades/privado");
-const ultimaSelecciónEmisión = new Set();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -125,8 +124,8 @@ module.exports = {
                             );
                             }
 
-                            var detalles5_1;
                             var elejido;
+                            var SeleccionadoEmisión;
                             interaction.editReply({ components: (totalEnEmisión > 25) ? [row, row25] : [row] }).then(searchemision => {
                                 const filterEmisión = (interacciónEmisión) => interacciónEmisión.user.id === interaction.member.id;
                                 const collectorEmisión = searchemision.createMessageComponentCollector({
@@ -137,16 +136,17 @@ module.exports = {
                                     //Collector On
                                     collectorEmisión.on('collect', async(collected) => {
                                         elejido = true;
-                                        row.components[0].setDisabled(true);
-                                        if (ultimaSelecciónEmisión.has(interaction.user.id)) return collected.deferUpdate();
-                                        ultimaSelecciónEmisión.add(interaction.user.id)
-                                        setTimeout(() => {
-                                            ultimaSelecciónEmisión.delete(interaction.user.id)
-                                        }, 5000);
+                                        function TrueFalse([tf]){(totalEnEmisión > 25) ? row.components[0].setDisabled(tf) && row25.components[0].setDisabled(tf):row.components[0].setDisabled(tf)}
+                                        TrueFalse([true]);
+                                        if(SeleccionadoEmisión === collected.values[0]) {
+                                            return await collected.deferUpdate();
+                                        }
+                                        SeleccionadoEmisión = null;
+                                        SeleccionadoEmisión = collected.values[0];
                                         await collected.deferUpdate();
                                         const value = collected.values[0];
                                         const redirecturl = "https://www3.animeflv.net"+value;
-                                        detallesEmisión = new MessageActionRow().addComponents(
+                                        const detallesEmisión = new MessageActionRow().addComponents(
                                             new MessageButton()
                                             .setURL(redirecturl)
                                             .setLabel("Ver original")
@@ -157,10 +157,10 @@ module.exports = {
                                         new MessageEmbed()
                                             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                             .setColor("RANDOM")
-                                            .setDescription(`**Cargando Información...""`)
+                                            .setDescription(`**Cargando Información...**`)
                                             .setFooter({text: `Puedes elejir otro durante 40 segundos`, iconURL: "https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif"})
                                         ], components: componentes});
-                                        row.components[0].setDisabled(false) && buscarAnime(interaction, page, browser, redirecturl, componentes);
+                                        buscarAnime(interaction, page, browser, "Argumento" ,redirecturl, componentes) && TrueFalse([false]);
                                         collectorEmisión.resetTimer();
                                     });
                                     //Collector Off
@@ -173,7 +173,6 @@ module.exports = {
                                                     .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                                     .setColor("RANDOM")
                                                     .setDescription(`La selección del anime ha terminado`)
-                                                    .setThumbnail("https://c.tenor.com/KxEm4q8BoKcAAAAC/spider-man-alfred-molina.gif")
                                                 ], components:[]});
                                         } else {interaction.editReply({ components:[]})}
                                         }

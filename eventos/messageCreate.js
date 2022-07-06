@@ -29,7 +29,69 @@ module.exports = message => {
 			.setImage("https://cdn.discordapp.com/attachments/945405660433117196/982798663095054406/disc.gif");
         message.reply({embeds: [exampleEmbed]
         })
-    } else if (message.channel.id === "992247243287564339") {
+    } else  if (message.content.startsWith("flv") && message.content.includes("flv")) {
+        const comandosSlash = new Discord.MessageSelectMenu()
+        .setCustomId('comandos')
+        .setPlaceholder('Haz click aquí para saber como usarlos')
+        .addOptions([
+            { 
+                label: `/buscar`,
+                emoji: textoyemojis.emojis.buscar,
+                value: `buscar`
+            },
+            { 
+                label: `/descargar`,
+                emoji: textoyemojis.emojis.descargar,
+                value: `descargar`
+            },
+            { 
+                label: `/emisión`,
+                emoji: textoyemojis.emojis.emisión,
+                value: `emisión`
+            },
+            { 
+                label: `/help`,
+                emoji: textoyemojis.emojis.help,
+                value: `help`
+            },
+            { 
+                label: `/random`,
+                emoji: textoyemojis.emojis.random,
+                value: `random`
+            }
+        ]);
+
+        const row = new Discord.MessageActionRow()
+        .addComponents(comandosSlash);
+
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setAuthor({name:`Hola ${message.author.username}`, iconURL: message.author.displayAvatarURL()})
+            .setDescription(`Desafortunadamente, el prefijo \`flv\` para ejecutar un comando ha sido deshabilitado. **Ahora se requiere utilizar el slash ( / ) antes del comando.**\n\nSelecciona cuaquiera de los comandos de abajo para ver un tutorial:`)
+            .setThumbnail("https://i.pinimg.com/originals/52/49/2d/52492dfd578e53265da207e2903a5ce7.gif");
+        return message.reply({embeds: [exampleEmbed], components: [row]}).then(cmds => {
+            const CMD = (interacción) => interacción.user.id === interaction.member.id;
+            const collectorEmisión = cmds.createMessageComponentCollector({
+                componentType: "SELECT_MENU",
+                CMD,
+                time: 200000
+            });
+                //Collector On
+                collectorEmisión.on('collect', async(collected) => {
+                    await collected.deferUpdate();
+                    const select = collected.values[0];
+                    cmds.edit({ embeds: [
+                    new Discord.MessageEmbed()
+                        .setColor("RANDOM")
+                        .setDescription(textoyemojis.emojis[select]+ " | Gif de como usar el comando **/"+select+"**")
+                        .setImage(textoyemojis.tutorial[select])
+                    ]});
+                    collectorEmisión.resetTimer();
+                })
+                collectorEmisión.on('end', a => {
+                    message.channel.messages.fetch(cmds.id).then((msg) => { msg.delete().catch((err) =>  {})}).catch((err) => {})})
+                })
+    }else if (message.channel.id === "992247243287564339") {
         const validUrl = require('valid-url');
         if (message.attachments.size > 0) {
             message.attachments.forEach(attachment => {

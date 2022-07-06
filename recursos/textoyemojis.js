@@ -25,17 +25,38 @@ module.exports = {
         cursor:"<a:CursorFLV:982818673653870612>",
         textorandom:"<:TextoFLV:982818156915589181>",
         play:"<a:PlayFLV:983158611494731806>",
-        pensando:"<a:PensandoFLV:983855943781589052>"
+        pensando:"<a:PensandoFLV:983855943781589052>",
+        buscar:"<a:buscando:993941419729367162>",
+        descargar:"<a:descargando:993941416524922900>",
+        emisión:"<a:emiitidos:993941413962199050>",
+        help:"<a:ayuda:993941665721094244>",
+        random:"<a:randomizando:993941411932160083>"
+    },
+    tutorial:{
+        buscar:"https://cdn.discordapp.com/attachments/945405660433117196/994030607615135825/Buscar_-T.gif",
+        descargar:"https://cdn.discordapp.com/attachments/945405660433117196/994030608865054771/Descargar-T.gif",
+        emisión:"https://cdn.discordapp.com/attachments/945405660433117196/994030608332370042/Emision-T.gif",
+        help:"https://cdn.discordapp.com/attachments/945405660433117196/994030607036334120/Help-T.gif",
+        random:"https://cdn.discordapp.com/attachments/945405660433117196/994030609544519710/Random-T.gif"
     },
     errors:{
-        error: "ERROR",
-        noPerm: "¡No tienes permiso para hacer esto!",
-        noChannel: "Debes especificar un canal",
-        wrongUsage: "No has escrito nada. | **Intenta con:**",
-        unknown: "Un error desconocido",
-        error404: "Esa página no está disponible en el servidor. ``` Page Not Found | ERROR 404``",
-        error522: "Se agotó el tiempo de espera de Animeflv al intentar conectarse con el servidor. ```Connection timed out | ERROR 522```",
-        error502: "El servidor proxy no pudo obtener una respuesta válida del servidor de origen. ```Bad Gateway | ERROR 502```",
+        buscar: {
+            LinkDirecto:"El enlace del anime proporcionado no existe:",
+            CapDirecto:"El enlace del capitulo proporcionado no existe o no está disponible:",
+            Argumento:"Desafortunadamente, el enlace del anime dejo de estar disponible en AnimeFLV:",
+            SinResultados:"No existe ningún anime titulado"
+        },
+        descargar: {
+            LinkDirecto:"",
+            CapDirecto:"",
+            Argumento:"",
+        },
+        emisión: {
+            Argumento: "El enlace del anime en emisión arroja un error:"
+        },
+        random: {
+            Argumento: "El enlace del anime elejido aleatoriamente arroja un error:"
+        },
         espera: "Espera un tiempo a que se solucione solo...",
         errorlink: "Ese anime o link no existe o no esta dissponible",
         errorcap: "Ese capítulo o anime no existe o no esta dissponible",

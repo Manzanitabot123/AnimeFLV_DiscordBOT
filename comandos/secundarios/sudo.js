@@ -12,6 +12,7 @@ module.exports = {
     category: 'Secundario',
 	guildOnly: true,
 	execute (interaction) {
+        if(!interaction.guild.me.permissions.has("MANAGE_WEBHOOKS") || !interaction.guild.me.permissionsIn(interaction.channel).has("MANAGE_WEBHOOKS")) return interaction.reply({ content: `${textoyemojis.emojis.cancelar} Es necesario que el bot tenga el permiso de **Gestionar Webhooks** para ejecutar este comando`,ephemeral: true});
         const usuariolejido = interaction.options.getUser('usuario');
         const mensaje = interaction.options.getString('mensaje');
         if(mensaje.length > 200) return interaction.reply({ embeds: [new MessageEmbed()

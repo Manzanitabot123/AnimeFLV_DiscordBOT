@@ -5,7 +5,7 @@ const lanzarChromium = require('../../utilidades/navegador');
 const buscarAnime = require("../../utilidades/buscarAnime");
 const privado = require("../../utilidades/privado");
 const validUrl = require('valid-url');
-const ultimaSelecciónBuscar = new Set();
+const textoyemojis = require("../../recursos/textoyemojis");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -31,41 +31,42 @@ module.exports = {
             })
             return;
             } else if(args.length < 3){
-                    interaction.reply({
-                        content: `${textoyemojis.emojis.cancelar} Ese nombre es muy corto`, 
-                        ephemeral: true
-                    })
-                    return;
+            interaction.reply({
+                content: `${textoyemojis.emojis.cancelar} Ese nombre es muy corto`, 
+                ephemeral: true
+            })
+            return;
             } else if(args.includes(`\n`)){
-                    interaction.reply({
-                        content: `${textoyemojis.emojis.cancelar} Tu busqueda contiene más de un reglón`, 
-                        ephemeral: true
-                    })
-                    return;
+            interaction.reply({
+                content: `${textoyemojis.emojis.cancelar} Tu busqueda contiene más de un reglón`, 
+                ephemeral: true
+            })
+            return;
             } else if (validUrl.isUri(args)){
                 if(args.startsWith("https://www3.animeflv.net/anime/")) {
                 (async () => {
                 privado[0](interaction, [new MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
+                .setDescription("Buscando con: **" +  args + "** ...")]);
 
                 const [browser, page] = await lanzarChromium(puppeteer)
-                buscarAnime(interaction, page, browser, args);
+                return buscarAnime(interaction, page, browser, "LinkDirecto", args);
                 })();
                 } else if (args.startsWith("https://www3.animeflv.net/ver/")) {
-                    (async () => {
-                    privado[0](interaction, [new MessageEmbed()
-                    .setColor("YELLOW")
-                    .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
-                    const [browser, page] = await lanzarChromium(puppeteer)
-                    buscarAnime(interaction, page, browser, args);
-                    })();
+                (async () => {
+                privado[0](interaction, [new MessageEmbed()
+                .setColor("YELLOW")
+                .setDescription("Buscando con: **" +  args + "** ...")]);
+                const [browser, page] = await lanzarChromium(puppeteer)
+                return buscarAnime(interaction, page, browser, "CapDirecto", args);
+                })();
                 } else {
                     privado[0](interaction, [new MessageEmbed()
                     .setColor("RED")
                     .setDescription(`${textoyemojis.emojis.cancelar} **${args}** no es un link válido.\n__Ejemplo:__\n ${textoyemojis.emojis.canal} **/buscar** anime:\`https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood\` ${textoyemojis.emojis.cursor}`)
                     .setFooter({text: "Intentalo de nuevo"})]); 
                 }
+                return;
             } else { 
                 buscarslash();
             }
@@ -94,7 +95,7 @@ module.exports = {
                                         .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                         .setColor("DARK_RED")
                                         .setTimestamp()
-                                        .setDescription("No se encontraron coincidencias para **" + args  + "**")
+                                        .setDescription(textoyemojis.errors.buscar.SinResultados+" **" + args  + "**")
                                 ]});
                                 return await browser.close()
                             }
@@ -153,6 +154,7 @@ module.exports = {
 
                             var detalles5_1;
                             var elejido;
+                            var SeleccionadoBusqueda;
                             interaction.editReply({ components: [row] }).then(searching => {
                                 const filterBuscar = (interacciónBuscar) => interacciónBuscar.user.id === interaction.member.id;
                                 const collectorBuscar = searching.createMessageComponentCollector({
@@ -164,12 +166,11 @@ module.exports = {
                                     collectorBuscar.on('collect', async(collected) => {
                                         elejido = true;
                                         row.components[0].setDisabled(true);
+                                        if(SeleccionadoBusqueda === collected.values[0]) { return await collected.deferUpdate();
+                                        }
+                                        SeleccionadoBusqueda = null;
+                                        SeleccionadoBusqueda = collected.values[0];
                                         const value = collected.values[0];
-                                        if (ultimaSelecciónBuscar.has(interaction.user.id)) return collected.deferUpdate();
-                                        ultimaSelecciónBuscar.add(interaction.user.id)
-                                        setTimeout(() => {
-                                            ultimaSelecciónBuscar.delete(interaction.user.id)
-                                        }, 5000);
                                         await collected.deferUpdate();
                                         const url = await page.$$eval(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a`, urlone => urlone.map(href => href.getAttribute('href')));
                                         let elemento = await page.$(`body > div.Wrapper > div > div > main > ul > li:nth-child(${value}) > article > a > h3`)
@@ -191,7 +192,7 @@ module.exports = {
                                             .setThumbnail(icon[0])
                                             .setFooter({text: `Puedes elejir otro durante 40 segundos`, iconURL: "https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif"})
                                         ], components: [row, detalles5_1]});
-                                        row.components[0].setDisabled(false) && await buscarAnime(interaction, page, browser, redirecturl, [row, detalles5_1]);
+                                        row.components[0].setDisabled(false) && await buscarAnime(interaction, page, browser, "Argumento", redirecturl, [row, detalles5_1]);
                                         await page.goto(busquedaurl, {waitUntil: 'load', timeout: 0})
                                         collectorBuscar.resetTimer();
                                     });

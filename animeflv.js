@@ -48,4 +48,4 @@ client.once('ready', () => {
 
 client.login(process.env.CLIENT_TOKEN);
 
-//https://discord.com/api/oauth2/authorize?client_id=938856255416569946&permissions=545352305777&scope=bot
+//https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&permissions=150055939184&scope=bot%20applications.commands

@@ -126,7 +126,7 @@ module.exports = {
                                     ], components:[detallesrandom]
                                     });
 
-                            buscarAnime(interaction, page, browser, link)
+                            buscarAnime(interaction, page, browser, "Argumento", link)
                             }
                             catch(error){
                             await browser.close();
