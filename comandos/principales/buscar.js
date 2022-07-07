@@ -95,7 +95,7 @@ module.exports = {
                                         .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                         .setColor("DARK_RED")
                                         .setTimestamp()
-                                        .setDescription(textoyemojis.errors.buscar.SinResultados+" **" + args  + "**")
+                                        .setDescription(textoyemojis.errors.buscar.SinResultados+":\n**" + args  + "**")
                                 ]});
                                 return await browser.close()
                             }
@@ -152,9 +152,9 @@ module.exports = {
                                 BúsquedaMenu
                             );
 
-                            var detalles5_1;
-                            var elejido;
-                            var SeleccionadoBusqueda;
+                            let detalles5_1;
+                            let elejido;
+                            let SeleccionadoBusqueda;
                             interaction.editReply({ components: [row] }).then(searching => {
                                 const filterBuscar = (interacciónBuscar) => interacciónBuscar.user.id === interaction.member.id;
                                 const collectorBuscar = searching.createMessageComponentCollector({

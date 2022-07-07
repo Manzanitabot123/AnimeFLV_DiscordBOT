@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('Ve la lista de comandos o información detallada sobre cualquier comando')
-		.addStringOption(option => option.setName('comando').setDescription('Elije o escribe un comando existente').addChoices( { name: 'Buscar', value: 'buscar' }, { name: 'Descargar', value: 'descargar' }, { name: 'Emisión', value: 'emisión' }, { name: 'Help', value: 'help' }, { name: 'Random', value: 'random' }, { name: 'Usuario', value: 'usuario' }, { name: 'Bot info', value: 'botinfo' }, { name: 'Imagen', value: 'imagen' }, { name: 'Interacción', value: 'interacción' }, { name: 'Ping', value: 'ping' }, { name: 'Pregunta', value: 'pregunta' }, { name: 'Sudo', value: 'sudo' }, { name: 'Sugerencia', value: 'sugerencia' }, { name: 'Ucrania', value: 'ucrania' }, { name: 'Yankenpo', value: 'yankenpo' }, { name: 'Youtube', value: 'youtube' }))
+		.addStringOption(option => option.setName('comando').setDescription('Elije o escribe un comando existente').addChoices( { name: 'Buscar', value: 'buscar' }, { name: 'Descargar', value: 'descargar' }, { name: 'Emisión', value: 'emisión' }, { name: 'Help', value: 'help' }, { name: 'Random', value: 'random' }, { name: 'Interacción', value: 'interacción' }, { name: 'Bot info', value: 'botinfo' }, { name: 'Imagen', value: 'imagen' }, { name: 'Interacción', value: 'interacción' }, { name: 'Ping', value: 'ping' }, { name: 'Pregunta', value: 'pregunta' }, { name: 'Sudo', value: 'sudo' }, { name: 'Sugerencia', value: 'sugerencia' }, { name: 'Ucrania', value: 'ucrania' }, { name: 'Yankenpo', value: 'yankenpo' }, { name: 'Youtube', value: 'youtube' }))
 		.addStringOption(privado[1]),
 	cooldown: '0',
 	example: [
@@ -102,6 +102,7 @@ module.exports = {
 				const commandEmbed = new MessageEmbed()
 					.setTitle(`${global.capitalize(command.data.name)}`)
 					.setDescription(`${command.data.description}`)
+					.setImage(textoyemojis.tutorial[command.data.name])
 					.addFields(
 						{ name: 'Enfriamiento', value: `\`${command.cooldown}\` segundo(s)`, inline: true },
 						{ name: 'Solo servidores', value: `\`${resultGuildOnly}\``, inline: true },

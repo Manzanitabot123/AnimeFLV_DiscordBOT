@@ -37,19 +37,33 @@ module.exports = {
         descargar:"https://cdn.discordapp.com/attachments/945405660433117196/994030608865054771/Descargar-T.gif",
         emisión:"https://cdn.discordapp.com/attachments/945405660433117196/994030608332370042/Emision-T.gif",
         help:"https://cdn.discordapp.com/attachments/945405660433117196/994030607036334120/Help-T.gif",
-        random:"https://cdn.discordapp.com/attachments/945405660433117196/994030609544519710/Random-T.gif"
+        random:"https://cdn.discordapp.com/attachments/945405660433117196/994030609544519710/Random-T.gif",
+        usuario: "https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        botinfo:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        imagen:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        interacción:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        ping:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        pregunta:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        sudo:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        sugerencia:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        ucrania:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        yankenpo:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3",
+        youtube:"https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3"
     },
     errors:{
         buscar: {
             LinkDirecto:"El enlace del anime proporcionado no existe:",
             CapDirecto:"El enlace del capitulo proporcionado no existe o no está disponible:",
             Argumento:"Desafortunadamente, el enlace del anime dejo de estar disponible en AnimeFLV:",
-            SinResultados:"No existe ningún anime titulado"
+            SinResultados:"No existe ningún anime titulado",
+            trylink:"Verifica el nombre o el link e intentalo de nuevo"
         },
         descargar: {
-            LinkDirecto:"",
-            CapDirecto:"",
-            Argumento:"",
+            trylink:"Verifica el nombre, el link o el capitulo e intentalo de nuevo",
+            DetallesDirecto:"El anime no existe o el capitulo aún no esta disponible",
+            VerDirecto:"El enlace del capitulo no existe",
+            Argumento:"Ese capítulo no se encuentra disponible",
+            SinResultados:"No se encontró ningún anime a descargar titulado"
         },
         emisión: {
             Argumento: "El enlace del anime en emisión arroja un error:"
@@ -59,8 +73,7 @@ module.exports = {
         },
         espera: "Espera un tiempo a que se solucione solo...",
         errorlink: "Ese anime o link no existe o no esta dissponible",
-        errorcap: "Ese capítulo o anime no existe o no esta dissponible",
-        trylink: "Verifica el nombre o el link e intentalo de nuevo"
+        errorcap: "Ese capítulo o anime no existe o no esta dissponible"
     },
     messages:{
         description: "Descripción",

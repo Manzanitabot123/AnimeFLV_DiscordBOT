@@ -45,7 +45,7 @@ module.exports = {
                     .setDescription("Buscando anime con el enlace: **" +  args + "** ...")]);
 
                     const [browser, page] = await lanzarChromium(puppeteer)
-                    enlacesDescarga(interaction, page, browser, args, cap);
+                    enlacesDescarga(interaction, page, browser, "DetallesDirecto", args, cap);
                     })();
                 } else if (args.startsWith("https://www3.animeflv.net/ver/")) {
                     (async () => {
@@ -54,12 +54,12 @@ module.exports = {
                     .setDescription("Buscando con el enlace: **" +  args + "** ...")]);
     
                     const [browser, page] = await lanzarChromium(puppeteer)
-                    enlacesDescarga(interaction, page, browser, args, cap);
+                    enlacesDescarga(interaction, page, browser, "VerDirecto", args, cap);
                     })();
                 } else {
                     privado[0](interaction, [new MessageEmbed()
                     .setColor("RED")
-                    .setDescription(`${textoyemojis.emojis.cancelar} **${args}** no es un link válido.\n__Ejemplo:__\n ${textoyemojis.emojis.canal} **/buscar** anime:\`https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood\` ${textoyemojis.emojis.cursor}`)
+                    .setDescription(`${textoyemojis.emojis.cancelar} **${args}** no es un link válido.\n__Ejemplo:__\n ${textoyemojis.emojis.canal} **/descargar** anime:\`https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood\` capítulo:\`3\` ${textoyemojis.emojis.cursor}`)
                     .setFooter({text: "Intentalo de nuevo"})]); 
                 }
             } else { 
@@ -90,7 +90,7 @@ module.exports = {
                                         .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: false })})
                                         .setColor("DARK_RED")
                                         .setTimestamp()
-                                        .setDescription("No se encontraron coincidencias para **" + args  + "**")
+                                        .setDescription(textoyemojis.errors.descargar.SinResultados+":\n**" + args  + "**")
                                 ]});
                                 return await browser.close()
                             }
@@ -148,7 +148,8 @@ module.exports = {
                                 BúsquedaDecargarMenu
                             );
 
-                            var SeleccionadoDescargar;
+                            let SeleccionadoDescargar;
+                            let elejido;
                             interaction.editReply({ components: [row] }).then(searchLinksDownload => {
                                 const filterDescargar = (interacciónDescargar) => interacciónDescargar.user.id === interaction.member.id;
                                 const collectorDescargar = searchLinksDownload.createMessageComponentCollector({
@@ -176,7 +177,7 @@ module.exports = {
                                             .setThumbnail(icono[0])
                                             .setFooter({text: `Links extraidos de AnimeFLV`, iconURL: "https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1626286790970x379404562786661800%2FAdvanced-Loading-Spinner.gif"})
                                         ], components: [row]});
-                                        enlacesDescarga(interaction, page, browser, SemiUrl[0], cap);
+                                        enlacesDescarga(interaction, page, browser, "Argumento" , SemiUrl[0], cap);
                                     });
                     
                                     collectorDescargar.on('end', async(_, reason) => {

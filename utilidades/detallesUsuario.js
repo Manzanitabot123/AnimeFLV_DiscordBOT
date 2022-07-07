@@ -5,13 +5,12 @@ const {
     MessageSelectMenu
   } = require("discord.js");
   
-  const enlacesDescarga = async(
+  const detallesUsuario = async(
     interaction,
     page,
     browser,
-    request,
-    urlSelected,
-    episodio
+    reason,
+    urlSelected
   ) => {
     let enlaceoriginal;
     if (urlSelected.startsWith("https://www3.animeflv.net/ver/")) {
@@ -25,7 +24,7 @@ const {
         console.log(interaction)
         interaction.editReply({ embeds: [ new MessageEmbed()
                 .setColor("DARK_RED")
-                .setDescription(textoyemojis.emojis.cancelar + " | " + textoyemojis.errors[interaction.commandName][request]+"\n**"+urlSelected+"**")
+                .setDescription(textoyemojis.emojis.cancelar + " | " + textoyemojis.errors[interaction.commandName][reason]+"\n**"+urlSelected+"**")
                 .setFooter({text: textoyemojis.errors.descargar.trylink + " | Error "+timeout.status()})], components:[]});
         return browser.close(); 
     }
@@ -151,4 +150,4 @@ async function Denuevo(collected, interaction, page, browser, a) {
     await browser.close()
     }
 }
-module.exports = enlacesDescarga;
+module.exports = detallesUsuario;

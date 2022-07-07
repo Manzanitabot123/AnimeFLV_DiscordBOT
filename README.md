@@ -37,27 +37,29 @@
 
 ### **Lista de Comandos**
 
-AnimeFLV Bot tiene un total de **6 comandos principales** y **6 comandos secundarios**.
+AnimeFLV Bot tiene un total de **6 comandos principales** y **10 comandos secundarios** disponibles.
 
 | Nombre | Descripción            | Estado
 | ------------- | ------------------------------ | ----- |
+| 🔲 `Buscar` | Busca y obtén información de un anime. | Disponible
 | ⬇️️ `Descargar` | Obtén enlaces de descarga de cualquier anime. | Disponible
-| ✔️ `Directorio` | Navega por el directorio de AnimeFLV. | Pendiente
 | 🟢 `Emision` | Muestra los anime que se encuentran en emisión. | Disponible
+| ✉️ `Help` | Ve información del bot y los comandos. | Disponible
+| 🎲 `Random` | Genera un anime aleatrio del repositorio de animes. | Disponible
+| ✔️ `Directorio` | Navega por el directorio de AnimeFLV. | Pendiente
 | ⚡ `Botinfo` | Muestra el estado actual del bot. | Disponible
 | 📁 `Imagen` | Consigue imágenes de artistas de Waifus, Nekos y Kitsunes.  | Disponible
-| 🔞 `Hentai` | (+18) Te redirecciona a una página de hentai. | Pendiente
-| 👨 `Usuario` | Revisa perfiles de usuarios de AnimeFLV.    | Pendiente
-| 🔲 `Buscar` | Busca y obtén información de un anime. | Disponible
-| 🎲 `Random` | Genera un anime aleatrio del repositorio de animes. | Disponible
+| 😜 `Interacción` | Crea una acción o reacción hacia otras personas o hacía ti.  | Disponible
 | 💬 `Ping` | Muestra el ping del bot. | Disponible
+| 👨 `Usuario` | Revisa perfiles de usuarios de AnimeFLV.    | Pendiente
 | 📺️ `Ultimoani` | Muestra los últimos animes agregados a AnimeFLV. | Pendiente
 | 🔟 `Ultimocap` | Muestra los últimos episodios del día. | Pendiente
-| ✉️ `Help` | Ve información del bot y los comandos. | Disponible
 | 💬 `Pregunta` | Pídele a Magic 8-Ball algo de sabiduría psíquica. | Disponible
 | 🤚  `Felizjueves` | Configura el mensaje semanal de Feliz Jueves. | Pendiente
 | 🕵️‍ `Sudo` | Haz un webhook para hacerte pasar por alguien. | Disponible
 | ✂️ `Yankenpo` | Reta al bot a una partida de piedra, papel o tijeras | Disponible
+| 💯 `Sugerencia` | Reta al bot a una partida de piedra, papel o tijeras | Disponible
+| ❤️️ `Ucrania` | ¡Por favor, dona lo que puedas para ayudar a Ucrania! | Disponible
 | 🎞️ `Youtube` | Inicia un YouTube Together en el canal de voz. | Disponible
 
 ----

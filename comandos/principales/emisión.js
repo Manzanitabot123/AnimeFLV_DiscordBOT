@@ -124,8 +124,9 @@ module.exports = {
                             );
                             }
 
-                            var elejido;
-                            var SeleccionadoEmisión;
+                            let elejido;
+                            let SeleccionadoEmisión;
+                            let detallesEmisión;
                             interaction.editReply({ components: (totalEnEmisión > 25) ? [row, row25] : [row] }).then(searchemision => {
                                 const filterEmisión = (interacciónEmisión) => interacciónEmisión.user.id === interaction.member.id;
                                 const collectorEmisión = searchemision.createMessageComponentCollector({
@@ -146,7 +147,7 @@ module.exports = {
                                         await collected.deferUpdate();
                                         const value = collected.values[0];
                                         const redirecturl = "https://www3.animeflv.net"+value;
-                                        const detallesEmisión = new MessageActionRow().addComponents(
+                                        detallesEmisión = new MessageActionRow().addComponents(
                                             new MessageButton()
                                             .setURL(redirecturl)
                                             .setLabel("Ver original")
@@ -166,6 +167,7 @@ module.exports = {
                                     //Collector Off
                     
                                     collectorEmisión.on('end', async(_, reason) => {
+                                        (totalEnEmisión > 25)?row.components[0].setDisabled(true) && row25.components[0].setDisabled(true):row.components[0].setDisabled(true), detallesEmisión
                                         if (reason === "time") {
                                         if (page.url() === emisiónurl){
                                             interaction.editReply({ embeds: [
@@ -174,7 +176,7 @@ module.exports = {
                                                     .setColor("RANDOM")
                                                     .setDescription(`La selección del anime ha terminado`)
                                                 ], components:[]});
-                                        } else {interaction.editReply({ components:[]})}
+                                        } else {interaction.editReply({ components:(totalEnEmisión > 25)?[row, row25, detallesEmisión]:[row, detallesEmisión]})}
                                         }
                                         await browser.close();
                                     })

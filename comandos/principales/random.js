@@ -34,7 +34,7 @@ module.exports = {
         ))
         .addStringOption(privado[1]),
 	cooldown: '5',
-	example: ['**/random**'],
+	example: ['**/random** tipo :`Película`'],
     category: 'Principal',
 	guildOnly: true,
 	execute (interaction) {

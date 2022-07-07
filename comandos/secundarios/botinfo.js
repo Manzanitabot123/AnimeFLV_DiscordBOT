@@ -3,6 +3,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { version, author, dependencies } = require('../../package.json');
 const { release, cpus } = require('os');
 const privado = require("../../utilidades/privado");
+const puppeteer = require('puppeteer');
+const lanzarChromium = require('../../utilidades/navegador');
 
 
 module.exports = {
@@ -39,10 +41,23 @@ module.exports = {
                 { name: '✉ __Chats__', value: `Servidores: \`${interaction.client.guilds.cache.size}\` \n Canales: \`${interaction.client.channels.cache.size}\``, inline: true },
                 { name: '⚙️ __Sistema__', value: `SO:\u2000\u2000\`${process.platform.replace('win32', 'Windows').replace('darwin', 'MacOS').replace('linux', 'Linux')} ${release}\` \nDiscordJS:\u2000\u2000\`${dependencies["discord.js"].replace('^', 'v')}\` \nNode:\u2000\u2000\`${process.version}\` \nCPU:\u2000\u2000\`${cpus()[0].model}\``, inline: true },
                 { name: '⌛ __Tiempo encendido__', value: `\`${days}\` días(s), \`${hours}\` horas(s), \`${minutes}\` minuto(s), \`${seconds}\` segundo(s)` },
-                { name: '👀 __Observaciones__', value: `Estado del bot: \`✅ Operando...\`\nEstado del sitio web: \`✅ Operando...\`` }
+                { name: '👀 __Observaciones__', value: `Estado del bot: \`Evaluando...\`\nEstado del sitio web: \`Evaluando...\`` }
             )
             .setFooter({text: `Info y estado del bot - Bot creado por ${author}`})
-            .setColor('#e09c2c');
-            privado[0](interaction, [embed]);
+            .setColor('YELLOW');
+        privado[0](interaction, [embed]);
+        (async () => {
+        const [browser, page] = await lanzarChromium(puppeteer)
+        const evaluar = await page.goto('https://www3.animeflv.net/', {waitUntil: 'load', timeout: 0})
+        if (evaluar.status() === 522||evaluar.status() === 404||evaluar.status() === 502) {
+            embed.fields[5] = { name: '👀 __Observaciones__', value: `Estado del bot: \`✅ Operando...\`\nEstado del sitio web: \`❌ No está funcionando... | ${evaluar.status()}\`` }
+            interaction.editReply({embeds:[embed.setColor('RED')]});
+            return browser.close();
+        } else {
+            embed.fields[5] = { name: '👀 __Observaciones__', value: `Estado del bot: \`✅ Operando...\`\nEstado del sitio web: \`✅ Operando... | ${evaluar.status()}\`` }
+            interaction.editReply({embeds:[embed.setColor('GREEN')]});
+            return browser.close();
+        }
+        })();
 	}
 };

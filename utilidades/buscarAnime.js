@@ -35,10 +35,9 @@ const getColors = require('get-image-colors')
             new MessageEmbed()
                 .setColor("DARK_RED")
                 .setDescription(textoyemojis.emojis.cancelar + " | " + textoyemojis.errors[interaction.commandName][petition]+" \n**"+urlSelected+"**")
-                .setFooter({text: textoyemojis.errors.trylink + " | Error "+timeout.status()})
+                .setFooter({text: textoyemojis.errors.buscar.trylink + " | Error "+timeout.status()})
         ], components:[]});
         return browser.close();
-        
     }
     
     if (urlSelected.startsWith("https://www3.animeflv.net/ver/")) {
@@ -244,5 +243,3 @@ const getColors = require('get-image-colors')
               } catch {}
   };
 module.exports = buscarAnime;
-
-//CORREGIR EL ASUNTO DEL TIPO ESPECIAL QUE RESULTA ERROR

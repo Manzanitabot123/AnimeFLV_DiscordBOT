@@ -29,7 +29,7 @@ module.exports = message => {
 			.setImage("https://cdn.discordapp.com/attachments/945405660433117196/982798663095054406/disc.gif");
         message.reply({embeds: [exampleEmbed]
         })
-    } else  if (message.content.startsWith("flv") && message.content.includes("flv")) {
+    } else  if (!ultimo && message.content.startsWith("flv") && message.content.includes("flv")) {
         const comandosSlash = new Discord.MessageSelectMenu()
         .setCustomId('comandos')
         .setPlaceholder('Haz click aquí para saber como usarlos')
@@ -89,7 +89,7 @@ module.exports = message => {
                     collectorEmisión.resetTimer();
                 })
                 collectorEmisión.on('end', a => {
-                    message.channel.messages.fetch(cmds.id).then((msg) => { msg.delete().catch((err) =>  {})}).catch((err) => {})})
+                    message.channel.messages.fetch(cmds.id).then((msg) => { msg.delete().catch((err) =>  { /*a*/})}).catch((err) => { /*b*/})})
                 })
     }else if (message.channel.id === "992247243287564339") {
         const validUrl = require('valid-url');
