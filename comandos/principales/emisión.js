@@ -167,8 +167,7 @@ module.exports = {
                                     //Collector Off
                     
                                     collectorEmisión.on('end', async(_, reason) => {
-                                        (totalEnEmisión > 25)?row.components[0].setDisabled(true) && row25.components[0].setDisabled(true):row.components[0].setDisabled(true), detallesEmisión
-                                        if (reason === "time") {
+                                        if(totalEnEmisión>25) {row.components[0].setDisabled(true) && row25.components[0].setDisabled(true)} else {row.components[0].setDisabled(true)}
                                         if (page.url() === emisiónurl){
                                             interaction.editReply({ embeds: [
                                                 new MessageEmbed()
@@ -177,7 +176,6 @@ module.exports = {
                                                     .setDescription(`La selección del anime ha terminado`)
                                                 ], components:[]});
                                         } else {interaction.editReply({ components:(totalEnEmisión > 25)?[row, row25, detallesEmisión]:[row, detallesEmisión]})}
-                                        }
                                         await browser.close();
                                     })
                                 })

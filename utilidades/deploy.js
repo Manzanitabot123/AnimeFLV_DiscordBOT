@@ -1,10 +1,7 @@
-module.exports = async () => {
+module.exports = async (dotenv, fs) => {
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const dotenv = require('dotenv');
 dotenv.config();
-const fs = require('fs');
-
 const commands = [];
 const commandFile = fs.readdirSync('comandos/');
 for (const catefile of commandFile) {
@@ -15,7 +12,6 @@ const command = require(`../comandos/${catefile}/${file}`);
 commands.push(command.data.toJSON());
 }
 }
-
 const rest = new REST({ version: '9' }).setToken(process.env.CLIENT_TOKEN);
 console.log("[COMANDOS CARGADOS] "+commands.map((i)=> i.name).join(" | "))
 rest.put(Routes.applicationCommands(process.env.APP_ID), { body: commands })
