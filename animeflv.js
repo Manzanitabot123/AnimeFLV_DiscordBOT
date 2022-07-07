@@ -25,7 +25,7 @@ for (const file of jsComandos) {
 //INICIANDO
 client.once('ready', () => {
 	console.log(`[ANIMEFLV] Iniciado como ${client.user.tag}\n[ANIMEFLV] Sirviendo a ${client.users.cache.size} usuarios y en ${client.channels.cache.size} canales de ${client.guilds.cache.size} servidores`);
-	console.log(client.guilds.cache.map(g => `[SERVIDOR] ${g.name}`).join('\n'))
+	console.log(client.guilds.cache.map(g => `[SERVIDOR] ${g.name} (${g.memberCount})`).join('\n'))
 	client.user.setStatus("idle")
 	client.user.setActivity({ name: "flv",  type: 'PLAYING' })
 	//Actualizar comandos

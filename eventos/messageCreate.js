@@ -30,6 +30,7 @@ module.exports = message => {
         message.reply({embeds: [exampleEmbed]
         })
     } else  if (!ultimo && message.content.startsWith("flv") && message.content.includes("flv")) {
+        ultimoMensaje();
         const comandosSlash = new Discord.MessageSelectMenu()
         .setCustomId('comandos')
         .setPlaceholder('Haz click aquí para saber como usarlos')

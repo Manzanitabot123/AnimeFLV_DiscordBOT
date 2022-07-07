@@ -43,7 +43,7 @@ animeflvBot.get("/", (req, res) => {
   <footer class="theme-footer"></footer>
   <h2>Un Bot de Discord (no oficial 🤖) para ver información y descargar animes clásicos, actuales y populares.</h2>\n    
   <p>Consola:</p>
-  <pre id='weather'>${getConsole()}</pre>
+  <pre>${getConsole()}</pre>
   \n\n    \x3C!-- InfluAds -->\n    
   <div id="influads_block" class="influads_block" style="display: none !important;"></div>
   <p><a href="https://github.com/Manzanitabot123/AnimeFLV_DiscordBOT/issues">Haz click aquí si tienes alguna duda o problema</a> <span>·</span> Hecho por <a href="https://github.com/Manzanitabot123/">${author}</a></p>
@@ -53,9 +53,8 @@ animeflvBot.get("/", (req, res) => {
   <a href="https://discord.ly/animeflv"><div class="area">◍ Bot en línea</div></a>
   </body>`)
 });
-animeflvBot.get("/invite", (req, res, next) => {
+animeflvBot.get("/invite", (req, res) => {
   res.redirect('https://discord.com/api/oauth2/authorize?client_id=938856255416569946&permissions=150055939184&scope=bot%20applications.commands');
-  next
 });
 animeflvBot.listen(PORT, () => {
   console.log(`[WEB] Aplicación en el puerto ${PORT}`);
