@@ -1,6 +1,6 @@
 <img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" alt="Animeflv" src="https://cdn.discordapp.com/avatars/938856255416569946/d5facd45ba90a6774f728365e9266b40.webp"> 
 
-# AnimeFLV Discord Bot v2.3.1
+# AnimeFLV Discord Bot v2.3.1.8
 
 [![Discord](https://img.shields.io/badge/discord.js-v13.8.1-red.svg?logo=npm)](https://www.npmjs.com/package/discord.js) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Manzanitabot123_AnimeFLV_DiscordBOT&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Manzanitabot123_AnimeFLV_DiscordBOT) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Manzanitabot123_AnimeFLV_DiscordBOT&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Manzanitabot123_AnimeFLV_DiscordBOT) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Manzanitabot123_AnimeFLV_DiscordBOT&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=Manzanitabot123_AnimeFLV_DiscordBOT) [![Estrellas](https://img.shields.io/github/stars/Manzanitabot123/AnimeFLV_DiscordBOT.svg)](https://github.com/Manzanitabot123/AnimeFLV_DiscordBOT) [![Licencia](https://img.shields.io/github/license/Manzanitabot123/AnimeFLV_DiscordBOT.svg)](https://github.com/Manzanitabot123/AnimeFLV_DiscordBOT/blob/master/LICENSE)
 
@@ -51,7 +51,7 @@ AnimeFLV Bot tiene un total de **6 comandos principales** y **10 comandos secund
 | 📁 `Imagen` | Consigue imágenes de artistas de Waifus, Nekos y Kitsunes.  | Disponible
 | 😜 `Interacción` | Crea una acción o reacción hacia otras personas o hacía ti.  | Disponible
 | 💬 `Ping` | Muestra el ping del bot. | Disponible
-| 👨 `Usuario` | Revisa perfiles de usuarios de AnimeFLV.    | Pendiente
+| 👨 `Usuario` | Revisa perfiles de usuarios de AnimeFLV.    | Disponible 🆕
 | 📺️ `Ultimoani` | Muestra los últimos animes agregados a AnimeFLV. | Pendiente
 | 🔟 `Ultimocap` | Muestra los últimos episodios del día. | Pendiente
 | 💬 `Pregunta` | Pídele a Magic 8-Ball algo de sabiduría psíquica. | Disponible
@@ -87,7 +87,7 @@ AnimeFLV bot tiene la licencia MIT. Consulta el archivo `LICENCIA`  en [este rep
 ----
 
 ### *Paquetes*
-**Versión del bot:** 2.3.1 [Julio 2022]
+**Versión del bot:** v2.3.1.8 [Julio 2022]
 
 | Dependencias  | Versión  | NPM |
 | :------------ |:---------------:| -----:|
@@ -95,6 +95,9 @@ AnimeFLV bot tiene la licencia MIT. Consulta el archivo `LICENCIA`  en [este rep
 | get-image-colors     | 4.0.1 | [Click aquí](https://www.npmjs.com/package/get-image-colors)
 | puppeteer        | 1.19.0 | [Click aquí](https://www.npmjs.com/package/puppeteer)
 | random | 3.0.6 | [Click aquí](https://www.npmjs.com/package/random)
+| cron | 2.0.0 | [Click aquí](https://www.npmjs.com/package/cron)
+| random | 3.0.6 | [Click aquí](https://www.npmjs.com/package/random)
+| express | 4.18.1 | [Click aquí](https://www.npmjs.com/package/express)
 
 ----
 

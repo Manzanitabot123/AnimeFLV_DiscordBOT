@@ -1,5 +1,8 @@
 module.exports = {
     embedColor: "RANDOM",
+    imagelinks:{
+        icono:"https://cdn.discordapp.com/attachments/945405660433117196/994735345939775548/LOGO_2.1.0_no_oficial_3-modified.png"
+    },
     emojis:{
         estrella: "<a:estrellaFLV:945408753249968169>",
         media_estrella: "<a:media_estrellaFLV:945409376523526164>",

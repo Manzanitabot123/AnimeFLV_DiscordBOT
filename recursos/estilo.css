@@ -1,11 +1,54 @@
 body {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, #527cee, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-  padding: 100px;
+  padding: 50px;
   text-rendering: optimizeLegibility;
   font: 14px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+body::-webkit-scrollbar {
+  width: 16px;
+}
+body::-webkit-scrollbar-thumb {
+  background: #fbd304 ;
+  border-radius: 20px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: rgb(208, 229, 252);
+}
+
+body::-webkit-scrollbar-button {
+  display: block;
+  background-color: #045cbc;
+  background-repeat: no-repeat;   
+  background-size: 50%;
+  background-position: center;
+}
+
+body::-webkit-scrollbar-button:vertical:start:increment {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7e/Chevron-up.svg');   
+}
+
+body::-webkit-scrollbar-button:vertical:start:decrement {
+  display: none;
+}
+
+body::-webkit-scrollbar-button:vertical:end:increment {
+  display: none;
+}
+
+body::-webkit-scrollbar-button:vertical:end:decrement {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ee/Chevron-down.svg');   
+}
+
+.fondo {
+  background-image: url("https://giffiles.alphacoders.com/121/12163.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 @keyframes gradient {
@@ -27,6 +70,7 @@ img {
   margin-right: auto;
   border-radius: 50%;
   animation: rotation 10s infinite linear;
+  width:10em;
 }
 
 @keyframes rotation 
@@ -48,8 +92,8 @@ h1, h2, p {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 h1 {
-  margin: 0;
-  font: bold 100px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: bold 70px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow-wrap: break-word;
   color: #fff;
   text-shadow: 0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbbbbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaaaaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
   transition: .2s all linear;
@@ -80,7 +124,7 @@ pre {
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.15)), to(rgba(0, 0, 0, 0)));
   background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
   width: 96%;
-  margin: 30px auto;
+  margin: auto;
   padding: 15px;
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);

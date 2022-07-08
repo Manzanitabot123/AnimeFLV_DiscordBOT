@@ -1,6 +1,6 @@
 {
   "name": "animeflv_bot",
-  "version": "2.3.1",
+  "version": "2.3.1.8",
   "description": "Un Bot de Discord (no oficial 🤖) de Animeflv para ver información y descargar animes clásicos, actuales y populares.",
   "main": "animeflv.js",
   "author": "Manzanitabot123",

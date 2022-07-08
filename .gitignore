@@ -1,11 +1,8 @@
-# Dependency directories
+# ´Directorio de dependencias
 node_modules/
 
-# Environment variables
+# Mdulos ENV
 .env
 
-# Configuration information
-textoyemojis.js
-
-# Package manifest
+# Paquetes
 package-lock.json
